@@ -1,12 +1,8 @@
 .content {
     grid-area: c;
-    background-color: cornflowerblue;
+    background-color: #b4d470;
 }
 
 .content img {
     height: 200px;
-}
-
-.item {
-    color: black;
 }

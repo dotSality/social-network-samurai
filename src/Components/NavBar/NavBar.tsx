@@ -1,18 +1,6 @@
 import React from "react";
 import s from './NavBar.module.css'
 
-/*let s = {
-    'nav': 'NavBar_nav__2Q_l4',
-    'item': 'NavBar_item__u5y3L',
-     'active': 'EVE_actveCEfvrv'
-}
-let c1 = 'item';
-let c2 = 'active';
-// 'item active'
-let classes = c1 + ' ' + c2;
-let classes = `${s.item} ${c2}`;*/
-
-
 
 console.log(s);
 const NavBar = () => {
