@@ -1,15 +1,15 @@
 import React from "react";
 import s from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = () => {
-    return (<div>
-        <img src='https://c4.wallpaperflare.com/wallpaper/784/819/740/ultra-wide-photography-beach-wallpaper-preview.jpg'/>
+    return (
         <div>
-            ava + description
+            <ProfileInfo/>
+            <MyPosts/>
         </div>
-        <MyPosts />
-    </div>)
+    )
 }
 
 export default Profile;
