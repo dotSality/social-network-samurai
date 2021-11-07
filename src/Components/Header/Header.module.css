@@ -1,8 +1,9 @@
 .header {
     grid-area: h;
-    background-color: #bfd41a;
+    background-image: url('https://i.ibb.co/kDDBfBd/pngtree-abstract-wave-business-logo-png-image-736975.jpg');
 }
 
 .header img {
-    width: 50px;
+    width: 70px;
+    margin-left: 10px;
 }

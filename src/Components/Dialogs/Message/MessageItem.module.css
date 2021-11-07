@@ -1,7 +1,31 @@
 .message {
-
+    background-color: #0065e9;
+    flex-basis: 30px;
+    min-width: 15%;
+    max-width: 40%;
+    margin: 5px auto 0 0;
+    border-radius: 10px;
+    color: white;
+    padding: 5px;
+    text-align: left;
+    overflow: inherit;
 }
 
-.dialogsItems .active {
+.self {
+    background-color: #0065e9;
+    flex-basis: 30px;
+    min-width: 15%;
+    max-width: 40%;
+    margin: 5px 0 0 auto;
+    border-radius: 10px;
     color: white;
+    padding: 5px;
+    text-align: left;
+    overflow: inherit;
+}
+
+.time {
+    text-align: right;
+    font-size: 80%;
+    opacity: 50%;
 }

@@ -4,6 +4,9 @@ import {MessageType} from '../../../redux/state';
 
 export const Message = (props: MessageType) => {
     return (
-        <div className={`${s.message} ${s.active}`}>{props.message}</div>
+
+        <div className={props.sender ? s.message : s.self}>{props.message}
+        <div className={s.time}>20:00</div>
+        </div>
     )
 }

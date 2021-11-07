@@ -1,6 +1,9 @@
 .app-wrapper {
+    padding: 10px 50px 10px 50px;
     margin: 0 auto;
-    width: 1450px;
+    min-height: 700px;
+    min-width: 700px;
+    max-width: 1200px;
     display: grid;
     grid-template-areas:
     'h h'
@@ -13,5 +16,5 @@
 
 .app-wrapper-content {
     grid-area: c;
-    background-color: #b4d470;
+    border: 1px #0065e9 solid;
 }

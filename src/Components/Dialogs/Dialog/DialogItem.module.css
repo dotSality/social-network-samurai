@@ -1,11 +1,8 @@
-.dialogsItems {
+.dialog {
     padding: 10px;
 }
 
-.dialogsItems .active {
-    color: white;
+.active {
+    color: #0065e9;
 }
 
-.dialogsItems .dialog {
-
-}
