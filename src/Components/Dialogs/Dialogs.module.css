@@ -15,3 +15,7 @@
     padding: 10px;
     overflow: inherit;
 }
+
+.addMsg {
+    align-self: flex-start;
+}

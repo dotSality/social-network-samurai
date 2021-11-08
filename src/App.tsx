@@ -8,19 +8,29 @@ import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {RootStateType} from './redux/state';
+import {addMessage, addPost, state, updateNewMessageText, updateNewPostText} from './redux/state';
 
-function App(props: RootStateType) {
+function App() {
+
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
                 <Header/>
-                <NavBar friends={props.sidebar.friends}/>
+                <NavBar friends={state.sidebar.friends}/>
                 <div className={'app-wrapper-content'}>
                     <Route exact path={'/dialogs'} render={() =>
-                        (<Dialogs DialogPropsItem={props.dialogsPage.dialogs}
-                            MessagePropsItem={props.dialogsPage.messages}/>)}/>
-                    <Route path={'/profile'} render={() => (<Profile MyPostsPropsType={props.profilePage.posts}/>)}/>
+                        (<Dialogs DialogPropsItem={state.dialogsPage.dialogs}
+                            MessagePropsItem={state.dialogsPage.messages}
+                            newMessageText={state.dialogsPage.newMessageText}
+                            addMessage={addMessage}
+                            updateNewMessageText={updateNewMessageText}
+                        />)}/>
+                    <Route path={'/profile'} render={() => (<Profile
+                        addPost={addPost}
+                        MyPostsPropsType={state.profilePage.posts}
+                        messageForNewPost={state.profilePage.messageForNewPost}
+                        updateNewPostText={updateNewPostText}
+                    />)}/>
                     <Route path={'/news'} render={() => (<News/>)}/>
                     <Route path={'/music'} render={() => (<Music/>)}/>
                     <Route path={'/settings'} render={() => (<Settings/>)}/>
