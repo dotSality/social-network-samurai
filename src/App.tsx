@@ -8,9 +8,15 @@ import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {addMessage, addPost, state, updateNewMessageText, updateNewPostText} from './redux/state';
+import {StoreType} from './redux/state';
 
-function App() {
+type PropsType = {
+    store: StoreType
+}
+
+function App(props: PropsType) {
+
+    const state = props.store.getState();
 
     return (
         <BrowserRouter>
@@ -22,14 +28,12 @@ function App() {
                         (<Dialogs DialogPropsItem={state.dialogsPage.dialogs}
                             MessagePropsItem={state.dialogsPage.messages}
                             newMessageText={state.dialogsPage.newMessageText}
-                            addMessage={addMessage}
-                            updateNewMessageText={updateNewMessageText}
+                            dispatch={props.store.dispatch.bind(props.store)}
                         />)}/>
                     <Route path={'/profile'} render={() => (<Profile
-                        addPost={addPost}
+                        dispatch={props.store.dispatch.bind(props.store)}
                         MyPostsPropsType={state.profilePage.posts}
                         messageForNewPost={state.profilePage.messageForNewPost}
-                        updateNewPostText={updateNewPostText}
                     />)}/>
                     <Route path={'/news'} render={() => (<News/>)}/>
                     <Route path={'/music'} render={() => (<Music/>)}/>
