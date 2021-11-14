@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import {DialogItem} from './Dialog/DialogItem';
 import {Message} from './Message/MessageItem';
-import {DialogType, MessageActionType, MessageType} from '../../redux/state';
+import {addMessageAC, DialogType, MessageActionType, MessageType, updateMessageTextAC} from '../../redux/state';
 
 type DialogsPropsType = {
     DialogPropsItem: Array<DialogType>
@@ -17,11 +17,11 @@ const Dialogs = (props: DialogsPropsType) => {
     let messageItems = props.MessagePropsItem.map(m => <Message id={m.id} message={m.message} sender={m.sender}/>)
 
     const addMessage = () => {
-        props.dispatch({type: 'ADD-MESSAGE', messageText: props.newMessageText})
+        props.dispatch(addMessageAC(props.newMessageText))
     }
 
     const updateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: e.currentTarget.value})
+        props.dispatch(updateMessageTextAC(e.currentTarget.value))
     }
 
     return (
@@ -34,6 +34,7 @@ const Dialogs = (props: DialogsPropsType) => {
                 <div className={s.addMsg}>
                     <button onClick={addMessage}>Send message</button>
                     <textarea
+                        placeholder={'Enter your message...'}
                         onChange={updateNewMessageText}
                         value={props.newMessageText}
                     />

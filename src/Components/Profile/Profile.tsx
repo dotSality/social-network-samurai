@@ -4,14 +4,11 @@ import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import {PostActionType, PostType} from '../../redux/state';
 
-
 type ProfilePropsType = {
     MyPostsPropsType: Array<PostType>
     dispatch: (action: PostActionType) => void
     messageForNewPost: string
 }
-
-
 
 const Profile = (props: ProfilePropsType) => {
     return (
