@@ -3,9 +3,10 @@ import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {store} from './redux/store';
+import store from './redux/redux-store';
 
 export const rerenderEntireTree = () => {
+    debugger
     ReactDOM.render(
         <React.StrictMode>
             <App store={store}/>

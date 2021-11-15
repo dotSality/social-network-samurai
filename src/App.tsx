@@ -9,13 +9,17 @@ import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {StoreType} from './redux/store';
+import store from './redux/redux-store';
+
+// type PropsType = {
+//     store: StoreType
+// }
 
 type PropsType = {
-    store: StoreType
+    store: typeof store
 }
 
 function App(props: PropsType) {
-
     const state = props.store.getState();
 
     return (
