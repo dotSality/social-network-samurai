@@ -22,7 +22,6 @@ let initialState: MessagePageType = {
 }
 
 export const dialogsReducer = (state = initialState, action: MessageActionType) => {
-
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage: MessageType = {

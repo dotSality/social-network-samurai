@@ -2,25 +2,24 @@ import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from './Post/Post';
 import {PostType} from '../../../redux/store';
-import {addPostAC, PostActionType, updatePostAC} from '../../../redux/profile-reducer'
 
-export type PostsPropsType = {
-    PostsPropsType: Array<PostType>
-    dispatch: (action: PostActionType) => void
+export type MyPostsPropsType = {
+    posts: Array<PostType>
+    updateNewPostText: (text: string) => void
+    addPost: () => void
     messageForNewPost: string
 }
 
-const MyPosts = (props: PostsPropsType) => {
+const MyPosts = (props: MyPostsPropsType) => {
 
-    let postsElements = props.PostsPropsType.map(p => (<Post id={p.id} post={p.post} likesCount={p.likesCount}/>))
+    let postsElements = props.posts.map(p => (<Post id={p.id} post={p.post} likesCount={p.likesCount}/>))
 
     const addPost = () => {
-        // props.dispatch({type: 'ADD-POST', postText: props.messageForNewPost})
-        props.dispatch(addPostAC(props.messageForNewPost))
+        props.addPost();
     }
 
     const updateNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updatePostAC(e.currentTarget.value))
+        props.updateNewPostText(e.currentTarget.value)
     }
 
     return (<div className={s.postsBlock}>
