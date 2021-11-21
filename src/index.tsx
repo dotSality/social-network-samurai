@@ -5,15 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/redux-store';
 import {BrowserRouter} from 'react-router-dom';
-import {Provider} from './StoreContext'
 
 export const rerenderEntireTree = () => {
     debugger
     ReactDOM.render(
         <BrowserRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
+                <App store={store}/>
         </BrowserRouter>,
         document.getElementById('root')
     );

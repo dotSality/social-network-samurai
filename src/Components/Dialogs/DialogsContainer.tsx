@@ -2,48 +2,28 @@ import React from 'react';
 import {addMessageAC, updateMessageTextAC} from '../../redux/dialogs-reducer'
 import Dialogs from './Dialogs';
 import {StoreType} from '../../redux/store';
-import {StoreContext} from '../../StoreContext';
-//
-// type DialogsPropsType = {
-//     store: StoreType
-// }
 
-export const DialogsContainer = () => {
+type DialogsPropsType = {
+    store: StoreType
+}
 
-    // const state = props.store.getState()
-    //
-    // const addMessage = () => {
-    //     props.store.dispatch(addMessageAC(state.dialogsPage.newMessageText))
-    // }
-    //
-    // const updateNewMessageText = (text: string) => {
-    //     props.store.dispatch(updateMessageTextAC(text))
-    // }
+export const DialogsContainer = (props: DialogsPropsType) => {
 
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
+    const state = props.store.getState()
 
-                    const state = store.getState()
+    const addMessage = () => {
+        props.store.dispatch(addMessageAC(state.dialogsPage.newMessageText))
+    }
 
-                    const addMessage = () => {
-                        store.dispatch(addMessageAC(state.dialogsPage.newMessageText))
-                    }
+    const updateNewMessageText = (text: string) => {
+        props.store.dispatch(updateMessageTextAC(text))
+    }
 
-                    const updateNewMessageText = (text: string) => {
-                        store.dispatch(updateMessageTextAC(text))
-                    }
-
-                    return <Dialogs
-                        updateNewMessageText={updateNewMessageText}
-                        addMessage={addMessage}
-                        messageItems={state.dialogsPage.messages}
-                        dialogItems={state.dialogsPage.dialogs}
-                        newMessageText={state.dialogsPage.newMessageText}
-                    />
-                }
-            }
-        </StoreContext.Consumer>
-    )
+    return <Dialogs
+        updateNewMessageText={updateNewMessageText}
+        addMessage={addMessage}
+        messageItems={state.dialogsPage.messages}
+        dialogItems={state.dialogsPage.dialogs}
+        newMessageText={state.dialogsPage.newMessageText}
+    />
 }

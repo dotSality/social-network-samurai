@@ -3,28 +3,30 @@ import './App.css';
 import Header from "./Components/Header/Header";
 import NavBar from "./Components/NavBar/NavBar";
 import Profile from "./Components/Profile/Profile";
+import Dialogs from './Components/Dialogs/Dialogs';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {Route} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
 import {StoreType} from './redux/store';
 
-// export type StorePropsType = {
-//     store: StoreType
-// }
+export type StorePropsType = {
+    store: StoreType
+}
 
-function App() {
-    // const state = props.store.getState();
+function App(props: StorePropsType) {
+    const state = props.store.getState();
+
     return (
             <div className={'app-wrapper'}>
                 <Header/>
-                <NavBar/>
+                <NavBar friends={state.sidebar.friends}/>
                 <div className={'app-wrapper-content'}>
                     <Route exact path={'/dialogs'} render={() =>
-                        (<DialogsContainer/>)}/>
+                        (<DialogsContainer store={props.store}/>)}/>
                     <Route path={'/profile'} render={() =>
-                        (<Profile/>)}/>
+                        (<Profile store={props.store}/>)}/>
                     <Route path={'/news'} render={() => (<News/>)}/>
                     <Route path={'/music'} render={() => (<Music/>)}/>
                     <Route path={'/settings'} render={() => (<Settings/>)}/>
