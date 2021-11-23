@@ -1,8 +1,9 @@
-import profileReducer, {PostActionType} from './profile-reducer';
+import {profileReducer, PostActionType} from './profile-reducer';
 import {dialogsReducer, MessageActionType} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
+import {ActionType} from './redux-store';
 
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         dialogsPage: {
             newMessageText: '',
@@ -67,30 +68,30 @@ export const store: StoreType = {
     }
 }
 
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
     sender: boolean
 }
 
-export type DialogType = {
+type DialogType = {
     name: string
     id: number
 }
 
-export type PostType = {
+type PostType = {
     id: number
     post: string
     likesCount: number
 }
 
-export type MessagePageType = {
+type MessagePageType = {
     newMessageText: string
     messages: MessageType[]
     dialogs: DialogType[]
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     messageForNewPost: string
     posts: PostType[]
 }
@@ -104,13 +105,13 @@ export type SidebarType = {
     friends: FriendsItemType[]
 }
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: MessagePageType
     sidebar: SidebarType
 }
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: () => void
@@ -118,4 +119,3 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
 }
 
-export type ActionType = PostActionType | MessageActionType

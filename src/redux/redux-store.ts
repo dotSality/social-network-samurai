@@ -1,8 +1,8 @@
 import {combineReducers, createStore} from 'redux';
-import profileReducer from './profile-reducer';
-import {dialogsReducer} from './dialogs-reducer';
+import {profileReducer, PostActionType} from './profile-reducer';
+import {dialogsReducer, MessageActionType} from './dialogs-reducer';
 import {sidebarReducer} from './sidebar-reducer';
-import {StoreType} from './store';
+
 
 let reducersBunch = combineReducers({
     profilePage: profileReducer,
@@ -10,6 +10,9 @@ let reducersBunch = combineReducers({
     sidebar: sidebarReducer,
 });
 
-const store: StoreType = createStore(reducersBunch);
+export type ActionType = PostActionType | MessageActionType
+
+
+const store = createStore(reducersBunch);
 
 export default store;

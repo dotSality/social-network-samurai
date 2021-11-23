@@ -2,8 +2,6 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import s from './NavBar.module.css'
 import {Friends} from '../Friends/Friends';
-import {SidebarType} from '../../redux/store';
-import {StoreContext} from '../../StoreContext';
 
 const NavBar = () => {
 

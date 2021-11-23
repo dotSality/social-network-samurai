@@ -8,7 +8,6 @@ import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
 import {Route} from 'react-router-dom';
 import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
-import {StoreType} from './redux/store';
 
 // export type StorePropsType = {
 //     store: StoreType

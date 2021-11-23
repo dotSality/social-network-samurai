@@ -1,9 +1,25 @@
-import {MessagePageType, MessageType} from './store';
-
 const ADD_MESSAGE = 'ADD-MESSAGE'
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 
-let initialState: MessagePageType = {
+
+export type MessageType = {
+    id: number
+    message: string
+    sender: boolean
+}
+
+export type DialogType = {
+    name: string
+    id: number
+}
+
+export type MessagePageType = {
+    newMessageText: string
+    messages: MessageType[]
+    dialogs: DialogType[]
+}
+
+const initialState: MessagePageType = {
     newMessageText: '',
     dialogs: [
         {id: 1, name: 'Dimych'},
