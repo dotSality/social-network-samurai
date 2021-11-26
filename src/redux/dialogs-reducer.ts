@@ -19,7 +19,7 @@ export type MessagePageType = {
     dialogs: DialogType[]
 }
 
-const initialState: MessagePageType = {
+const initialState = {
     newMessageText: '',
     dialogs: [
         {id: 1, name: 'Dimych'},
@@ -27,14 +27,14 @@ const initialState: MessagePageType = {
         {id: 3, name: 'Sasha'},
         {id: 4, name: 'Victor'},
         {id: 5, name: 'Valery'},
-    ],
+    ] as DialogType[],
     messages: [
         {id: 1, message: 'Hi', sender: true},
         {id: 2, message: 'Yo!', sender: false},
         {id: 3, message: 'What\'s up? I saw you yesterday at the park at 9 o\'clock!', sender: true},
         {id: 4, message: 'Okay... Why do you stalkering me?!', sender: false},
         {id: 5, message: 'I LOVE YOU BABE! I WANNA BE WITH YOU!!!', sender: true},
-    ]
+    ] as MessageType[]
 }
 
 export const dialogsReducer = (state = initialState, action: MessageActionType) => {

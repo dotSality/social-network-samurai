@@ -13,13 +13,13 @@ export type ProfilePageType = {
     posts: PostType[]
 }
 
-let initialState: ProfilePageType =  {
+const initialState =  {
         messageForNewPost: '',
         posts: [
             {id: 1, post: 'Hi', likesCount: 15},
             {id: 2, post: 'Yo!', likesCount: 12},
             {id: 3, post: 'Wazzup?', likesCount: 23},
-        ]
+        ] as PostType[]
     }
 
 export const profileReducer = (state = initialState, action: PostActionType) => {
