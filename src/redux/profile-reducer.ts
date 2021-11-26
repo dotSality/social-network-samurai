@@ -23,7 +23,6 @@ let initialState: ProfilePageType =  {
     }
 
 export const profileReducer = (state = initialState, action: PostActionType) => {
-    debugger
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -31,12 +30,12 @@ export const profileReducer = (state = initialState, action: PostActionType) => 
                 post: action.postText,
                 likesCount: 0
             };
-            state.posts.unshift(newPost)
-            state.messageForNewPost = ''
-            return state;
+            // state.posts.unshift(newPost)
+            // state.messageForNewPost = ''
+            return {...state, posts: [newPost, ...state.posts], messageForNewPost: ''};
         case UPDATE_NEW_POST_TEXT:
-            state.messageForNewPost = action.newText
-            return state;
+            // state.messageForNewPost = action.newText
+            return {...state, messageForNewPost: action.newText};
         default:
             return state;
     }

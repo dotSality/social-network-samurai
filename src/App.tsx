@@ -3,29 +3,25 @@ import './App.css';
 import Header from "./Components/Header/Header";
 import NavBar from "./Components/NavBar/NavBar";
 import Profile from "./Components/Profile/Profile";
-import Dialogs from './Components/Dialogs/Dialogs';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
+import {NavBarContainer} from './Components/NavBar/NavBarContainer';
 
-export type StorePropsType = {
-    store: StoreType
-}
-
-function App(props: StorePropsType) {
-    const state = props.store.getState();
+function App() {
 
     return (
             <div className={'app-wrapper'}>
                 <Header/>
-                <NavBar friends={state.sidebar.friends}/>
+                <NavBarContainer/>
                 <div className={'app-wrapper-content'}>
                     <Route exact path={'/dialogs'} render={() =>
-                        (<DialogsContainer store={props.store}/>)}/>
+                        (<DialogsContainer/>)}/>
                     <Route path={'/profile'} render={() =>
-                        (<Profile store={props.store}/>)}/>
+                        (<Profile/>)}/>
+                    <Route path={'/users'} render={()=> (<Users/>)}/>
                     <Route path={'/news'} render={() => (<News/>)}/>
                     <Route path={'/music'} render={() => (<Music/>)}/>
                     <Route path={'/settings'} render={() => (<Settings/>)}/>

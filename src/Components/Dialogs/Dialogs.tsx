@@ -2,23 +2,23 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import {DialogItem} from './Dialog/DialogItem';
 import {Message} from './Message/MessageItem';
-import {DialogType, MessageType} from '../../redux/dialogs-reducer';
+import {DialogsPropsType} from './DialogsContainer';
 
-type DialogsPropsType = {
-    updateNewMessageText: (newText: string) => void
-    addMessage: () => void
-    messageItems: MessageType[]
-    dialogItems: DialogType[]
-    newMessageText: string
-}
+// type DialogsPropsType = {
+//     updateNewMessageText: (newText: string) => void
+//     addMessage: () => void
+//     messageItems: MessageType[]
+//     dialogItems: DialogType[]
+//     newMessageText: string
+// }
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogItems = props.dialogItems.map(d => <DialogItem name={d.name} id={d.id}/>)
-    let messageItems = props.messageItems.map(m => <Message id={m.id} message={m.message} sender={m.sender}/>)
+    let dialogItems = props.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
+    let messageItems = props.messages.map(m => <Message key={m.id} id={m.id} message={m.message} sender={m.sender}/>)
 
     const addMessage = () => {
-        props.addMessage()
+        props.addMessage(props.newMessageText)
     }
 
     const updateNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {

@@ -96,12 +96,12 @@ type ProfilePageType = {
     posts: PostType[]
 }
 
-export type FriendsItemType = {
+type FriendsItemType = {
     avatar: string
     name: string
 }
 
-export type SidebarType = {
+type SidebarType = {
     friends: FriendsItemType[]
 }
 
@@ -111,7 +111,7 @@ type RootStateType = {
     sidebar: SidebarType
 }
 
-type StoreType = {
+export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: () => void

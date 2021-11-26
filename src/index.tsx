@@ -3,12 +3,11 @@ import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/redux-store';
+import {store} from './redux/redux-store';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 export const rerenderEntireTree = () => {
-    debugger
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>

@@ -2,15 +2,10 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import s from './NavBar.module.css'
 import {Friends} from '../Friends/Friends';
+import {NavBarPropsType} from './NavBarContainer';
 
-const NavBar = () => {
-
-    return <StoreContext.Consumer>
-        {(store) => {
-
-            const state = store.getState()
-
-            return (<nav className={s.nav}>
+const NavBar = (props: NavBarPropsType) => {
+    return (<nav className={s.nav}>
                 <div className={s.mainNav}>
                     <div className={s.item}>
                         <NavLink to={'/profile'} activeClassName={s.activeLink}>Profile</NavLink>
@@ -29,12 +24,9 @@ const NavBar = () => {
                     </div>
                 </div>
                 <div>
-                    <Friends friends={state.sidebar.friends}/>
+                    <Friends friends={props.friends}/>
                 </div>
             </nav>)
-        }
-        }
-    </StoreContext.Consumer>
 }
 
 export default NavBar;

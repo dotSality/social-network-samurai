@@ -12,7 +12,6 @@ let reducersBunch = combineReducers({
 
 export type ActionType = PostActionType | MessageActionType
 
+export const store = createStore(reducersBunch);
 
-const store = createStore(reducersBunch);
-
-export default store;
+export type AppStateType = ReturnType<typeof reducersBunch>
