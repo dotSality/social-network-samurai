@@ -2,3 +2,8 @@
     width: 50px;
     border-radius: 50%;
 }
+
+.selected {
+    background-color: black;
+    color: white;
+}
