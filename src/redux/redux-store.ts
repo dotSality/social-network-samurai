@@ -5,7 +5,7 @@ import {sidebarReducer} from './sidebar-reducer';
 import {usersReducer} from './users-reducer';
 
 
-let reducersBunch = combineReducers({
+const reducersBunch = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,

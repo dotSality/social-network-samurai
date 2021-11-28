@@ -2,18 +2,18 @@
 const FOLLOW_TOGGLE = 'FOLLOW-TOGGLE';
 const SET_USERS = 'SET-USERS';
 
-type LocationType = {
-    city: string,
-    country: string,
+type PhotosType = {
+    small: string | null
+    large: string | null
 }
 
 export type UserType = {
+    name: string,
     id: number,
-    avatar: string,
+    uniqueUrlName: string | null,
+    photos: PhotosType,
+    status: string | null,
     followed: boolean,
-    fullName: string,
-    status: string,
-    location: LocationType,
 }
 
 type InitialStateType = typeof initialState;
@@ -28,7 +28,7 @@ const initialState = {
         //     followed: true, fullName: 'Yury', status: 'Top!' ,location: {city: 'Minsk', country: 'Belarus'}},
         // {id: 4, avatar: 'https://avatarfiles.alphacoders.com/184/thumb-184458.jpg',
         //     followed: false, fullName: 'Evgeniy', status: 'Hi...' ,location: {city: 'Moscow', country: 'Russia'}}
-    ] as UserType[],
+    ] as UserType[]
 }
 
 export const followToggleAC = (userID: number) => ({type: FOLLOW_TOGGLE, userID} as const);

@@ -17,10 +17,10 @@ type MapDispatchToPropsType = {
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 
-const mapStateToProps = (props: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        posts: props.profilePage.posts,
-        messageForNewPost: props.profilePage.messageForNewPost
+        posts: state.profilePage.posts,
+        messageForNewPost: state.profilePage.messageForNewPost
     }
 }
 

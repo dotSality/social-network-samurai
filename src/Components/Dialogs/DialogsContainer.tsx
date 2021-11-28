@@ -18,11 +18,11 @@ type MapDispatchToPropsType = {
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 
-let mapStateToProps = (props: AppStateType): MapStateToPropsType => {
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        dialogs: props.dialogsPage.dialogs,
-        messages: props.dialogsPage.messages,
-        newMessageText: props.dialogsPage.newMessageText
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
+        newMessageText: state.dialogsPage.newMessageText
     }
 }
 
