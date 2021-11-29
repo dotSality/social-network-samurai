@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {followToggleAC, setCurrentPageAC, setTotalCountAC, setUsersAC, UsersReducerActionType, UserType} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
+import axios from 'axios';
 import {Users} from './Users';
 
 type MapStateToPropsType = {
@@ -45,6 +46,39 @@ const mapDispatchToProps = (dispatch: (action: UsersReducerActionType) => void):
 
 }
 
-export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
+type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export class UsersContainer extends React.Component<UsersPropsType> {
+
+    onPageChanged = (currentPage: number) => {
+        this.props.setCurrentPage(currentPage);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`).then(
+            response => {
+                this.props.setUsers(response.data.items);
+            }
+        );
+    }
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(
+            response => {
+                this.props.setUsers(response.data.items);
+                this.props.setTotalCount(response.data.totalCount);
+            }
+        );
+    }
+
+
+    render() {
+        return <Users
+            totalUsersCount={this.props.totalUsersCount}
+            pageSize={this.props.pageSize}
+            currentPage={this.props.currentPage}
+            onPageChanged={this.onPageChanged}
+            toggleFollow={this.props.toggleFollow}
+            users={this.props.users}
+        />
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
