@@ -1,121 +1,126 @@
-import {profileReducer, PostActionType} from './profile-reducer';
-import {dialogsReducer, MessageActionType} from './dialogs-reducer';
-import {sidebarReducer} from './sidebar-reducer';
-import {ActionType} from './redux-store';
+export {}
 
-const store: StoreType = {
-    _state: {
-        dialogsPage: {
-            newMessageText: '',
-            dialogs: [
-                {id: 1, name: 'Dimych'},
-                {id: 2, name: 'Andrew'},
-                {id: 3, name: 'Sasha'},
-                {id: 4, name: 'Victor'},
-                {id: 5, name: 'Valery'},
-            ],
-            messages: [
-                {id: 1, message: 'Hi', sender: true},
-                {id: 2, message: 'Yo!', sender: false},
-                {id: 3, message: 'What\'s up? I saw you yesterday at the park at 9 o\'clock!', sender: true},
-                {id: 4, message: 'Okay... Why do you stalkering me?!', sender: false},
-                {id: 5, message: 'I LOVE YOU BABE! I WANNA BE WITH YOU!!!', sender: true},
-            ]
-        },
-        profilePage: {
-            messageForNewPost: '',
-            posts: [
-                {id: 1, post: 'Hi', likesCount: 15},
-                {id: 2, post: 'Yo!', likesCount: 12},
-                {id: 3, post: 'Wazzup?', likesCount: 23},
-            ],
+/*
+ import {profileReducer, PostActionType} from './profile-reducer';
+ import {dialogsReducer, MessageActionType} from './dialogs-reducer';
+ import {sidebarReducer} from './sidebar-reducer';
+ import {ActionType} from './redux-store';
 
-        },
-        sidebar: {
-            friends: [
-                {
-                    avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
-                    name: 'Alexey'
-                },
-                {
-                    avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
-                    name: 'Dmitry'
-                },
-                {
-                    avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
-                    name: 'Sveta'
-                }
-            ]
-        }
-    },
-    _callSubscriber() {
-        console.log('state has been changed')
-    },
+ const store: StoreType = {
+     _state: {
+         dialogsPage: {
+             newMessageText: '',
+             dialogs: [
+                 {id: 1, name: 'Dimych'},
+                 {id: 2, name: 'Andrew'},
+                 {id: 3, name: 'Sasha'},
+                 {id: 4, name: 'Victor'},
+                 {id: 5, name: 'Valery'},
+             ],
+             messages: [
+                 {id: 1, message: 'Hi', sender: true},
+                 {id: 2, message: 'Yo!', sender: false},
+                 {id: 3, message: 'What\'s up? I saw you yesterday at the park at 9 o\'clock!', sender: true},
+                 {id: 4, message: 'Okay... Why do you stalkering me?!', sender: false},
+                 {id: 5, message: 'I LOVE YOU BABE! I WANNA BE WITH YOU!!!', sender: true},
+             ]
+         },
+         profilePage: {
+             messageForNewPost: '',
+             posts: [
+                 {id: 1, post: 'Hi', likesCount: 15},
+                 {id: 2, post: 'Yo!', likesCount: 12},
+                 {id: 3, post: 'Wazzup?', likesCount: 23},
+             ],
 
-    getState() {
-        return this._state;
-    },
-    subscribe(observer: () => void) {
-        this._callSubscriber = observer
-    },
+         },
+         sidebar: {
+             friends: [
+                 {
+                     avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
+                     name: 'Alexey'
+                 },
+                 {
+                     avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
+                     name: 'Dmitry'
+                 },
+                 {
+                     avatar: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
+                     name: 'Sveta'
+                 }
+             ]
+         }
+     },
+     _callSubscriber() {
+         console.log('state has been changed')
+     },
 
-    dispatch(action: any) {// action ~ { type: 'ADD-POST' }
-        this._state.profilePage = profileReducer(this._state.profilePage,action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
-        this._state.sidebar = sidebarReducer(this._state.sidebar,action)
+     getState() {
+         return this._state;
+     },
+     subscribe(observer: () => void) {
+         this._callSubscriber = observer
+     },
 
-        this._callSubscriber();
-    }
-}
+     dispatch(action: any) {// action ~ { type: 'ADD-POST' }
+         this._state.profilePage = profileReducer(this._state.profilePage,action)
+         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
+         this._state.sidebar = sidebarReducer(this._state.sidebar,action)
 
-type MessageType = {
-    id: number
-    message: string
-    sender: boolean
-}
+         this._callSubscriber();
+     }
+ }
 
-type DialogType = {
-    name: string
-    id: number
-}
+ type MessageType = {
+     id: number
+     message: string
+     sender: boolean
+ }
 
-type PostType = {
-    id: number
-    post: string
-    likesCount: number
-}
+ type DialogType = {
+     name: string
+     id: number
+ }
 
-type MessagePageType = {
-    newMessageText: string
-    messages: MessageType[]
-    dialogs: DialogType[]
-}
+ type PostType = {
+     id: number
+     post: string
+     likesCount: number
+ }
 
-type ProfilePageType = {
-    messageForNewPost: string
-    posts: PostType[]
-}
+ type MessagePageType = {
+     newMessageText: string
+     messages: MessageType[]
+     dialogs: DialogType[]
+ }
 
-type FriendsItemType = {
-    avatar: string
-    name: string
-}
+ type ProfilePageType = {
+     messageForNewPost: string
+     posts: PostType[]
+ }
 
-type SidebarType = {
-    friends: FriendsItemType[]
-}
+ type FriendsItemType = {
+     avatar: string
+     name: string
+ }
 
-type RootStateType = {
-    profilePage: ProfilePageType
-    dialogsPage: MessagePageType
-    sidebar: SidebarType
-}
+ type SidebarType = {
+     friends: FriendsItemType[]
+ }
 
-export type StoreType = {
-    _state: RootStateType
-    getState: () => RootStateType
-    _callSubscriber: () => void
-    dispatch: (action: ActionType) => void
-    subscribe: (observer: () => void) => void
-}
+ type RootStateType = {
+     profilePage: ProfilePageType
+     dialogsPage: MessagePageType
+     sidebar: SidebarType
+ }
+
+ export type StoreType = {
+     _state: RootStateType
+     getState: () => RootStateType
+     _callSubscriber: () => void
+     dispatch: (action: ActionType) => void
+     subscribe: (observer: () => void) => void
+ }
+
+*/
 

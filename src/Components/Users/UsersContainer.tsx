@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {followToggle, setCurrentPage, setTotalCount, setUsers, toggleFetching, UsersReducerActionType, UserType} from '../../redux/users-reducer';
+import {followToggle, setCurrentPage, setTotalCount, setUsers, toggleFetching, UserType} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import axios from 'axios';
 import {Users} from './Users';
-import loading from './Img/loading-buffering.gif';
 import {Preloader} from '../common/Preloader/Preloader';
 
 type MapStateToPropsType = {
