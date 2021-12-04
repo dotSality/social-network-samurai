@@ -41,10 +41,6 @@ export const Users = (props: PresentUsersPropsType) => {
                         <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
-                    <span>
-                        <div>{'u.location.city'}</div>
-                        <div>{'u.location.country'}</div>
-                    </span>
                 </span>
             </div>)
         }
