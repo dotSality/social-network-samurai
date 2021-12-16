@@ -3,19 +3,18 @@ import s from './Users.module.css';
 import userPhoto from './Img/default-user.jpg'
 import {UserType} from '../../redux/users-reducer';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
 
 type PresentUsersPropsType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
     onPageChanged: (currentPage: number) => void
-    toggleFollow: (id: number) => void
+    toggleFollow: (userID: number, isFollowed: boolean) => void
     users: UserType[]
+    isFollowing: number[]
 }
 
 export const Users = (props: PresentUsersPropsType) => {
-
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     const pages = [];
@@ -37,39 +36,8 @@ export const Users = (props: PresentUsersPropsType) => {
                         </NavLink>
                     </div>
                     <div>
-                        <button onClick={() => {
-                            debugger
-                            axios.get(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                withCredentials: true,
-                                headers: {
-                                    'API-KEY': 'ecad3ae6-8083-4154-b722-6cea4b99f288'
-                                }
-                            }).then(response => {
-                                if (u.followed) {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': 'ecad3ae6-8083-4154-b722-6cea4b99f288'
-                                        }
-                                    }).then(response => {
-                                        if (response.data.resultCode === 0) {
-                                            props.toggleFollow(u.id)
-                                        }
-                                    })
-                                } else {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {},{
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': 'ecad3ae6-8083-4154-b722-6cea4b99f288'
-                                        }
-                                    }).then(response => {
-                                        if (response.data.resultCode === 0) {
-                                            props.toggleFollow(u.id)
-                                        }
-                                    })
-                                }
-                            })
-                        }}>{u.followed ? 'Follow' : 'Unfollow'}</button>
+                        <button disabled={props.isFollowing.some(id => id === u.id)}
+                            onClick={() => {props.toggleFollow(u.id, u.followed)}}>{!u.followed ? 'Follow' : 'Unfollow'}</button>
                     </div>
                 </span>
                 <span>
@@ -82,9 +50,6 @@ export const Users = (props: PresentUsersPropsType) => {
         }
     </div>
 }
-
-
-
 
 
 

@@ -1,8 +1,12 @@
+import {usersAPI} from '../api/api';
+import {Dispatch} from 'redux';
+
 const FOLLOW_TOGGLE = 'FOLLOW-TOGGLE';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
+const FOLLOWING_IN_PROGRESS = 'FOLLOWING-IN-PROGRESS';
 
 type PhotosType = {
     small: string | null
@@ -25,7 +29,8 @@ const initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 3,
-    isFetching: true
+    isFetching: true,
+    isFollowing: [] as number[]
 }
 
 export const followToggle = (userID: number) => ({type: FOLLOW_TOGGLE, userID} as const);
@@ -38,6 +43,43 @@ export const setTotalCount = (totalCount: number) => ({type: SET_TOTAL_COUNT, to
 type SetTotalCountActionType = ReturnType<typeof setTotalCount>
 export const toggleFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
 type ToggleIsFetchingActionType = ReturnType<typeof toggleFetching>
+export const toggleIsFollowingProgress = (isFetching: boolean, userID: number) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userID} as const)
+type IsFollowingActionType = ReturnType<typeof toggleIsFollowingProgress>
+
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getUsers(currentPage, pageSize).then(
+            res => {
+                dispatch(toggleFetching(false))
+                dispatch(setUsers(res.items));
+                dispatch(setTotalCount(res.totalCount));
+            }
+        );
+    }
+}
+
+export const toggleFollow = (userID: number, isFollowed: boolean) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFollowingProgress(true, userID))
+        usersAPI.getUserData(userID).then(response => {
+            if (isFollowed) {
+                usersAPI.unfollowUserRequest(userID).then(response => {
+                    if (response.data.resultCode === 0) {
+                        dispatch(followToggle(userID))
+                    }
+                    dispatch(toggleIsFollowingProgress(false, userID))
+                })
+            } else {
+                usersAPI.followUserRequest(userID).then(response => {
+                    if (response.data.resultCode === 0) {
+                        dispatch(followToggle(userID))
+                    }
+                    dispatch(toggleIsFollowingProgress(false, userID))
+                })
+            }
+        })
+    }
+}
 
 export type UsersReducerActionType =
     SetUsersActionType
@@ -45,6 +87,7 @@ export type UsersReducerActionType =
     | SetCurrentPageActionType
     | SetTotalCountActionType
     | ToggleIsFetchingActionType
+    | IsFollowingActionType
 
 export const usersReducer = (state = initialState, action: UsersReducerActionType): InitialStateType => {
     switch (action.type) {
@@ -58,6 +101,8 @@ export const usersReducer = (state = initialState, action: UsersReducerActionTyp
             return {...state, totalUsersCount: action.totalCount}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
+        case FOLLOWING_IN_PROGRESS:
+            return {...state, isFollowing: action.isFetching ? [...state.isFollowing, action.userID] : state.isFollowing.filter(id => id !== action.userID)}
         default:
             return state;
     }
