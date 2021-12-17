@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {UserType} from '../redux/users-reducer';
+import {ProfileType} from '../Components/Profile/ProfileInfo/ProfileContainer';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -11,31 +12,44 @@ const instance = axios.create({
 
 export const usersAPI: UsersAPIType = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetResponseType<UserType[]>>
+        return instance.get<string,AxiosResponse<GetDataType>>
         (`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
     },
     getUserData(userID: number) {
-        return instance.get<GetResponseType<UserType>>(`follow/${userID}`).then(res => res.data)
+        return instance.get<string,AxiosResponse<CommonResponseType<UserType>>>(`follow/${userID}`).then(res => res.data)
     },
     unfollowUserRequest(userID: number) {
-        return instance.delete<CommonResponseType<{}>>(`follow/${userID}`)
+        return instance.delete<string, AxiosResponse>(`follow/${userID}`)
     },
     followUserRequest(userID: number) {
-        return instance.post<CommonResponseType<{}>>(`follow/${userID}`, {})
+        return instance.post<string, AxiosResponse>(`follow/${userID}`, {})
+    },
+    getUserProfile(userId: string) {
+        return instance.get<string,AxiosResponse<ProfileType>>(`profile/` + userId).then(res => res.data)
     }
 }
 
-type UsersAPIType = {
-    getUsers: (currentPage: number, pageSize: number) => Promise<GetResponseType<UserType[]>>,
-    getUserData: (userID: number) => Promise<GetResponseType<UserType>>,
-    unfollowUserRequest: (userID: number) => Promise<AxiosResponse<CommonResponseType<{}>>>,
-    followUserRequest: (userID: number) =>Promise<AxiosResponse<CommonResponseType<{}>>>,
+export const authAPI: AuthAPIType = {
+    isAuthRequest() {
+        return instance.get<string,AxiosResponse<CommonResponseType<IsAuthResponseType>>>(`auth/me`).then(res => res.data)
+    },
 }
 
-type GetResponseType<T> = {
-    error: number | null,
-    items: T,
-    totalCount: number,
+type AuthAPIType = {
+    isAuthRequest: () => Promise<CommonResponseType<IsAuthResponseType>>,
+}
+
+
+type IsAuthResponseType = {
+    email: string,
+    id: number,
+    login: string,
+}
+
+type GetDataType = {
+    error: number,
+    items: UserType[],
+    totalCount: number
 }
 
 type CommonResponseType<T> = {
@@ -45,19 +59,10 @@ type CommonResponseType<T> = {
     resultCode: number,
 }
 
-// export const getUsers = (currentPage = 10, pageSize: number) => {
-//     return instance.get<GetResponseType<UserType[]>>
-//     (`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
-// }
-//
-// export const getUserData = (userID: number) => {
-//     return instance.get<GetResponseType<UserType>>(`follow/${userID}`).then(res => res.data)
-// }
-//
-// export const unfollowUserRequest = (userID: number) => {
-//     return instance.delete<CommonResponseType<{}>>(`follow/${userID}`)
-// }
-//
-// export const followUserRequest = (userID: number) => {
-//     return instance.post<CommonResponseType<{}>>(`follow/${userID}`, {})
-// }
+type UsersAPIType = {
+    getUsers: (currentPage: number, pageSize: number) => Promise<GetDataType>,
+    getUserData: (userID: number) => Promise<CommonResponseType<UserType>>,
+    unfollowUserRequest: (userID: number) => Promise<AxiosResponse>,
+    followUserRequest: (userID: number) => Promise<AxiosResponse>,
+    getUserProfile: (userId: string) => Promise<ProfileType>,
+}
