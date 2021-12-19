@@ -9,6 +9,7 @@ import {NavBarContainer} from './Components/NavBar/NavBarContainer';
 import UsersContainer from './Components/Users/UsersContainer';
 import ProfileContainer from './Components/Profile/ProfileInfo/ProfileContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
+import {LoginPage} from './Components/LoginPage/LoginPage';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
                 <HeaderContainer/>
                 <NavBarContainer/>
                 <div className={'app-wrapper-content'}>
+                    <Route path={'/login/'} render={() => (<LoginPage/>)}/>
                     <Route exact path={'/dialogs/'} render={() =>
                         (<DialogsContainer/>)}/>
                     <Route path={'/profile/:usedId?'} render={() =>
