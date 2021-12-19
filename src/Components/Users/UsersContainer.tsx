@@ -4,6 +4,8 @@ import {followToggle, getUsers, setCurrentPage, toggleFollow, toggleIsFollowingP
 import {AppStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {compose} from 'redux';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -47,7 +49,7 @@ export class UsersContainer extends React.Component<UsersPropsType> {
 
     render() {
         return <>
-        {this.props.isFetching ? <Preloader/> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users
                 isFollowing={this.props.isFollowing}
                 totalUsersCount={this.props.totalUsersCount}
@@ -61,6 +63,13 @@ export class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
-export default connect(mapStateToProps, {
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {followToggle,
+        setCurrentPage, toggleIsFollowingProgress, getUsers, toggleFollow}),
+    WithAuthRedirect
+)(UsersContainer)
+
+connect(mapStateToProps, {
     followToggle, setCurrentPage, toggleIsFollowingProgress,
-    getUsers, toggleFollow})(UsersContainer)
+    getUsers, toggleFollow
+})(UsersContainer)
