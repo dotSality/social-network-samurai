@@ -73,7 +73,6 @@ export class ProfileContainer extends React.Component<RoutedProfileType> {
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {setUserProfile, loadUserProfile}),
     withRouter,
-    WithAuthRedirect
 )(ProfileContainer)
 
 // let AuthRedirectComponent = WithAuthRedirect(ProfileContainer)

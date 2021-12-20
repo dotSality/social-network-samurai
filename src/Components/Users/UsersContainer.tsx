@@ -68,8 +68,3 @@ export default compose<React.ComponentType>(
         setCurrentPage, toggleIsFollowingProgress, getUsers, toggleFollow}),
     WithAuthRedirect
 )(UsersContainer)
-
-connect(mapStateToProps, {
-    followToggle, setCurrentPage, toggleIsFollowingProgress,
-    getUsers, toggleFollow
-})(UsersContainer)
