@@ -3,6 +3,8 @@ import s from './Users.module.css';
 import userPhoto from './Img/default-user.jpg'
 import {UserType} from '../../redux/users-reducer';
 import {NavLink} from 'react-router-dom';
+import {profileAPI} from '../../api/api';
+import {log} from 'util';
 
 type PresentUsersPropsType = {
     totalUsersCount: number
@@ -37,7 +39,7 @@ export const Users = (props: PresentUsersPropsType) => {
                     </div>
                     <div>
                         <button disabled={props.isFollowing.some(id => id === u.id)}
-                            onClick={() => {props.toggleFollow(u.id, u.followed)}}>{!u.followed ? 'Follow' : 'Unfollow'}</button>
+                            onClick={() => props.toggleFollow(u.id, u.followed)}>{!u.followed ? 'Follow' : 'Unfollow'}</button>
                     </div>
                 </span>
                 <span>

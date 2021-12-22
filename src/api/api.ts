@@ -25,7 +25,8 @@ export const usersAPI: UsersAPIType = {
         return instance.post<string, AxiosResponse>(`follow/${userID}`, {})
     },
     getUserProfile(userId: string) {
-        return instance.get<string,AxiosResponse<ProfileType>>(`profile/` + userId).then(res => res.data)
+        console.warn('Obsolete method. Please, use profileAPI object.')
+        return profileAPI.getUserProfile(userId)
     }
 }
 
@@ -35,10 +36,31 @@ export const authAPI: AuthAPIType = {
     },
 }
 
+export const profileAPI: ProfileAPIType = {
+    getUserProfile(userId: string) {
+        return instance.get<string,AxiosResponse<ProfileType>>(`profile/` + userId).then(res => res.data)
+    },
+    getUserStatus(userId: number) {
+        return instance.get<string, AxiosResponse<string>>(`profile/status/${userId}`).then(res => res.data)
+    },
+    updateStatus(status: string) {
+        return instance.put<string, AxiosResponse>(`profile/status`, { status })
+    }
+}
+
+type ProfileAPIType = {
+    getUserProfile: (userId: string) => Promise<ProfileType>,
+    getUserStatus: (userId: number) => Promise<string>,
+    updateStatus: (status: string) => Promise<AxiosResponse>,
+}
+
 type AuthAPIType = {
     isAuthRequest: () => Promise<CommonResponseType<IsAuthResponseType>>,
 }
 
+type StatusResponseType = {
+    message: string
+}
 
 type IsAuthResponseType = {
     email: string,
@@ -57,6 +79,12 @@ type CommonResponseType<T> = {
     messages: string[],
     fieldsErrors: string[],
     resultCode: number,
+}
+
+type PutResponseType<T> = {
+    resultCode: number,
+    messages: string[],
+    data: T
 }
 
 type UsersAPIType = {
