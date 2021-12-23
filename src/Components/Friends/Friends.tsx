@@ -8,7 +8,7 @@ type FriendsPropsType = {
 }
 
 export function Friends (props: FriendsPropsType) {
-    let friendItems = props.friends.map(f => <Friend avatar={f.avatar} name={f.name}/>)
+    let friendItems = props.friends.map(f => <Friend key={f.id} id={f.id} avatar={f.avatar} name={f.name}/>)
     return(
         <div className={s.friendsCont}>
             <span className={s.header}>Friends</span>

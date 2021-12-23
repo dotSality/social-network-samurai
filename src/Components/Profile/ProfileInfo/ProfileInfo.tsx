@@ -3,10 +3,11 @@ import s from './ProfileInfo.module.css'
 import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileType} from './ProfileContainer';
 import {ProfileStatus} from './ProfileStatus';
+import {Nullable} from '../../../redux/profile-reducer';
 
 type ProfileInfoPropsType = {
     status: string
-    profile: ProfileType
+    profile: Nullable<ProfileType>
     updateUserStatus: (status: string)=> void
 }
 
@@ -29,7 +30,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 </div>
             </div>
             <div className={s.descriptionBlock}>
-                {props.profile.photos.large && <img src={props.profile.photos.large} alt={'photo'}/>}
+                {props.profile.photos.large && <img src={props.profile.photos.large} alt={'profile owner'}/>}
             </div>
         </div>
     )

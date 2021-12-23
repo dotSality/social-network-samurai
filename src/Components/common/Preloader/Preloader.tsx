@@ -5,7 +5,7 @@ import React from 'react';
 export const Preloader = () => {
     return (
         <div>
-            <img style={{width: '25px', backgroundColor: 'black'}} src={loading}/>
+            <img style={{width: '25px', backgroundColor: 'black'}} src={loading} alt={'preloader'}/>
         </div>
     )
 }

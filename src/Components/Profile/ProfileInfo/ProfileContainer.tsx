@@ -2,7 +2,7 @@ import React from "react";
 import Profile from '../Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
-import {getUserStatus, loadUserProfile, updateUserStatus} from '../../../redux/profile-reducer';
+import {getUserStatus, loadUserProfile, Nullable, updateUserStatus} from '../../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 
@@ -26,7 +26,7 @@ type PhotosType = {
     large: string | null
 }
 export type ProfileType = {
-    aboutMe: string,
+    aboutMe: string | null,
     contacts: ContactsType,
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,
@@ -36,7 +36,7 @@ export type ProfileType = {
 }
 
 type MapStateToPropsType = {
-    profile: ProfileType,
+    profile: Nullable<ProfileType>,
     status: string,
 }
 

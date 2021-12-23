@@ -3,8 +3,6 @@ import s from './Users.module.css';
 import userPhoto from './Img/default-user.jpg'
 import {UserType} from '../../redux/users-reducer';
 import {NavLink} from 'react-router-dom';
-import {profileAPI} from '../../api/api';
-import {log} from 'util';
 
 type PresentUsersPropsType = {
     totalUsersCount: number
@@ -26,7 +24,7 @@ export const Users = (props: PresentUsersPropsType) => {
 
     return <div>
         <div>
-            {pages.map(i => <button onClick={() => props.onPageChanged(i)}
+            {pages.map(i => <button key={i} onClick={() => props.onPageChanged(i)}
                 className={props.currentPage === i ? s.selected : ''}>{i}</button>)}
         </div>
         {
@@ -34,7 +32,7 @@ export const Users = (props: PresentUsersPropsType) => {
                 <span>
                     <div>
                         <NavLink to={'/profile/' + u.id}>
-                        <img src={u.photos.small ? u.photos.small : userPhoto} className={s.userPhoto}/>
+                        <img src={u.photos.small ? u.photos.small : userPhoto} className={s.userPhoto} alt={'user face'}/>
                         </NavLink>
                     </div>
                     <div>
