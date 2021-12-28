@@ -58,27 +58,25 @@ export const getUsers = (currentPage: number, pageSize: number) => {
     }
 }
 
-export const toggleFollow = (userID: number, isFollowed: boolean) => {
-    return (dispatch: Dispatch) => {
-        dispatch(toggleIsFollowingProgress(true, userID))
-        usersAPI.getUserData(userID).then(response => {
-            if (isFollowed) {
-                usersAPI.unfollowUserRequest(userID).then(response => {
-                    if (response.data.resultCode === 0) {
-                        dispatch(followToggle(userID))
-                    }
-                    dispatch(toggleIsFollowingProgress(false, userID))
-                })
-            } else {
-                usersAPI.followUserRequest(userID).then(response => {
-                    if (response.data.resultCode === 0) {
-                        dispatch(followToggle(userID))
-                    }
-                    dispatch(toggleIsFollowingProgress(false, userID))
-                })
-            }
-        })
-    }
+export const toggleFollow = (userID: number, isFollowed: boolean) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFollowingProgress(true, userID))
+    usersAPI.getUserData(userID).then(response => {
+        if (isFollowed) {
+            usersAPI.unfollowUserRequest(userID).then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followToggle(userID))
+                }
+                dispatch(toggleIsFollowingProgress(false, userID))
+            })
+        } else {
+            usersAPI.followUserRequest(userID).then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followToggle(userID))
+                }
+                dispatch(toggleIsFollowingProgress(false, userID))
+            })
+        }
+    })
 }
 
 export type UsersReducerActionType =

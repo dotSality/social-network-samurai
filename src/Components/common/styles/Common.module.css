@@ -1,6 +1,7 @@
 .textBlock {
     height: 30px;
     color: red;
+    user-select: none;
 }
 
 .textArea {

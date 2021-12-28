@@ -17,6 +17,7 @@ export const LoginForm = (props: SubmitDataPropsType) => {
         register,
         handleSubmit,
         formState: {errors},
+        reset
     } = useForm<FormInputsType>({
         defaultValues: {
             email: '',
@@ -25,8 +26,11 @@ export const LoginForm = (props: SubmitDataPropsType) => {
         }
     })
 
-    const onSubmit: SubmitHandler<FormInputsType> = (data: FormInputsType) => props.onSubmitData(data)
-    console.log(errors)
+    const onSubmit: SubmitHandler<FormInputsType> = (data: FormInputsType) => {
+        props.onSubmitData(data)
+        reset()
+    }
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>

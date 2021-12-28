@@ -12,7 +12,12 @@ type PostFormPropsType = {
 
 export const AddPostForm = (props: PostFormPropsType) => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm<PostFormType>({
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset,
+    } = useForm<PostFormType>({
         defaultValues: {
             text: ''
         }
@@ -20,7 +25,10 @@ export const AddPostForm = (props: PostFormPropsType) => {
 
     const errorClassName = errors.text ? `${s.textArea} ${s.error}` : s.textArea
 
-    const onSubmit = (data: PostFormType) => props.onSubmit(data.text)
+    const onSubmit = (data: PostFormType) => {
+        props.onSubmit(data.text)
+        reset()
+    }
 
     return <form onSubmit={handleSubmit(onSubmit)}>
             <textarea className={errorClassName} placeholder={'Write something...'}

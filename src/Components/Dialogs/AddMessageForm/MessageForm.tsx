@@ -7,7 +7,12 @@ type MessageData = {
 
 export const MessageForm = (props: DialogsPropsType) => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm<MessageData>({
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset
+    } = useForm<MessageData>({
         defaultValues: {
             message: ''
         }
@@ -15,6 +20,7 @@ export const MessageForm = (props: DialogsPropsType) => {
 
     const onSubmit = (data: MessageData) => {
         props.addMessage(data.message)
+        reset()
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>
