@@ -1,42 +1,20 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from './MyPosts.module.css'
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
-
-//
-// export type MyPostsPropsType = {
-//     posts: Array<PostType>
-//     updateNewPostText: (text: string) => void
-//     addPost: () => void
-//     messageForNewPost: string
-// }
+import {AddPostForm} from './AddPostForm/AddPostForm';
 
 const MyPosts = (props: MyPostsPropsType) => {
 
     let postsElements = props.posts.map(p => (<Post key={p.id} id={p.id} post={p.post} likesCount={p.likesCount}/>))
 
-
-    const addPost = () => {
-        props.addPost(props.messageForNewPost);
-    }
-
-    const updateNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
-    }
+    const onSubmit = (text: string) => props.addPost(text)
 
     return (<div className={s.postsBlock}>
         <h3>My posts</h3>
         <div>
             <div>
-                <textarea
-                    placeholder={'Write something...'}
-                    value={props.messageForNewPost}
-                    onChange={updateNewPostText}
-                />
-
-            </div>
-            <div>
-                <button onClick={addPost}>add post</button>
+                <AddPostForm onSubmit={onSubmit}/>
             </div>
         </div>
         <div className={s.posts}>

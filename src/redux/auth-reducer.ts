@@ -2,17 +2,25 @@ import {Dispatch} from 'redux';
 import {authAPI} from '../api/api';
 
 const SET_USER_DATA = 'SET-USER-DATA'
+const LOGIN_USER = 'LOGIN-USER'
+
+export type SubmitDataType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+}
 
 const initialState = {
     id: 0,
     email: '',
     login: '',
-    isAuth: false
+    remember: false,
+    isAuth: false,
 }
 
 type InitialStateType = typeof initialState
 
-export const authReducer = (state = initialState, action: SetDataActionType): InitialStateType => {
+export const authReducer = (state = initialState, action: CommonActionType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {...state, ...action.data, isAuth: true}
@@ -32,5 +40,9 @@ export const loginRequest = () => {
     }
 }
 
+type CommonActionType = SubmitUserLoginType | SetDataActionType
+
+export const submitUserLogin = (userId: number) => ({type: LOGIN_USER, userId} as const)
+type SubmitUserLoginType = ReturnType<typeof submitUserLogin>
 export const setAuthUserData = (id: number, email: string, login: string) => ({type: SET_USER_DATA, data: {id, email, login}} as const)
 type SetDataActionType = ReturnType<typeof setAuthUserData>

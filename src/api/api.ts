@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {UserType} from '../redux/users-reducer';
 import {ProfileType} from '../Components/Profile/ProfileInfo/ProfileContainer';
+import {SubmitDataType} from '../redux/auth-reducer';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -26,9 +27,15 @@ export const usersAPI: UsersAPIType = {
     },
 }
 
-export const authAPI: AuthAPIType = {
+export const authAPI/*: AuthAPIType*/ = {
     isAuthRequest() {
         return instance.get<string,AxiosResponse<CommonResponseType<IsAuthResponseType>>>(`auth/me`).then(res => res.data)
+    },
+    userLogin(data: SubmitDataType) {
+        return instance.post<SubmitDataType, AxiosResponse>(`auth/login`,data)
+    },
+    userLogout() {
+        return instance.delete<string, AxiosResponse>(`auth/login`)
     },
 }
 
@@ -52,6 +59,8 @@ type ProfileAPIType = {
 
 type AuthAPIType = {
     isAuthRequest: () => Promise<CommonResponseType<IsAuthResponseType>>,
+    userLogin: (data: SubmitDataType) => Promise<AxiosResponse>,
+    userLogout: () => Promise<AxiosResponse>,
 }
 
 type IsAuthResponseType = {

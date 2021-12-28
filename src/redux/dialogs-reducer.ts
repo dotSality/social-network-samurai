@@ -1,6 +1,4 @@
 const ADD_MESSAGE = 'ADD-MESSAGE'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
-
 
 export type MessageType = {
     id: number
@@ -13,14 +11,7 @@ export type DialogType = {
     id: number
 }
 
-export type MessagePageType = {
-    newMessageText: string
-    messages: MessageType[]
-    dialogs: DialogType[]
-}
-
 const initialState = {
-    newMessageText: '',
     dialogs: [
         {id: 1, name: 'Dimych'},
         {id: 2, name: 'Andrew'},
@@ -45,18 +36,12 @@ export const dialogsReducer = (state = initialState, action: MessageActionType) 
                 message: action.messageText,
                 sender: false
             };
-            // state.messages.push(newMessage)
-            // state.newMessageText = ''
-            return {...state, messages: [...state.messages, newMessage], newMessageText: ''};
-        case UPDATE_NEW_MESSAGE_TEXT:
-            // state.newMessageText = action.newText
-            return {...state, newMessageText: action.newText};
+            return {...state, messages: [...state.messages, newMessage]};
         default:
             return state;
     }
 }
 
-export type MessageActionType = ReturnType<typeof addMessage> | ReturnType<typeof updateMessageText>
+export type MessageActionType = ReturnType<typeof addMessage>
 
 export const addMessage = (messageText: string) => ({type: ADD_MESSAGE, messageText: messageText} as const)
-export const updateMessageText = (newText: string) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: newText} as const)
