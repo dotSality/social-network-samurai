@@ -1,0 +1,13 @@
+.textBlock {
+    height: 30px;
+    color: red;
+}
+
+.textArea {
+    outline: none;
+
+}
+
+.error {
+    border: 1px solid red;
+}

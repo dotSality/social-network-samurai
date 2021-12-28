@@ -9,7 +9,7 @@ import {NavBarContainer} from './Components/NavBar/NavBarContainer';
 import UsersContainer from './Components/Users/UsersContainer';
 import ProfileContainer from './Components/Profile/ProfileInfo/ProfileContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
-import {LoginPage} from './Components/LoginPage/LoginPage';
+import LoginPage from './Components/LoginPage/LoginPage';
 
 function App() {
 

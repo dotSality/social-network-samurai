@@ -1,4 +1,6 @@
 import {useForm} from 'react-hook-form';
+import {postFieldValidator} from '../../../../utils/validators/validators';
+import s from '../../../common/styles/Common.module.css'
 
 type PostFormType = {
     text: string,
@@ -16,11 +18,15 @@ export const AddPostForm = (props: PostFormPropsType) => {
         }
     })
 
+    const errorClassName = errors.text ? `${s.textArea} ${s.error}` : s.textArea
+
     const onSubmit = (data: PostFormType) => props.onSubmit(data.text)
 
     return <form onSubmit={handleSubmit(onSubmit)}>
-        <textarea placeholder={'Write something...'}
-            {...register('text')}/>
-        <input onClick={() => {}} value={'Publish post'} type='submit'/>
+            <textarea className={errorClassName} placeholder={'Write something...'}
+                {...register('text', postFieldValidator)}/>
+        <div className={s.textBlock}
+        >{errors.text && errors.text.message}</div>
+        <input value={'Publish post'} type='submit'/>
     </form>
 }

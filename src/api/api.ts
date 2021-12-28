@@ -27,7 +27,7 @@ export const usersAPI: UsersAPIType = {
     },
 }
 
-export const authAPI/*: AuthAPIType*/ = {
+export const authAPI: AuthAPIType = {
     isAuthRequest() {
         return instance.get<string,AxiosResponse<CommonResponseType<IsAuthResponseType>>>(`auth/me`).then(res => res.data)
     },
