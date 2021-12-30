@@ -7,9 +7,15 @@ import {Redirect} from 'react-router-dom';
 
 type MapStateToPropsType = {
     isAuth: boolean
+    error: string
+    captchaUrl: string
 }
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({isAuth: state.auth.isAuth})
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+    isAuth: state.auth.isAuth,
+    error: state.auth.error,
+    captchaUrl: state.auth.captchaUrl,
+})
 
 type MapDispatchToPropsType = {
     login: (data: SubmitDataType) => void
@@ -27,7 +33,7 @@ const LoginPage = (props: LoginPagePropsType) => {
         <Redirect to={'/profile'}/>
     ) : <div>
         <h1>Login page</h1>
-        <LoginForm onSubmitData={onSubmitData}/>
+        <LoginForm captchaUrl={props.captchaUrl} error={props.error} onSubmitData={onSubmitData}/>
     </div>
 }
 

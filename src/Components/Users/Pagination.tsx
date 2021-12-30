@@ -11,8 +11,8 @@ type PaginationType = {
 export const Pagination = (props: PaginationType) => {
 
     const pages = []
-    const prevThreePages = () => props.onPageChanged(props.currentPage - 3)
-    const nextThreePages = () => props.onPageChanged(props.currentPage + 3)
+    const prevTwoPages = () => props.onPageChanged(props.currentPage - 2)
+    const nextTwoPages = () => props.onPageChanged(props.currentPage + 2)
     const onFirstPageChange = () => props.onPageChanged(1)
     const onLastPageChange = () => props.onPageChanged(props.pagesCount)
 
@@ -24,7 +24,7 @@ export const Pagination = (props: PaginationType) => {
             {pages.map(i => <button key={i} onClick={() => props.onPageChanged(i)}
                 className={props.currentPage === i ? s.selected : ''}>{i}</button>)
             }
-            <button onClick={nextThreePages}>»</button>
+            <button onClick={nextTwoPages}>»</button>
             <button onClick={onLastPageChange}>...</button>
         </div>
     } else if (props.currentPage >= 4 && props.currentPage <= props.pagesCount - 4) {
@@ -33,11 +33,11 @@ export const Pagination = (props: PaginationType) => {
         }
         return <div>
             <button onClick={onFirstPageChange}>{1}</button>
-            <button onClick={prevThreePages}>«</button>
+            <button onClick={prevTwoPages}>«</button>
             {pages.map(i => <button key={i} onClick={() => props.onPageChanged(i)}
                 className={props.currentPage === i ? s.selected : ''}>{i}</button>)
             }
-            <button onClick={nextThreePages}>»</button>
+            <button onClick={nextTwoPages}>»</button>
             <button onClick={onLastPageChange}>...</button>
         </div>
     } else {
@@ -46,7 +46,7 @@ export const Pagination = (props: PaginationType) => {
         }
         return <div>
             <button onClick={onFirstPageChange}>{1}</button>
-            <button onClick={prevThreePages}>«</button>
+            <button onClick={prevTwoPages}>«</button>
             {pages.map(i => <button key={i} onClick={() => props.onPageChanged(i)}
                 className={props.currentPage === i ? s.selected : ''}>{i}</button>)
             }

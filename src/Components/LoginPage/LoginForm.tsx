@@ -1,15 +1,18 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
 import s from '../common/styles/Common.module.css'
-import {emailFieldValidatorType, passwordFieldValidatorType} from '../../utils/validators/validators';
+import {captchaFieldValidator, emailFieldValidator, passwordFieldValidator} from '../../utils/validators/validators';
 
 export type FormInputsType = {
     email: string,
     password: string,
     rememberMe: boolean,
+    captcha: string
 }
 
 type SubmitDataPropsType = {
     onSubmitData: (data: FormInputsType) => void
+    error: string
+    captchaUrl: string
 }
 
 export const LoginForm = (props: SubmitDataPropsType) => {
@@ -23,6 +26,7 @@ export const LoginForm = (props: SubmitDataPropsType) => {
             email: '',
             password: '',
             rememberMe: false,
+            captcha: '',
         }
     })
 
@@ -36,14 +40,25 @@ export const LoginForm = (props: SubmitDataPropsType) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <input className={s.textArea} placeholder={'Email...'}
-                        {...register('email', emailFieldValidatorType)}/>
+                        {...register('email', emailFieldValidator)}/>
                 </div>
                 <div className={s.textBlock}>{errors.email?.message}</div>
                 <div>
                     <input type={'password'} placeholder={'Password...'}
-                        className={s.textArea} {...register('password', passwordFieldValidatorType)}/>
+                        className={s.textArea} {...register('password', passwordFieldValidator)}/>
                 </div>
-                <div className={s.textBlock}>{errors.password?.message}</div>
+                {
+                    props.captchaUrl ?
+                        <div>
+                            <img src={props.captchaUrl} alt={'captcha'}/>
+                            <div>
+                                <input className={s.textArea} {...register('captcha', captchaFieldValidator)} />
+                            </div>
+                            <span className={s.textBlock}>{props.error ? props.error : errors.captcha && errors.captcha?.message}</span>
+                        </div>
+                    : props.error ? <div className={s.textBlock}>{props.error}</div>
+                        : <div className={s.textBlock}>{errors.password?.message}</div>
+                }
                 <div>
                     <input type={'checkbox'}
                         {...register('rememberMe')}/> Remember me

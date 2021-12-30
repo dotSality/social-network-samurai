@@ -26,10 +26,6 @@ export const Users = (props: PresentUsersPropsType) => {
     }
 
     return <div>
-        {/*<div>*/}
-        {/*    {pages.map(i => <button key={i} onClick={() => props.onPageChanged(i)}*/}
-        {/*        className={props.currentPage === i ? s.selected : ''}>{i}</button>)}*/}
-        {/*</div>*/}
         <Pagination
             pagesCount={pagesCount}
             onPageChanged={props.onPageChanged}

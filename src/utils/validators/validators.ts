@@ -14,18 +14,19 @@ export const postFieldValidator: TextareaValidatorType = {
     },
 }
 
-export const emailFieldValidatorType = {
-    required: 'Please, enter your e-mail',
+export const emailFieldValidator = {
+    required: 'Please, enter e-mail',
     pattern: {
         value: /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/,
         message: 'Incorrect e-mail'
     }
 }
 
-export const passwordFieldValidatorType = {
+export const passwordFieldValidator = {
     required: 'Please, enter password',
-    minLength: {
-        value: 6,
-        message: 'Incorrect password format'
-    }
 }
+
+export const captchaFieldValidator = {
+    required: 'Wrong captcha'
+}
+

@@ -38,6 +38,8 @@ export type ProfileType = {
 type MapStateToPropsType = {
     profile: Nullable<ProfileType>,
     status: string,
+    authorizedUserId: Nullable<number>,
+    isAuth: boolean,
 }
 
 type MapDispatchToPropsType = {
@@ -54,6 +56,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
+        authorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth,
     }
 }
 
@@ -61,7 +65,7 @@ export class ProfileContainer extends React.Component<RoutedProfileType> {
 
     componentDidMount() {
         let userId = this.props.match.params.usedId
-        if (!userId) userId = '6623'
+        if (!userId && this.props.authorizedUserId) userId = this.props.authorizedUserId.toString()
         this.props.loadUserProfile(userId)
         this.props.getUserStatus(userId)
     }

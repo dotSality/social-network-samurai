@@ -10,7 +10,6 @@ export const MessageForm = (props: DialogsPropsType) => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
         reset
     } = useForm<MessageData>({
         defaultValues: {

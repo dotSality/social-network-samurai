@@ -37,6 +37,9 @@ export const authAPI: AuthAPIType = {
     userLogout() {
         return instance.delete<string, AxiosResponse>(`auth/login`)
     },
+    captchaRequest() {
+        return instance.get<string, AxiosResponse<AxiosResponse>>('security/get-captcha-url')
+    }
 }
 
 export const profileAPI: ProfileAPIType = {
@@ -61,6 +64,7 @@ type AuthAPIType = {
     isAuthRequest: () => Promise<CommonResponseType<IsAuthResponseType>>,
     userLogin: (data: SubmitDataType) => Promise<AxiosResponse>,
     userLogout: () => Promise<AxiosResponse>,
+    captchaRequest: () => Promise<AxiosResponse>,
 }
 
 type IsAuthResponseType = {
