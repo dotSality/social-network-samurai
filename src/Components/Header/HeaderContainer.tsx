@@ -7,10 +7,6 @@ import {Nullable} from '../../redux/profile-reducer';
 
 class HeaderContainer extends React.Component<HeaderPropsType> {
 
-    componentDidMount() {
-        this.props.loginRequest();
-    }
-
     render() {
         return <Header {...this.props}/>
     }
@@ -22,7 +18,6 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    loginRequest: () => void
     logout: () => void
 }
 
@@ -36,4 +31,4 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {loginRequest, logout})(HeaderContainer)
+export default connect(mapStateToProps, {logout})(HeaderContainer)

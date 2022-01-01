@@ -46,7 +46,7 @@ type ToggleIsFetchingActionType = ReturnType<typeof toggleFetching>
 export const toggleIsFollowingProgress = (isFetching: boolean, userID: number) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userID} as const)
 type IsFollowingActionType = ReturnType<typeof toggleIsFollowingProgress>
 
-export const getUsers = (currentPage: number, pageSize: number) => {
+export const requestUsers = (currentPage: number, pageSize: number) => {
     return (dispatch: Dispatch) => {
         usersAPI.getUsers(currentPage, pageSize).then(
             res => {

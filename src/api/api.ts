@@ -38,12 +38,12 @@ export const authAPI: AuthAPIType = {
         return instance.delete<string, AxiosResponse>(`auth/login`)
     },
     captchaRequest() {
-        return instance.get<string, AxiosResponse<AxiosResponse>>('security/get-captcha-url')
+        return instance.get<string, AxiosResponse>('security/get-captcha-url')
     }
 }
 
 export const profileAPI: ProfileAPIType = {
-    getUserProfile(userId: string) {
+    getUserProfile(userId: number) {
         return instance.get<string,AxiosResponse<ProfileType>>(`profile/` + userId).then(res => res.data)
     },
     getUserStatus(userId: number) {
@@ -55,7 +55,7 @@ export const profileAPI: ProfileAPIType = {
 }
 
 type ProfileAPIType = {
-    getUserProfile: (userId: string) => Promise<ProfileType>,
+    getUserProfile: (userId: number) => Promise<ProfileType>,
     getUserStatus: (userId: number) => Promise<string>,
     updateStatus: (status: string) => Promise<AxiosResponse>,
 }

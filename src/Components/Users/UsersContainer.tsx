@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {followToggle, getUsers, setCurrentPage, toggleFollow, toggleIsFollowingProgress, UserType} from '../../redux/users-reducer';
+import {followToggle, requestUsers, setCurrentPage, toggleFollow, toggleIsFollowingProgress, UserType} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
+import {getCurrentPage, getIsFetching, getIsFollowing, getPageSize, getTotalUsersCount, getUsers} from '../../redux/users-selector';
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -18,12 +19,12 @@ type MapStateToPropsType = {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        isFollowing: state.usersPage.isFollowing
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        isFollowing: getIsFollowing(state),
     }
 }
 
@@ -65,6 +66,6 @@ export class UsersContainer extends React.Component<UsersPropsType> {
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {followToggle,
-        setCurrentPage, toggleIsFollowingProgress, getUsers, toggleFollow}),
+        setCurrentPage, toggleIsFollowingProgress, requestUsers, toggleFollow}),
     WithAuthRedirect
 )(UsersContainer)

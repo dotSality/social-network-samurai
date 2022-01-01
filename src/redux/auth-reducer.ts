@@ -15,7 +15,7 @@ export type SubmitDataType = {
 }
 
 const initialState = {
-    id: null,
+    id: null as number | null,
     email: null,
     login: null,
     remember: false,

@@ -48,9 +48,12 @@ export const profileReducer = (state = initialState, action: PostActionType): Pr
     }
 }
 
-export const loadUserProfile = (userId: string) => (dispatch: Dispatch) => {
+export const loadUserProfile = (userId: number) => (dispatch: Dispatch) => {
         profileAPI.getUserProfile(userId)
-            .then(response => dispatch(setUserProfile(response)));
+            .then(response => {
+                console.log(response)
+                dispatch(setUserProfile(response))
+            });
 }
 
 export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {

@@ -35,24 +35,19 @@ export type ProfileType = {
     photos: PhotosType,
 }
 
-type MapStateToPropsType = {
-    profile: Nullable<ProfileType>,
-    status: string,
-    authorizedUserId: Nullable<number>,
-    isAuth: boolean,
-}
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchToPropsType = {
     setUserProfile: (profile: ProfileType) => void
-    loadUserProfile: (userId: string) => void
-    getUserStatus: (userId: string) => void
+    loadUserProfile: (userId: number) => void
+    getUserStatus: (userId: number) => void
     updateUserStatus: (status: string) => void
 }
 
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type RoutedProfileType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
@@ -64,8 +59,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 export class ProfileContainer extends React.Component<RoutedProfileType> {
 
     componentDidMount() {
-        let userId = this.props.match.params.usedId
-        if (!userId && this.props.authorizedUserId) userId = this.props.authorizedUserId.toString()
+        let userId: number = +this.props.match.params.usedId
+        userId ? this.props.history.push('/login') : userId = 6623/*this.props.authorizedUserId */
         this.props.loadUserProfile(userId)
         this.props.getUserStatus(userId)
     }
