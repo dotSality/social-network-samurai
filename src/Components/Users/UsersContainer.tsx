@@ -32,7 +32,7 @@ type MapDispatchToPropsType = {
     followToggle: (userID: number) => void,
     setCurrentPage: (currentPage: number) => void,
     toggleIsFollowingProgress: (isFollowing: boolean, userID: number) => void
-    getUsers: (currentPage: number, pageSize: number) => void
+    requestUsers: (currentPage: number, pageSize: number) => void
     toggleFollow: (userID: number, isFollowed: boolean) => void
 }
 
@@ -40,12 +40,12 @@ type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 export class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPage(currentPage);
-        this.props.getUsers(currentPage, this.props.pageSize)
+        this.props.requestUsers(currentPage, this.props.pageSize)
     }
 
     render() {

@@ -2,7 +2,7 @@ import React from "react";
 import Profile from '../Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
-import {getUserStatus, loadUserProfile, Nullable, updateUserStatus} from '../../../redux/profile-reducer';
+import {getUserStatus, loadUserProfile, updateUserStatus} from '../../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 
@@ -60,7 +60,15 @@ export class ProfileContainer extends React.Component<RoutedProfileType> {
 
     componentDidMount() {
         let userId: number = +this.props.match.params.usedId
-        userId ? this.props.history.push('/login') : userId = 6623/*this.props.authorizedUserId */
+        // userId ? this.props.history.push('/login') : userId = 6623/*this.props.authorizedUserId */
+        if (!userId) {
+            // @ts-ignore
+            userId = this.props.authorizedUserId
+            if (!userId) {
+                this.props.history.push('/login')
+            }
+
+        }
         this.props.loadUserProfile(userId)
         this.props.getUserStatus(userId)
     }

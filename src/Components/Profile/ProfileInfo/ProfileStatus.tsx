@@ -1,46 +1,37 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
 type ProfileStatusPropsType = {
     status: string
-    updateUserStatus: (status: string)=> void
+    updateUserStatus: (status: string) => void
 }
 
-type StatePropsType = {
-    editMode: boolean,
-    status: string,
-}
+export const ProfileStatus = (props: ProfileStatusPropsType) => {
 
-export class ProfileStatus extends React.Component<ProfileStatusPropsType, StatePropsType> {
-    state = {
-        editMode: false,
-        status: this.props.status
+    const [editMode, setEditMode] = useState<boolean>(false)
+    const [status, setStatus] = useState<string>(props.status)
+
+    useEffect(() => {
+        setStatus(props.status)
+    },[props.status])
+
+    const onEditMode = () => setEditMode(true)
+
+    const offEditMode = () => {
+        setEditMode(false)
+        props.updateUserStatus(status)
     }
 
-    onEditMode = () => this.setState({ editMode: true })
-
-    offEditMode = () => {
-        this.setState({editMode: false})
-        this.props.updateUserStatus(this.state.status)
+    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setStatus(e.currentTarget.value)
     }
 
-    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({ status: e.currentTarget.value })
-    }
-
-    componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: StatePropsType) {
-        if (prevProps.status !== this.props.status) this.setState({ status: this.props.status })
-    }
-
-    render() {
-        return <div>
-            {!this.state.editMode ?
-                (<div>
-                    <span onClick={this.onEditMode}>{this.props.status ? this.props.status : 'no status'}</span>
-                </div>) : (
+    return <div>
+        {!editMode ?
+            (<div>
+                <span onClick={onEditMode}>{status || 'no status'}</span>
+            </div>) : (
                 <div>
-                    <input onChange={this.onStatusChange} autoFocus onBlur={this.offEditMode} value={this.state.status}/>
-                </div>)
-            }
-        </div>
-    }
+                    <input onChange={onStatusChange} autoFocus onBlur={offEditMode} value={status}/>
+                </div>)}
+    </div>
 }
