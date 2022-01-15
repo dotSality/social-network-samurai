@@ -28,4 +28,5 @@ test('new message should be added',() => {
 
     expect(newState.messages.length).toBe(6)
     expect(newState.messages[5].message).toBe(message)
+    expect(newState.dialogs).toStrictEqual(state.dialogs)
 })
