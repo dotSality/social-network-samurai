@@ -5,6 +5,7 @@ import {profileAPI} from '../api/api';
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
+const DELETE_POST = 'DELETE-POST'
 
 export type PostType = {
     id: number
@@ -22,7 +23,7 @@ const initialState: ProfilePageType = {
     status: '',
 }
 
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: PostType[],
     profile: Nullable<ProfileType>,
     status: string,
@@ -43,24 +44,27 @@ export const profileReducer = (state = initialState, action: PostActionType): Pr
             return {...state, profile: action.profile};
         case SET_STATUS:
             return {...state, status: action.status}
+        case 'DELETE-POST':
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         default:
             return state;
     }
 }
 
 export const loadUserProfile = (userId: number) => (dispatch: Dispatch) => {
-        profileAPI.getUserProfile(userId)
-            .then(response => {
-                console.log(response)
-                dispatch(setUserProfile(response))
-            });
+    profileAPI.getUserProfile(userId)
+        .then(response => {
+            console.log(response)
+            dispatch(setUserProfile(response))
+        });
 }
 
 export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {
-        profileAPI.getUserStatus(userId)
-            .then(res => {
-                dispatch(setStatus(res))})
-            }
+    profileAPI.getUserStatus(userId)
+        .then(res => {
+            dispatch(setStatus(res))
+        })
+}
 
 export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
     profileAPI.updateStatus(status)
@@ -70,13 +74,17 @@ export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
 }
 
 
-export type PostActionType = addPostType
-    | setUserProfileType
-    | setStatusType
+export type PostActionType = AddPostType
+    | SetUserProfileType
+    | SetStatusType
+    | DeletePostType
 
 export const addPost = (postText: string) => ({type: ADD_POST, postText: postText} as const)
 export const setUserProfile = (profile: Nullable<ProfileType>) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
-type addPostType = ReturnType<typeof addPost>
-type setUserProfileType = ReturnType<typeof setUserProfile>
-type setStatusType = ReturnType<typeof setStatus>
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
+
+type AddPostType = ReturnType<typeof addPost>
+type SetUserProfileType = ReturnType<typeof setUserProfile>
+type SetStatusType = ReturnType<typeof setStatus>
+type DeletePostType = ReturnType<typeof deletePost>

@@ -28,7 +28,9 @@ const initialState = {
     ] as MessageType[]
 }
 
-export const dialogsReducer = (state = initialState, action: MessageActionType) => {
+export type DialogsStateType = typeof initialState
+
+export const dialogsReducer = (state = initialState, action: MessageActionType): DialogsStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage: MessageType = {
