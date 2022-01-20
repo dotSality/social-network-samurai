@@ -2,7 +2,7 @@ import {loginRequest} from './auth-reducer';
 import {ThunkAction} from 'redux-thunk';
 import {AppStateType} from './redux-store';
 
-const SET_INITIALIZED = 'SET-INITIALIZED'
+const SET_INITIALIZED = 'app/SET-INITIALIZED'
 
 const initialState = {
     initialized: false
@@ -19,12 +19,10 @@ export const appReducer = (state = initialState, action: CommonActionType): Init
     }
 }
 
-export const initializeApp = (): AppThunkType => {
-    return (dispatch, getState: () => AppStateType) => {
-        let promise = dispatch(loginRequest())
-         Promise.all([promise])
-            .then(() => dispatch(initSuccess()))
-    }
+export const initializeApp = (): AppThunkType => async (dispatch) => {
+    let promise = dispatch(loginRequest())
+    await Promise.all([promise])
+    dispatch(initSuccess())
 }
 type CommonActionType = InitSuccessType
 

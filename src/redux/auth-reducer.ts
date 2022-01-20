@@ -1,12 +1,12 @@
-import { ThunkAction } from 'redux-thunk';
+import {ThunkAction} from 'redux-thunk';
 import {authAPI} from '../api/api';
 import {AppStateType} from './redux-store';
 import {Nullable} from './profile-reducer';
 
-const SET_USER_DATA = 'SET-USER-DATA'
-const LOGIN_USER = 'LOGIN-USER'
-const STOP_SUBMIT = 'STOP-SUBMIT'
-const SET_CAPTCHA = 'SET-CAPTCHA'
+const SET_USER_DATA = 'auth/SET-USER-DATA'
+const LOGIN_USER = 'auth/LOGIN-USER'
+const STOP_SUBMIT = 'auth/STOP-SUBMIT'
+const SET_CAPTCHA = 'auth/SET-CAPTCHA'
 
 export type SubmitDataType = {
     email: string,
@@ -40,42 +40,36 @@ export const authReducer = (state = initialState, action: CommonActionType): Ini
 }
 
 export const loginRequest = (): AuthThunkType => {
-    return (dispatch, getState: () => AppStateType) => {
-        authAPI.isAuthRequest().then(response => {
-                if (response.resultCode === 0) {
-                    let {id, email, login} = response.data
-                    dispatch(setAuthUserData(id, email, login, true))
-                }
-        })
+    return async (dispatch, getState: () => AppStateType) => {
+        let res = await authAPI.isAuthRequest()
+        if (res.resultCode === 0) {
+            let {id, email, login} = res.data
+            dispatch(setAuthUserData(id, email, login, true))
+        }
     }
 }
 
 export const login = (data: SubmitDataType): AuthThunkType => {
-    return (dispatch, getState: () => AppStateType) => {
-        authAPI.userLogin(data).then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(loginRequest())
-                dispatch(setCaptcha(''))
-            } else if (res.data.resultCode === 10) {
-                dispatch(stopSubmit(res.data.messages[0]))
-                authAPI.captchaRequest().then(res => {
-                    dispatch(setCaptcha(res.data.url))
-                })
-            } else {
-                if (res.data.messages.length > 0) dispatch(stopSubmit(res.data.messages[0]))
-            }
-        })
+    return async (dispatch, getState: () => AppStateType) => {
+        let userLoginRes = await authAPI.userLogin(data)
+        if (userLoginRes.data.resultCode === 0) {
+            dispatch(loginRequest())
+            dispatch(setCaptcha(''))
+        } else if (userLoginRes.data.resultCode === 10) {
+            dispatch(stopSubmit(userLoginRes.data.messages[0]))
+            let captchaRes = await authAPI.captchaRequest()
+            dispatch(setCaptcha(captchaRes.data.url))
+        } else {
+            if (userLoginRes.data.messages.length > 0) dispatch(stopSubmit(userLoginRes.data.messages[0]))
+        }
     }
 }
 
 export const logout = (): AuthThunkType => {
-   return (dispatch, getState: () => AppStateType) => {
-       authAPI.userLogout().then(res => {
-           if (res.data.resultCode === 0) {
-               dispatch(setAuthUserData(null, null, null, false))
-           }
-       })
-   }
+    return async (dispatch, getState: () => AppStateType) => {
+        let logoutRes = await authAPI.userLogout()
+        if (logoutRes.data.resultCode === 0) dispatch(setAuthUserData(null, null, null, false))
+    }
 }
 
 type AuthThunkType = ThunkAction<void, AppStateType, unknown, CommonActionType>
@@ -85,7 +79,7 @@ type CommonActionType = SubmitUserLoginType | SetDataActionType | StopSubmitType
 
 export const submitUserLogin = (userId: number) => ({type: LOGIN_USER, userId} as const)
 type SubmitUserLoginType = ReturnType<typeof submitUserLogin>
-export const setAuthUserData = (id: Nullable<number>, email:Nullable<string>, login: Nullable<string>, isAuth: boolean, captcha: string = '') =>
+export const setAuthUserData = (id: Nullable<number>, email: Nullable<string>, login: Nullable<string>, isAuth: boolean, captcha: string = '') =>
     ({type: SET_USER_DATA, payload: {id, email, login, isAuth, captcha}} as const)
 type SetDataActionType = ReturnType<typeof setAuthUserData>
 export const stopSubmit = (error: string) => ({type: STOP_SUBMIT, error} as const)
