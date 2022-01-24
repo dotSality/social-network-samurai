@@ -11,60 +11,54 @@ const instance = axios.create({
     }
 })
 
-export const usersAPI: UsersAPIType = {
+export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get<string,AxiosResponse<GetDataType>>
+        return instance.get<string, AxiosResponse<GetDataType>>
         (`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
     },
     getUserData(userID: number) {
-        return instance.get<string,AxiosResponse<CommonResponseType<UserType>>>(`follow/${userID}`).then(res => res.data)
+        return instance.get<AxiosResponse<CommonResponseType<UserType>>>(`follow/${userID}`).then(res => res.data)
     },
     unfollowUserRequest(userID: number) {
-        return instance.delete<string, AxiosResponse>(`follow/${userID}`)
+        return instance.delete<CommonResponseType>(`follow/${userID}`)
     },
     followUserRequest(userID: number) {
-        return instance.post<string, AxiosResponse>(`follow/${userID}`, {})
+        return instance.post<CommonResponseType>(`follow/${userID}`, {})
     },
 }
 
-export const authAPI: AuthAPIType = {
+export const authAPI = {
     isAuthRequest() {
-        return instance.get<string,AxiosResponse<CommonResponseType<IsAuthResponseType>>>(`auth/me`).then(res => res.data)
+        return instance.get<CommonResponseType<IsAuthResponseType>>(`auth/me`).then(res => res.data)
     },
     userLogin(data: SubmitDataType) {
-        return instance.post<SubmitDataType, AxiosResponse>(`auth/login`,data)
+        return instance.post<SubmitDataType, CommonResponseType>(`auth/login`, data)
     },
     userLogout() {
-        return instance.delete<string, AxiosResponse>(`auth/login`)
+        return instance.delete<CommonResponseType>(`auth/login`)
     },
     captchaRequest() {
-        return instance.get<string, AxiosResponse>('security/get-captcha-url')
+        return instance.get<CommonResponseType<{ url: string }>>('security/get-captcha-url')
     }
 }
 
-export const profileAPI: ProfileAPIType = {
+export const profileAPI = {
     getUserProfile(userId: number) {
-        return instance.get<string,AxiosResponse<ProfileType>>(`profile/` + userId).then(res => res.data)
+        return instance.get<ProfileType>(`profile/` + userId).then(res => res.data)
     },
     getUserStatus(userId: number) {
-        return instance.get<string, AxiosResponse<string>>(`profile/status/${userId}`).then(res => res.data)
+        return instance.get<string>(`profile/status/${userId}`).then(res => res.data)
     },
     updateStatus(status: string) {
-        return instance.put<string, AxiosResponse>(`profile/status`, { status })
+        return instance.put<CommonResponseType>(`profile/status`, {status})
+    },
+    uploadPhoto(file: File) {
+        let formData = new FormData()
+        formData.append('image', file)
+        return instance.put<CommonResponseType<PhotosType>>(`profile/photo`, formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(res => res.data)
     }
-}
-
-type ProfileAPIType = {
-    getUserProfile: (userId: number) => Promise<ProfileType>,
-    getUserStatus: (userId: number) => Promise<string>,
-    updateStatus: (status: string) => Promise<AxiosResponse>,
-}
-
-type AuthAPIType = {
-    isAuthRequest: () => Promise<CommonResponseType<IsAuthResponseType>>,
-    userLogin: (data: SubmitDataType) => Promise<AxiosResponse>,
-    userLogout: () => Promise<AxiosResponse>,
-    captchaRequest: () => Promise<AxiosResponse>,
 }
 
 type IsAuthResponseType = {
@@ -79,16 +73,16 @@ type GetDataType = {
     totalCount: number
 }
 
-type CommonResponseType<T> = {
+type PhotosType = {
+    photos: {
+        small: string
+        large: string
+    }
+}
+
+type CommonResponseType<T = {}> = {
     data: T,
     messages: string[],
     fieldsErrors: string[],
     resultCode: number,
-}
-
-type UsersAPIType = {
-    getUsers: (currentPage: number, pageSize: number) => Promise<GetDataType>,
-    getUserData: (userID: number) => Promise<CommonResponseType<UserType>>,
-    unfollowUserRequest: (userID: number) => Promise<AxiosResponse>,
-    followUserRequest: (userID: number) => Promise<AxiosResponse>,
 }

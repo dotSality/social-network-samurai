@@ -6,6 +6,7 @@ const ADD_POST = 'profile/ADD-POST'
 const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
 const SET_STATUS = 'profile/SET-STATUS'
 const DELETE_POST = 'profile/DELETE-POST'
+const SAVE_PHOTO_SUCCESS = 'profile/SAVE-PHOTO-SUCCESS'
 
 export type PostType = {
     id: number
@@ -46,6 +47,9 @@ export const profileReducer = (state = initialState, action: PostActionType): Pr
             return {...state, status: action.status}
         case DELETE_POST:
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+        case SAVE_PHOTO_SUCCESS:
+            // @ts-ignore
+            return {...state, profile: {...state.profile, photos: action.photos}}
         default:
             return state;
     }
@@ -66,18 +70,26 @@ export const updateUserStatus = (status: string) => async (dispatch: Dispatch) =
     if (updateStatusRes.data.resultCode === 0) dispatch(setStatus(status))
 }
 
+export const uploadPhoto = (file: File) => async (dispatch: Dispatch) => {
+    let res = await profileAPI.uploadPhoto(file)
+    if (res.resultCode === 0) dispatch(uploadPhotoSuccess(res.data.photos))
+}
+
 
 export type PostActionType = AddPostType
     | SetUserProfileType
     | SetStatusType
     | DeletePostType
+    | SuccessUploadPhotoType
 
 export const addPost = (postText: string) => ({type: ADD_POST, postText: postText} as const)
 export const setUserProfile = (profile: Nullable<ProfileType>) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
+export const uploadPhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
 type AddPostType = ReturnType<typeof addPost>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type SetStatusType = ReturnType<typeof setStatus>
 type DeletePostType = ReturnType<typeof deletePost>
+type SuccessUploadPhotoType = ReturnType<typeof uploadPhotoSuccess>

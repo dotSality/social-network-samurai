@@ -52,15 +52,15 @@ export const loginRequest = (): AuthThunkType => {
 export const login = (data: SubmitDataType): AuthThunkType => {
     return async (dispatch, getState: () => AppStateType) => {
         let userLoginRes = await authAPI.userLogin(data)
-        if (userLoginRes.data.resultCode === 0) {
+        if (userLoginRes.resultCode === 0) {
             dispatch(loginRequest())
             dispatch(setCaptcha(''))
-        } else if (userLoginRes.data.resultCode === 10) {
-            dispatch(stopSubmit(userLoginRes.data.messages[0]))
+        } else if (userLoginRes.resultCode === 10) {
+            dispatch(stopSubmit(userLoginRes.messages[0]))
             let captchaRes = await authAPI.captchaRequest()
-            dispatch(setCaptcha(captchaRes.data.url))
+            dispatch(setCaptcha(captchaRes.data.data.url))
         } else {
-            if (userLoginRes.data.messages.length > 0) dispatch(stopSubmit(userLoginRes.data.messages[0]))
+            if (userLoginRes.messages.length > 0) dispatch(stopSubmit(userLoginRes.messages[0]))
         }
     }
 }

@@ -4,10 +4,15 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {ProfilePropsType} from './ProfileInfo/ProfileContainer';
 
-const Profile = (props: ProfilePropsType) => {
+type ProfileType = ProfilePropsType & {
+    isOwner: boolean
+}
+
+const Profile = (props: ProfileType) => {
     return (
         <div className={s.mainCont}>
-            <ProfileInfo status={props.status} updateUserStatus={props.updateUserStatus} profile={props.profile}/>
+            <ProfileInfo uploadPhoto={props.uploadPhoto} isOwner={props.isOwner} status={props.status}
+                updateUserStatus={props.updateUserStatus} profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     )

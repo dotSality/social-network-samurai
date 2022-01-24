@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from './ProfileInfo.module.css'
 import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileType} from './ProfileContainer';
@@ -10,28 +10,30 @@ type ProfileInfoPropsType = {
     status: string
     profile: Nullable<ProfileType>
     updateUserStatus: (status: string)=> void
+    isOwner: boolean
+    uploadPhoto: (file: File | null) => void
 }
 
-const ProfileInfo = (props: ProfileInfoPropsType) => {
+const ProfileInfo = ({status, profile, updateUserStatus, isOwner, uploadPhoto}: ProfileInfoPropsType) => {
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader/>
+    }
+
+    const onMainPhotoSelect = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files!.length) uploadPhoto(e.target.files![0])
     }
 
     return (
         <div>
-            <div>
-                <img
-                    className={s.img}
-                    src='https://c4.wallpaperflare.com/wallpaper/784/819/740/ultra-wide-photography-beach-wallpaper-preview.jpg'
-                    alt={'avatar'}
-                />
-                <div>
-                    <ProfileStatus updateUserStatus={props.updateUserStatus} status={props.status}/>
-                </div>
-            </div>
             <div className={s.descriptionBlock}>
-                {<img src={props.profile.photos.large || userPhoto} alt={'profile owner'}/>}
+                <img src={profile.photos.large || userPhoto} alt={'profile owner'}/>
+                {isOwner && <input onChange={onMainPhotoSelect} type={'file'}/>}
+            </div>
+            <div>
+                <div>
+                    <ProfileStatus updateUserStatus={updateUserStatus} status={status}/>
+                </div>
             </div>
         </div>
     )
