@@ -1,6 +1,6 @@
 {
   "name": "social-network",
-  "homepage": "dotsality.github.io/social-network",
+  "homepage": "https://dotsality.github.io/social-network",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

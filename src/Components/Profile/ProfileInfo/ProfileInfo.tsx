@@ -4,6 +4,7 @@ import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileType} from './ProfileContainer';
 import {ProfileStatus} from './ProfileStatus';
 import {Nullable} from '../../../redux/profile-reducer';
+import userPhoto from './../../common/Img/default-user.jpg';
 
 type ProfileInfoPropsType = {
     status: string
@@ -30,7 +31,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 </div>
             </div>
             <div className={s.descriptionBlock}>
-                {props.profile.photos.large && <img src={props.profile.photos.large} alt={'profile owner'}/>}
+                {<img src={props.profile.photos.large || userPhoto} alt={'profile owner'}/>}
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import loading from '../../Users/Img/loading-buffering.gif';
+import loading from '../Img/loading-buffering.gif';
 import React from 'react';
 
 

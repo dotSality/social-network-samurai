@@ -1,5 +1,5 @@
 import {NavLink} from 'react-router-dom';
-import userPhoto from './Img/default-user.jpg';
+import userPhoto from '../common/Img/default-user.jpg';
 import s from './Users.module.css';
 import React from 'react';
 import {UserType} from '../../redux/users-reducer';
