@@ -10,3 +10,8 @@ libraries.
 Runs the app in the development mode in.
 Open https://localhost:3000 to view app
 in the browser.
+
+### 'test account data'
+
+Email: free@samuraijs.com
+Password: free
