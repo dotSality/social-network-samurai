@@ -44,7 +44,7 @@ type MapDispatchToPropsType = {
     getUserStatus: (userId: number) => void
     updateUserStatus: (status: string) => void
     uploadPhoto: (photo: File | null) => void
-    submitProfile: (profile: ProfileDataType, userId: number) => void
+    submitProfile: (profile: ProfileDataType) => void
 }
 
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType

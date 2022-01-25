@@ -81,10 +81,11 @@ export const uploadPhoto = (file: File): ThunkType =>
         if (res.resultCode === 0) dispatch(uploadPhotoSuccess(res.data.photos))
     }
 
-export const submitProfile = (profile: ProfileDataType, userId: number): ThunkType =>
-    async (dispatch) => {
+export const submitProfile = (profile: ProfileDataType): ThunkType =>
+    async (dispatch, getState) => {
         let res = await profileAPI.submitProfile(profile)
         if (res.resultCode === 0) {
+            const userId: number = getState().auth.id!
             let profileRes = await profileAPI.getUserProfile(userId)
             dispatch(setUserProfile(profileRes))
         }

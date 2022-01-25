@@ -9,16 +9,15 @@ import {ProfileData} from './ProfileData/ProfileData';
 import {ProfileDataForm, ProfileDataType} from './ProfileDataForm/ProfileDataForm';
 
 type ProfileInfoPropsType = {
-    id: number
     status: string
     profile: Nullable<ProfileType>
     updateUserStatus: (status: string) => void
     isOwner: boolean
     uploadPhoto: (file: File | null) => void
-    submitProfile: (profile: ProfileDataType, userId: number) => void
+    submitProfile: (profile: ProfileDataType) => void
 }
 
-const ProfileInfo = ({id,status, profile, updateUserStatus, isOwner, uploadPhoto, submitProfile}: ProfileInfoPropsType) => {
+const ProfileInfo = ({status, profile, updateUserStatus, isOwner, uploadPhoto, submitProfile}: ProfileInfoPropsType) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [hover, setHover] = useState<boolean>(false)
@@ -37,7 +36,7 @@ const ProfileInfo = ({id,status, profile, updateUserStatus, isOwner, uploadPhoto
         if (e.target.files!.length) uploadPhoto(e.target.files![0])
     }
 
-    const onSubmit = (data: ProfileDataType) => submitProfile(data, id)
+    const onSubmit = (data: ProfileDataType) => submitProfile(data)
 
     const activeClassName = `${s.status} ${isOwner && hover ? s.active : ''}`
 
