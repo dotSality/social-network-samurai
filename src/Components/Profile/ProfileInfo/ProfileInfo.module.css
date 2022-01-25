@@ -2,6 +2,12 @@
     padding: 10px;
 }
 
-.img {
+.status {
+    margin: 10px;
+   padding-left: 20px;
+}
 
+.status.active {
+    cursor: pointer;
+    text-decoration: underline;
 }

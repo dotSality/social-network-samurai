@@ -2,15 +2,17 @@ import React from "react";
 import Profile from '../Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
-import {getUserStatus, loadUserProfile, updateUserStatus, uploadPhoto} from '../../../redux/profile-reducer';
+import {getUserStatus, loadUserProfile, submitProfile, updateUserStatus, uploadPhoto} from '../../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
+import * as process from 'process';
+import {ProfileDataType} from './ProfileDataForm/ProfileDataForm';
 
 type PathParamsType = {
     usedId: string
 }
 
-type ContactsType = {
+export type ContactsType = {
     facebook: string | null,
     website: string | null,
     vk: string | null,
@@ -42,6 +44,7 @@ type MapDispatchToPropsType = {
     getUserStatus: (userId: number) => void
     updateUserStatus: (status: string) => void
     uploadPhoto: (photo: File | null) => void
+    submitProfile: (profile: ProfileDataType, userId: number) => void
 }
 
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -68,12 +71,6 @@ export class ProfileContainer extends React.Component<RoutedProfileType> {
     }
 
     componentDidMount() {
-        // let userId = +this.props.match.params.usedId
-        // if (!userId) {
-        //     userId = this.props.authorizedUserId as number
-        // }
-        // this.props.loadUserProfile(userId)
-        // this.props.getUserStatus(userId)
         this.refreshProfile()
     }
 
@@ -89,6 +86,7 @@ export class ProfileContainer extends React.Component<RoutedProfileType> {
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {loadUserProfile, getUserStatus, updateUserStatus, uploadPhoto}),
+    connect(mapStateToProps, {loadUserProfile, getUserStatus,
+        updateUserStatus, uploadPhoto, submitProfile}),
     withRouter,
 )(ProfileContainer)

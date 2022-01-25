@@ -1,6 +1,6 @@
 import {ThunkAction} from 'redux-thunk';
 import {authAPI} from '../api/api';
-import {AppStateType} from './redux-store';
+import {AppStateType, ThunkType} from './redux-store';
 import {Nullable} from './profile-reducer';
 
 const SET_USER_DATA = 'auth/SET-USER-DATA'
@@ -26,7 +26,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const authReducer = (state = initialState, action: CommonActionType): InitialStateType => {
+export const authReducer = (state = initialState, action: AuthActionType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {...state, ...action.payload, error: ''} as InitialStateType
@@ -39,7 +39,7 @@ export const authReducer = (state = initialState, action: CommonActionType): Ini
     }
 }
 
-export const loginRequest = (): AuthThunkType => {
+export const loginRequest = (): ThunkType => {
     return async (dispatch, getState: () => AppStateType) => {
         let res = await authAPI.isAuthRequest()
         if (res.resultCode === 0) {
@@ -49,7 +49,7 @@ export const loginRequest = (): AuthThunkType => {
     }
 }
 
-export const login = (data: SubmitDataType): AuthThunkType => {
+export const login = (data: SubmitDataType): ThunkType => {
     return async (dispatch, getState: () => AppStateType) => {
         let userLoginRes = await authAPI.userLogin(data)
         if (userLoginRes.resultCode === 0) {
@@ -65,17 +65,14 @@ export const login = (data: SubmitDataType): AuthThunkType => {
     }
 }
 
-export const logout = (): AuthThunkType => {
+export const logout = (): ThunkType => {
     return async (dispatch, getState: () => AppStateType) => {
         let logoutRes = await authAPI.userLogout()
         if (logoutRes.data.resultCode === 0) dispatch(setAuthUserData(null, null, null, false))
     }
 }
 
-type AuthThunkType = ThunkAction<void, AppStateType, unknown, CommonActionType>
-
-
-type CommonActionType = SubmitUserLoginType | SetDataActionType | StopSubmitType | SetCaptchaType
+export type AuthActionType = SubmitUserLoginType | SetDataActionType | StopSubmitType | SetCaptchaType
 
 export const submitUserLogin = (userId: number) => ({type: LOGIN_USER, userId} as const)
 type SubmitUserLoginType = ReturnType<typeof submitUserLogin>

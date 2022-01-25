@@ -56,8 +56,8 @@ export const LoginForm = (props: SubmitDataPropsType) => {
                             </div>
                             <span className={s.textBlock}>{props.error ? props.error : errors.captcha && errors.captcha?.message}</span>
                         </div>
-                    : props.error ? <div className={s.textBlock}>{props.error}</div>
-                        : <div className={s.textBlock}>{errors.password?.message}</div>
+                        : props.error ? <div className={s.textBlock}>{props.error}</div>
+                            : <div className={s.textBlock}>{errors.password?.message}</div>
                 }
                 <div>
                     <input type={'checkbox'}

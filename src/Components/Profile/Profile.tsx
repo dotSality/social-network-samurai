@@ -8,11 +8,13 @@ type ProfileType = ProfilePropsType & {
     isOwner: boolean
 }
 
-const Profile = (props: ProfileType) => {
+const Profile = ({authorizedUserId, uploadPhoto,
+                     isOwner, status, submitProfile,
+                     updateUserStatus, profile}: ProfileType) => {
     return (
         <div className={s.mainCont}>
-            <ProfileInfo uploadPhoto={props.uploadPhoto} isOwner={props.isOwner} status={props.status}
-                updateUserStatus={props.updateUserStatus} profile={props.profile}/>
+            <ProfileInfo id={authorizedUserId!} uploadPhoto={uploadPhoto} isOwner={isOwner} status={status}
+               submitProfile={submitProfile} updateUserStatus={updateUserStatus} profile={profile}/>
             <MyPostsContainer/>
         </div>
     )

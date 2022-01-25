@@ -1,12 +1,4 @@
-type TextareaValidatorType = {
-    required: string,
-    maxLength: {
-        value: number,
-        message: string,
-    }
-}
-
-export const postFieldValidator: TextareaValidatorType = {
+export const postFieldValidator = {
     required: 'You can\'t post an empty post',
     maxLength: {
         value: 10,

@@ -1,7 +1,8 @@
 import axios, {AxiosResponse} from 'axios';
 import {UserType} from '../redux/users-reducer';
-import {ProfileType} from '../Components/Profile/ProfileInfo/ProfileContainer';
+import {ContactsType, ProfileType} from '../Components/Profile/ProfileInfo/ProfileContainer';
 import {SubmitDataType} from '../redux/auth-reducer';
+import {ProfileDataType} from '../Components/Profile/ProfileInfo/ProfileDataForm/ProfileDataForm';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -58,6 +59,9 @@ export const profileAPI = {
         return instance.put<CommonResponseType<PhotosType>>(`profile/photo`, formData, {
             headers: {'Content-Type': 'multipart/form-data'}
         }).then(res => res.data)
+    },
+    submitProfile(profile: ProfileDataType) {
+        return instance.put<CommonResponseType>(`profile`, profile).then(res => res.data)
     }
 }
 
