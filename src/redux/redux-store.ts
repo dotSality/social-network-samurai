@@ -7,6 +7,7 @@ import {AuthActionType, authReducer} from './auth-reducer';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {AppActionType, appReducer} from './app-reducer';
 import {FormActionType, formReducer} from './form-reducer';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 
 const reducersBunch = combineReducers({
@@ -23,7 +24,10 @@ export type ActionType = PostActionType | MessageActionType
     | AppActionType | AuthActionType | UsersReducerActionType
     | FormActionType
 
-export const store = createStore(reducersBunch, applyMiddleware(thunkMiddleware));
+export const store = createStore(reducersBunch, composeWithDevTools(
+        applyMiddleware(thunkMiddleware)
+    )
+);
 
 export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
 
