@@ -13,12 +13,12 @@ export type ProfileDataType = {
 }
 
 type ProfileDataFormPropsType = {
-    offEditMode: () => void
     onSubmit: (data: ProfileDataType) => void
     profile: ProfileType
+    error: string | null
 }
 
-export const ProfileDataForm = ({profile, offEditMode, onSubmit}: ProfileDataFormPropsType) => {
+export const ProfileDataForm = ({error, profile, onSubmit}: ProfileDataFormPropsType) => {
 
     const {
         register,
@@ -46,7 +46,7 @@ export const ProfileDataForm = ({profile, offEditMode, onSubmit}: ProfileDataFor
 
     const onFormSubmit: SubmitHandler<ProfileDataType> = (data: ProfileDataType) => {
         onSubmit(data)
-        offEditMode()
+        // offEditMode()
     }
 
     return (
@@ -145,9 +145,9 @@ export const ProfileDataForm = ({profile, offEditMode, onSubmit}: ProfileDataFor
 
                 </div>
 
+                <div className={c.textBlock}>{error}</div>
                 <input className={s.submit} value={'Submit data'} type={'submit'}/>
             </form>
-            <button onClick={offEditMode}>Go to profile</button>
         </div>
     )
 }

@@ -8,13 +8,14 @@ type ProfileType = ProfilePropsType & {
     isOwner: boolean
 }
 
-const Profile = ({uploadPhoto,
+const Profile = ({editMode, uploadPhoto, formError, onEditMode,
                      isOwner, status, submitProfile,
                      updateUserStatus, profile}: ProfileType) => {
     return (
         <div className={s.mainCont}>
-            <ProfileInfo uploadPhoto={uploadPhoto} isOwner={isOwner} status={status}
-               submitProfile={submitProfile} updateUserStatus={updateUserStatus} profile={profile}/>
+            <ProfileInfo onEditMode={onEditMode} editMode={editMode}
+                error={formError} uploadPhoto={uploadPhoto} isOwner={isOwner} status={status}
+                submitProfile={submitProfile} updateUserStatus={updateUserStatus} profile={profile}/>
             <MyPostsContainer/>
         </div>
     )

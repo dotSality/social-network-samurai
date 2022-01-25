@@ -3,6 +3,7 @@ import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
 import {ProfileDataType} from '../Components/Profile/ProfileInfo/ProfileDataForm/ProfileDataForm';
 import {ThunkType} from './redux-store';
+import {setEditMode, setFormError} from './form-reducer';
 
 const ADD_POST = 'profile/ADD-POST'
 const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
@@ -88,6 +89,10 @@ export const submitProfile = (profile: ProfileDataType): ThunkType =>
             const userId: number = getState().auth.id!
             let profileRes = await profileAPI.getUserProfile(userId)
             dispatch(setUserProfile(profileRes))
+            dispatch(setEditMode(false))
+            dispatch(setFormError(null))
+        } else {
+            dispatch(setFormError(res.messages[0]))
         }
     }
 

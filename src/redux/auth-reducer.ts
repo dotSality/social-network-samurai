@@ -1,4 +1,3 @@
-import {ThunkAction} from 'redux-thunk';
 import {authAPI} from '../api/api';
 import {AppStateType, ThunkType} from './redux-store';
 import {Nullable} from './profile-reducer';

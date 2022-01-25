@@ -7,6 +7,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import * as process from 'process';
 import {ProfileDataType} from './ProfileDataForm/ProfileDataForm';
+import {onEditMode} from '../../../redux/form-reducer';
 
 type PathParamsType = {
     usedId: string
@@ -45,6 +46,7 @@ type MapDispatchToPropsType = {
     updateUserStatus: (status: string) => void
     uploadPhoto: (photo: File | null) => void
     submitProfile: (profile: ProfileDataType) => void
+    onEditMode: () => void
 }
 
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -56,6 +58,8 @@ const mapStateToProps = (state: AppStateType) => {
         status: state.profilePage.status,
         authorizedUserId: state.auth.id,
         isAuth: state.auth.isAuth,
+        formError: state.form.error,
+        editMode: state.form.editMode,
     }
 }
 
@@ -87,6 +91,6 @@ export class ProfileContainer extends React.Component<RoutedProfileType> {
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {loadUserProfile, getUserStatus,
-        updateUserStatus, uploadPhoto, submitProfile}),
+        updateUserStatus, uploadPhoto, submitProfile, onEditMode}),
     withRouter,
 )(ProfileContainer)

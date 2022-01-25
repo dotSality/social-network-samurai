@@ -6,6 +6,7 @@ import {usersReducer, UsersReducerActionType} from './users-reducer';
 import {AuthActionType, authReducer} from './auth-reducer';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {AppActionType, appReducer} from './app-reducer';
+import {FormActionType, formReducer} from './form-reducer';
 
 
 const reducersBunch = combineReducers({
@@ -15,10 +16,12 @@ const reducersBunch = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     app: appReducer,
+    form: formReducer,
 });
 
 export type ActionType = PostActionType | MessageActionType
     | AppActionType | AuthActionType | UsersReducerActionType
+    | FormActionType
 
 export const store = createStore(reducersBunch, applyMiddleware(thunkMiddleware));
 

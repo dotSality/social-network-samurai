@@ -15,19 +15,19 @@ type ProfileInfoPropsType = {
     isOwner: boolean
     uploadPhoto: (file: File | null) => void
     submitProfile: (profile: ProfileDataType) => void
+    error: string | null
+    onEditMode: () => void
+    editMode: boolean
 }
 
-const ProfileInfo = ({status, profile, updateUserStatus, isOwner, uploadPhoto, submitProfile}: ProfileInfoPropsType) => {
+const ProfileInfo = ({editMode, error,status, profile, onEditMode,
+                         updateUserStatus, isOwner, uploadPhoto, submitProfile}: ProfileInfoPropsType) => {
 
-    const [editMode, setEditMode] = useState<boolean>(false)
     const [hover, setHover] = useState<boolean>(false)
 
     if (!profile) {
         return <Preloader/>
     }
-
-    const onEditMode = () => setEditMode(true)
-    const offEditMode = () => setEditMode(false)
 
     const onHover = () => setHover(true)
     const offHover = () => setHover(false)
@@ -52,7 +52,7 @@ const ProfileInfo = ({status, profile, updateUserStatus, isOwner, uploadPhoto, s
                     : (status ? status : 'no status')}
                 </div>
             </div>
-            {editMode ? <ProfileDataForm profile={profile} onSubmit={onSubmit} offEditMode={offEditMode}/>
+            {editMode ? <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit}/>
                 : <ProfileData onEditMode={onEditMode} isOwner={isOwner} profile={profile}/>}
         </div>
     )
