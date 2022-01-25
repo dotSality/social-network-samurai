@@ -33,7 +33,7 @@ export const authAPI = {
         return instance.get<CommonResponseType<IsAuthResponseType>>(`auth/me`).then(res => res.data)
     },
     userLogin(data: SubmitDataType) {
-        return instance.post<SubmitDataType, CommonResponseType>(`auth/login`, data)
+        return instance.post<SubmitDataType, AxiosResponse<CommonResponseType>>(`auth/login`, data).then(res => res.data)
     },
     userLogout() {
         return instance.delete<CommonResponseType>(`auth/login`)
