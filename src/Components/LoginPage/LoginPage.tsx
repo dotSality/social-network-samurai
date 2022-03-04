@@ -1,28 +1,8 @@
 import React from 'react';
 import {FormInputsType, LoginForm} from './LoginForm';
-import {connect} from 'react-redux';
-import {login, SubmitDataType} from '../../bll/auth-reducer';
-import {RootStateType} from '../../bll/store';
+import {login} from '../../bll/auth-reducer';
 import {Navigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../bll/hooks';
-
-// type MapStateToPropsType = {
-//     isAuth: boolean
-//     error: string
-//     captchaUrl: string
-// }
-//
-// const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
-//     isAuth: state.auth.isAuth,
-//     error: state.auth.error,
-//     captchaUrl: state.auth.captchaUrl,
-// })
-//
-// type MapDispatchToPropsType = {
-//     login: (data: SubmitDataType) => void
-// }
-//
-// type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
 
 export const LoginPage = () => {
 
@@ -39,5 +19,3 @@ export const LoginPage = () => {
         <LoginForm captchaUrl={captchaUrl} error={error} onSubmitData={onSubmitData}/>
     </div>
 }
-
-// export default connect(mapStateToProps, {login})(LoginPage)

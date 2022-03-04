@@ -2,7 +2,7 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {aboutMeValidator, descriptionValidator, fullNameValidator} from '../../../../utils/profileFormValidators/profile-valid';
 import s from './ProfileDataForm.module.css'
 import c from './../../../common/styles/Common.module.css';
-import {ContactsType, ProfileType} from '../../Profile';
+import {ContactsType} from '../../Profile';
 import {useAppSelector} from '../../../../bll/hooks';
 
 export type ProfileDataType = {
@@ -26,7 +26,6 @@ export const ProfileDataForm = ({error, onSubmit}: ProfileDataFormPropsType) => 
         register,
         handleSubmit,
         formState: {errors},
-        reset
     } = useForm<ProfileDataType>({
         defaultValues: {
             lookingForAJob: profile.lookingForAJob,

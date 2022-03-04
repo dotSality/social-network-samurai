@@ -1,14 +1,16 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import Post from './Post/Post';
-import {MyPostsPropsType} from './MyPostsContainer';
 import {AddPostForm} from './AddPostForm/AddPostForm';
+import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
+import {addPost} from '../../../bll/profile-reducer';
 
-const MyPosts = (props: MyPostsPropsType) => {
+export const MyPosts = () => {
+    const dispatch = useAppDispatch()
+    const posts = useAppSelector(state => state.profilePage.posts)
+    let postsElements = posts.map(p => (<Post key={p.id} id={p.id} post={p.post} likesCount={p.likesCount}/>))
 
-    let postsElements = props.posts.map(p => (<Post key={p.id} id={p.id} post={p.post} likesCount={p.likesCount}/>))
-
-    const onSubmit = (text: string) => props.addPost(text)
+    const onSubmit = (text: string) => dispatch(addPost(text))
 
     return (<div className={s.postsBlock}>
         <h3>My posts</h3>
@@ -22,5 +24,3 @@ const MyPosts = (props: MyPostsPropsType) => {
         </div>
     </div>)
 }
-
-export default MyPosts;

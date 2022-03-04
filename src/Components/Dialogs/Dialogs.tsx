@@ -5,7 +5,7 @@ import {Message} from './Message/MessageItem';
 import {MessageForm} from './AddMessageForm/MessageForm';
 import {useAppSelector} from '../../bll/hooks';
 
-export default () => {
+const Dialogs = () => {
 
     const {dialogs,messages} = useAppSelector(state => state.dialogsPage)
     let dialogItems = dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
@@ -26,3 +26,5 @@ export default () => {
         </div>
     )
 }
+
+export default Dialogs

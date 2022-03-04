@@ -1,8 +1,5 @@
 import s from './Users.module.css';
 import React from 'react';
-import {requestUsers, setCurrentPage} from '../../bll/users-reducer';
-import {useAppDispatch, useAppSelector} from '../../bll/hooks';
-import {usersData} from '../../bll/selectors';
 
 type PropsType = {
     onPageChanged: (i: number, pageSize: number) => void,
@@ -14,7 +11,6 @@ type PropsType = {
 
 export const Pagination = ({currentPage, onPageChanged, totalUsersCount, pageSize}: PropsType) => {
 
-    // const {totalUsersCount, pageSize, currentPage} = useAppSelector(usersData)
     const pages = []
     const prevTwoPages = () => onPageChanged(currentPage - 2, pageSize)
     const nextTwoPages = () => onPageChanged(currentPage + 2, pageSize)

@@ -11,7 +11,7 @@ export const Contacts = (props: ContactsType) => {
     let contacts = keys.map((key, i) => {
         return <div key={key}>
             {values[i] && <div className={s.link}><b>{key}</b>:
-                {<a target={'_blank'} href={values[i]!}> {values[i]}</a>}</div>}
+                {<a target={'_blank'} rel={'noreferrer'} href={values[i]!}> {values[i]}</a>}</div>}
         </div>
     })
 
