@@ -1,4 +1,4 @@
-import {ContactsType} from '../ProfileContainer';
+import {ContactsType} from '../../Profile';
 import React from 'react';
 import s from './Contacts.module.css';
 

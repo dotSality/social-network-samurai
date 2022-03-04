@@ -4,7 +4,7 @@ export {}
  import {profileReducer, PostActionType} from './profile-reducer';
  import {dialogsReducer, MessageActionType} from './dialogs-reducer';
  import {sidebarReducer} from './sidebar-reducer';
- import {ActionType} from './redux-store';
+ import {ActionType} from './bll-store';
 
  const store: StoreType = {
      _state: {

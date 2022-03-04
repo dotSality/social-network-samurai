@@ -1,40 +1,43 @@
 import React from 'react';
 import {FormInputsType, LoginForm} from './LoginForm';
 import {connect} from 'react-redux';
-import {login, SubmitDataType} from '../../redux/auth-reducer';
-import {AppStateType} from '../../redux/redux-store';
-import {Redirect} from 'react-router-dom';
+import {login, SubmitDataType} from '../../bll/auth-reducer';
+import {RootStateType} from '../../bll/store';
+import {Navigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../bll/hooks';
 
-type MapStateToPropsType = {
-    isAuth: boolean
-    error: string
-    captchaUrl: string
-}
+// type MapStateToPropsType = {
+//     isAuth: boolean
+//     error: string
+//     captchaUrl: string
+// }
+//
+// const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
+//     isAuth: state.auth.isAuth,
+//     error: state.auth.error,
+//     captchaUrl: state.auth.captchaUrl,
+// })
+//
+// type MapDispatchToPropsType = {
+//     login: (data: SubmitDataType) => void
+// }
+//
+// type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    isAuth: state.auth.isAuth,
-    error: state.auth.error,
-    captchaUrl: state.auth.captchaUrl,
-})
+export const LoginPage = () => {
 
-type MapDispatchToPropsType = {
-    login: (data: SubmitDataType) => void
-}
-
-type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
-
-const LoginPage = (props: LoginPagePropsType) => {
-
+    const dispatch = useAppDispatch()
+    const {isAuth, error, captchaUrl} = useAppSelector(state => state.auth)
     const onSubmitData = (data: FormInputsType) => {
-        props.login(data)
+        dispatch(login(data))
     }
 
-    return props.isAuth ? (
-        <Redirect to={'/profile'}/>
+    return isAuth ? (
+        <Navigate to={'/profile'}/>
     ) : <div>
         <h1>Login page</h1>
-        <LoginForm captchaUrl={props.captchaUrl} error={props.error} onSubmitData={onSubmitData}/>
+        <LoginForm captchaUrl={captchaUrl} error={error} onSubmitData={onSubmitData}/>
     </div>
 }
 
-export default connect(mapStateToProps, {login})(LoginPage)
+// export default connect(mapStateToProps, {login})(LoginPage)

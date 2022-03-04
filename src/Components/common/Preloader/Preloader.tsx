@@ -1,11 +1,11 @@
-import loading from '../Img/loading-buffering.gif';
+import loading from '../Img/Circle-Loading.svg';
 import React from 'react';
-
+import s from './Preloader.module.scss';
 
 export const Preloader = () => {
     return (
-        <div>
-            <img style={{width: '250px'}} src={loading} alt={'preloader'}/>
+        <div className={s.container}>
+            <img style={{width: '350px'}} src={loading} alt={'preloader'}/>
         </div>
     )
 }

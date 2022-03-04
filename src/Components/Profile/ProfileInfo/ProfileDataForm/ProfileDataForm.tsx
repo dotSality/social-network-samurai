@@ -2,7 +2,8 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {aboutMeValidator, descriptionValidator, fullNameValidator} from '../../../../utils/profileFormValidators/profile-valid';
 import s from './ProfileDataForm.module.css'
 import c from './../../../common/styles/Common.module.css';
-import {ContactsType, ProfileType} from '../ProfileContainer';
+import {ContactsType, ProfileType} from '../../Profile';
+import {useAppSelector} from '../../../../bll/hooks';
 
 export type ProfileDataType = {
     lookingForAJob: boolean,
@@ -14,11 +15,12 @@ export type ProfileDataType = {
 
 type ProfileDataFormPropsType = {
     onSubmit: (data: ProfileDataType) => void
-    profile: ProfileType
     error: string | null
 }
 
-export const ProfileDataForm = ({error, profile, onSubmit}: ProfileDataFormPropsType) => {
+export const ProfileDataForm = ({error, onSubmit}: ProfileDataFormPropsType) => {
+
+    const profile = useAppSelector(state => state.profilePage.profile!)
 
     const {
         register,
@@ -46,7 +48,6 @@ export const ProfileDataForm = ({error, profile, onSubmit}: ProfileDataFormProps
 
     const onFormSubmit: SubmitHandler<ProfileDataType> = (data: ProfileDataType) => {
         onSubmit(data)
-        // offEditMode()
     }
 
     return (

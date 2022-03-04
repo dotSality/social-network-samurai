@@ -1,24 +1,23 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
+import {updateUserStatus} from '../../../bll/profile-reducer';
 
-type ProfileStatusPropsType = {
-    status: string
-    updateUserStatus: (status: string) => void
-}
+export const ProfileStatus = () => {
 
-export const ProfileStatus = (props: ProfileStatusPropsType) => {
-
+    const profileStatus = useAppSelector(state => state.profilePage.status)
+    const dispatch = useAppDispatch()
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [status, setStatus] = useState<string>(props.status)
+    const [status, setStatus] = useState<string>(profileStatus)
 
     useEffect(() => {
-        setStatus(props.status)
-    },[props.status])
+        setStatus(profileStatus)
+    }, [profileStatus])
 
     const onEditMode = () => setEditMode(true)
 
     const offEditMode = () => {
         setEditMode(false)
-        props.updateUserStatus(status)
+        dispatch(updateUserStatus(status))
     }
 
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,37 +1,36 @@
-import React from 'react';
-import {UserType} from '../../redux/users-reducer';
+import React, {useEffect} from 'react';
+import {requestUsers, setCurrentPage} from '../../bll/users-reducer';
 import {Pagination} from './Pagination';
 import {User} from './User';
+import {useAppDispatch, useAppSelector} from '../../bll/hooks';
+import {usersData} from '../../bll/selectors';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
-type PresentUsersPropsType = {
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    onPageChanged: (currentPage: number) => void
-    toggleFollow: (userID: number, isFollowed: boolean) => void
-    users: UserType[]
-    isFollowing: number[]
-}
 
-export const Users = (props: PresentUsersPropsType) => {
-    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+export default WithAuthRedirect(() => {
+    const {totalUsersCount, pageSize, currentPage} = useAppSelector(usersData)
+    const {users} = useAppSelector(usersData)
 
-    const pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(requestUsers({currentPage, pageSize}))
+    }, [])
+
+    const onPageChanged = (currentPage: number, pageSize: number) => {
+        dispatch(setCurrentPage(currentPage));
+        dispatch(requestUsers({currentPage, pageSize}));
     }
 
     return <div>
-        <Pagination pagesCount={pagesCount}
-            onPageChanged={props.onPageChanged}
-            currentPage={props.currentPage}/>
-        {
-            props.users.map(u => <User key={u.id} u={u}
-                isFollowing={props.isFollowing}
-                toggleFollow={props.toggleFollow}/>)
-        }
+        <Pagination
+            pageSize={pageSize}
+            currentPage={currentPage}
+            totalUsersCount={totalUsersCount}
+            onPageChanged={onPageChanged}
+        />
+        {users.map(u => <User key={u.id} u={u}/>)}
     </div>
-}
+})
 
 
 

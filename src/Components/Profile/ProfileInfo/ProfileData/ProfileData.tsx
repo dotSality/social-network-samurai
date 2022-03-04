@@ -1,15 +1,16 @@
 import React from 'react';
-import {ProfileType} from '../ProfileContainer';
 import {Contacts} from '../Contacts/Contacts';
 import s from './ProfileData.module.css'
+import {useAppSelector} from '../../../../bll/hooks';
 
 type ProfileDataPropsType = {
-    profile: ProfileType
     isOwner: boolean
     onEditMode: () => void
 }
 
-export const ProfileData = ({profile, isOwner, onEditMode}: ProfileDataPropsType) => {
+export const ProfileData = ({isOwner, onEditMode}: ProfileDataPropsType) => {
+
+    const profile = useAppSelector(state => state.profilePage.profile!)
 
     return (
         <div className={s.container}>

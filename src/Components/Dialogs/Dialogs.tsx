@@ -2,13 +2,14 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {DialogItem} from './Dialog/DialogItem';
 import {Message} from './Message/MessageItem';
-import {DialogsPropsType} from './DialogsContainer';
 import {MessageForm} from './AddMessageForm/MessageForm';
+import {useAppSelector} from '../../bll/hooks';
 
-const Dialogs = (props: DialogsPropsType) => {
+export default () => {
 
-    let dialogItems = props.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
-    let messageItems = props.messages.map(m => <Message key={m.id} id={m.id} message={m.message} sender={m.sender}/>)
+    const {dialogs,messages} = useAppSelector(state => state.dialogsPage)
+    let dialogItems = dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
+    let messageItems = messages.map(m => <Message key={m.id} id={m.id} message={m.message} sender={m.sender}/>)
 
     return (
         <div className={s.dialogs}>
@@ -18,12 +19,10 @@ const Dialogs = (props: DialogsPropsType) => {
             <div className={s.messages}>
                 {messageItems}
                 <div className={s.addMsg}>
-                    <MessageForm {...props}/>
+                    <MessageForm/>
                 </div>
             </div>
 
         </div>
     )
 }
-
-export default Dialogs;

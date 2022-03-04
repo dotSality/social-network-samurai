@@ -1,12 +1,14 @@
 import {useForm} from 'react-hook-form';
-import {DialogsPropsType} from '../DialogsContainer';
+import {useAppDispatch} from '../../../bll/hooks';
+import {addMessage} from '../../../bll/dialogs-reducer';
 
 type MessageData = {
     message: string
 }
 
-export const MessageForm = (props: DialogsPropsType) => {
+export const MessageForm = () => {
 
+    const dispatch = useAppDispatch()
     const {
         register,
         handleSubmit,
@@ -18,7 +20,7 @@ export const MessageForm = (props: DialogsPropsType) => {
     })
 
     const onSubmit = (data: MessageData) => {
-        props.addMessage(data.message)
+        dispatch(addMessage(data.message))
         reset()
     }
 
