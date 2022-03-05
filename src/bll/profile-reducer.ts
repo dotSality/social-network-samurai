@@ -56,10 +56,8 @@ export const profileReducer = slice.reducer
 export const {deletePost, addPost} = slice.actions
 
 export const loadUserProfile = createAsyncThunk('profile/loadUserProfile', async (userId: number, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.getUserProfile(userId)
-        console.log(res)
         dispatch(setAppError(null))
         dispatch(setAppStatus('succeeded'))
         return res
@@ -71,7 +69,6 @@ export const loadUserProfile = createAsyncThunk('profile/loadUserProfile', async
 })
 
 export const getUserStatus = createAsyncThunk('profile/getUserStatus', async (userId: number, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.getUserStatus(userId)
         dispatch(setAppError(null))

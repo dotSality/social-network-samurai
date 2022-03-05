@@ -41,11 +41,13 @@ export default WithAuthRedirect(() => {
     const profile = useAppSelector(state => state.profilePage.profile)
 
     useEffect(() => {
+        console.log('2')
         refreshProfile()
     }, [userId])
 
     const refreshProfile = () => {
         if (userId) {
+            console.log('1')
             let id = +userId
             dispatch(loadUserProfile(id))
             dispatch(getUserStatus(id))

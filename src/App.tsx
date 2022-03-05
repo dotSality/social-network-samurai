@@ -19,13 +19,16 @@ const Users = LazyWithSuspense(lazy(() => import('./Components/Users/Users')))
 export const App = () => {
 
     const {id} = useAppSelector(state => state.auth)
-    const initialized = useAppSelector(state => state.app.initialized)
+    const {initialized, status} = useAppSelector(state => state.app)
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(initializeApp())
     }, [])
 
     if (!initialized) return <Preloader/>
+
+    if (status === 'loading') return <Preloader/>
+
     return <div className={'app-wrapper'}>
         <Header/>
         <NavBar/>

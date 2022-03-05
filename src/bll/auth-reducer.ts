@@ -45,21 +45,17 @@ const slice = createSlice({
 export const authReducer = slice.reducer
 
 export const authMe = createAsyncThunk('auth/loginRequest', async (_, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
     try {
         let res = await authAPI.isAuthRequest()
         if (res.resultCode === 0) {
             let {id, email, login} = res.data
-            dispatch(setAppStatus('succeeded'))
             return {id, email, login, isAuth: true}
         } else {
             dispatch(setAppError(res.messages[0]))
-            dispatch(setAppStatus('failed'))
             return rejectWithValue({})
         }
     } catch (e: any) {
         dispatch(setAppError(e.message))
-        dispatch(setAppStatus('failed'))
         return rejectWithValue({})
     }
 })
