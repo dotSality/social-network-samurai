@@ -1,4 +1,4 @@
-import loading from '../Img/Circle-Loading.svg';
+import loading from '../../common/Img/Circle-Loading.svg';
 import React from 'react';
 import s from './Preloader.module.scss';
 

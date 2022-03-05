@@ -8,7 +8,8 @@ import {addPost} from '../../../bll/profile-reducer';
 export const MyPosts = () => {
     const dispatch = useAppDispatch()
     const posts = useAppSelector(state => state.profilePage.posts)
-    let postsElements = posts.map(p => (<Post key={p.id} id={p.id} post={p.post} likesCount={p.likesCount}/>))
+    let postsElements = posts.map(({post, id, likesCount}) =>
+        (<Post key={id} id={id} post={post} likesCount={likesCount}/>))
 
     const onSubmit = (text: string) => dispatch(addPost(text))
 

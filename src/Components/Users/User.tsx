@@ -1,5 +1,5 @@
 import {NavLink} from 'react-router-dom';
-import userPhoto from '../common/Img/default-user.jpg';
+import userPhoto from '../../common/Img/default-user.jpg';
 import s from './Users.module.css';
 import React from 'react';
 import {toggleFollow, UserType} from '../../bll/users-reducer';
@@ -18,23 +18,23 @@ export const User = ({u}: UserPropsType) => {
 
     return (
         <div>
-                <span>
-                    <div>
-                        <NavLink to={'/profile/' + u.id}>
-                        <img src={u.photos.small ? u.photos.small : userPhoto} className={s.userPhoto} alt={'user face'}/>
-                        </NavLink>
-                    </div>
-                    <div>
-                        <button disabled={isFollowing.some(id => id === u.id)}
-                            onClick={toggleFollowHandler}>{!u.followed ? 'Follow' : 'Unfollow'}</button>
-                    </div>
-                </span>
             <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
-                    </span>
+                <div>
+                    <NavLink to={'/profile/' + u.id}>
+                        <img src={u.photos.small ? u.photos.small : userPhoto} className={s.userPhoto} alt={'user face'}/>
+                    </NavLink>
+                </div>
+                <div>
+                    <button disabled={isFollowing.some(id => id === u.id)}
+                        onClick={toggleFollowHandler}>{!u.followed ? 'Follow' : 'Unfollow'}</button>
+                </div>
+            </span>
+            <span>
+                <span>
+                    <div>{u.name}</div>
+                    <div>{u.status}</div>
                 </span>
+            </span>
         </div>
     )
 }

@@ -1,6 +1,6 @@
-import {addMessage, dialogsReducer, DialogsStateType, DialogType, MessageType} from './dialogs-reducer';
+import {addMessage, dialogsReducer, DialogType, MessageType} from './dialogs-reducer';
 
-let state:DialogsStateType;
+let state: any;
 
 beforeEach(() => {
     state = {

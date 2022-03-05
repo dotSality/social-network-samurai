@@ -1,7 +1,7 @@
 import {ComponentType, Suspense} from 'react';
-import {Preloader} from '../Components/common/Preloader/Preloader';
+import {Preloader} from '../Components/Preloader/Preloader';
 
-export function LazyWithSuspense<T = any>(Component: ComponentType) {
+export function LazyWithSuspense<T>(Component: ComponentType) {
     return (props: T) => <Suspense fallback={<Preloader/>}>
         <Component {...props}/>
     </Suspense>

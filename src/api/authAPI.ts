@@ -14,7 +14,7 @@ export const authAPI = {
         return instance.delete<CommonResponseType>(`auth/login`)
     },
     captchaRequest() {
-        return instance.get<CommonResponseType<{ url: string }>>('security/get-captcha-url')
+        return instance.get<{ url: string }>('security/get-captcha-url')
     }
 }
 

@@ -3,10 +3,10 @@ import './App.css';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {LoginPage} from './Components/LoginPage/LoginPage';
 import {initializeApp} from './bll/app-reducer';
-import {Preloader} from './Components/common/Preloader/Preloader';
+import {Preloader} from './Components/Preloader/Preloader';
 import {LazyWithSuspense} from './HOC/LazyWithSuspense';
 import {useAppDispatch, useAppSelector} from './bll/hooks';
 import {Header} from './Components/Header/Header';
@@ -18,6 +18,7 @@ const Users = LazyWithSuspense(lazy(() => import('./Components/Users/Users')))
 
 export const App = () => {
 
+    const {id} = useAppSelector(state => state.auth)
     const initialized = useAppSelector(state => state.app.initialized)
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -30,6 +31,7 @@ export const App = () => {
         <NavBar/>
         <div className={'app-wrapper-content'}>
             <Routes>
+                <Route path={'/profile/'} element={<Navigate to={`/profile/${id}`}/>}/>
                 <Route path={'/login/'} element={<LoginPage/>}/>
                 <Route path={'/dialogs/'} element={<Dialogs/>}/>
                 <Route path={'/profile/:userId'} element={<Profile/>}/>

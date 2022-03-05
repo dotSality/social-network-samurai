@@ -1,6 +1,8 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
-import s from '../common/styles/Common.module.css'
+import s from '../../common/styles/Common.module.css'
 import {captchaFieldValidator, emailFieldValidator, passwordFieldValidator} from '../../utils/validators/validators';
+import {Nullable} from '../../bll/profile-reducer';
+import {useAppSelector} from '../../bll/hooks';
 
 export type FormInputsType = {
     email: string,
@@ -11,11 +13,11 @@ export type FormInputsType = {
 
 type SubmitDataPropsType = {
     onSubmitData: (data: FormInputsType) => void
-    error: string
     captchaUrl: string
 }
 
 export const LoginForm = (props: SubmitDataPropsType) => {
+    const {error, status} = useAppSelector(state => state.app)
     const {
         register,
         handleSubmit,
@@ -54,9 +56,12 @@ export const LoginForm = (props: SubmitDataPropsType) => {
                             <div>
                                 <input className={s.textArea} {...register('captcha', captchaFieldValidator)} />
                             </div>
-                            <span className={s.textBlock}>{props.error ? props.error : errors.captcha && errors.captcha?.message}</span>
+                            <>
+                                {status === 'failed' &&
+                                <span className={s.textBlock}>{error ? error : errors.captcha && errors.captcha?.message}</span>}
+                            </>
                         </div>
-                        : props.error ? <div className={s.textBlock}>{props.error}</div>
+                        : error ? <div className={s.textBlock}>{error}</div>
                             : <div className={s.textBlock}>{errors.password?.message}</div>
                 }
                 <div>

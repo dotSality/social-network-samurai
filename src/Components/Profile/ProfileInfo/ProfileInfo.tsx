@@ -1,13 +1,11 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './ProfileInfo.module.css'
-import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileStatus} from './ProfileStatus';
 import {submitProfile, uploadPhoto} from '../../../bll/profile-reducer';
-import userPhoto from './../../common/Img/default-user.jpg';
+import userPhoto from './../../../common/Img/default-user.jpg';
 import {ProfileData} from './ProfileData/ProfileData';
 import {ProfileDataForm, ProfileDataType} from './ProfileDataForm/ProfileDataForm';
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
-import {setEditMode} from '../../../bll/form-reducer';
 
 type PropsType = {
     isOwner: boolean
@@ -16,11 +14,12 @@ type PropsType = {
 export const ProfileInfo = ({isOwner}: PropsType) => {
 
     const {profile, status} = useAppSelector(state => state.profilePage)
-    const {editMode, error} = useAppSelector(state => state.form)
+    const {error} = useAppSelector(state => state.app)
+    const [editMode, setEditMode] = useState<boolean>(false)
     const dispatch = useAppDispatch()
     const [hover, setHover] = useState<boolean>(false)
 
-    const onEditMode = () => dispatch(setEditMode(true))
+    const onEditMode = () => setEditMode(true)
     const onHover = () => setHover(true)
     const offHover = () => setHover(false)
 
@@ -28,18 +27,17 @@ export const ProfileInfo = ({isOwner}: PropsType) => {
         if (e.target.files!.length) dispatch(uploadPhoto(e.target.files![0]))
     }
 
-    const onSubmit = (data: ProfileDataType) => dispatch(submitProfile(data))
+    const onSubmit = (data: ProfileDataType) => {
+        setEditMode(false)
+        dispatch(submitProfile(data))
+    }
 
     const activeClassName = `${s.status} ${isOwner && hover ? s.active : ''}`
-
-    if (!profile) {
-        return <Preloader/>
-    }
 
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.large || userPhoto} alt={'profile owner'}/>
+                <img src={profile?.photos.large || userPhoto} alt={'profile owner'}/>
                 {isOwner && <input onChange={onMainPhotoSelect} type={'file'}/>}
             </div>
             <div>
@@ -49,8 +47,10 @@ export const ProfileInfo = ({isOwner}: PropsType) => {
                         : (status ? status : 'no status')}
                 </div>
             </div>
-            {editMode ? <ProfileDataForm error={error} onSubmit={onSubmit}/>
-                : <ProfileData onEditMode={onEditMode} isOwner={isOwner}/>}
+            <>
+                {editMode ? <ProfileDataForm error={error} onSubmit={onSubmit}/>
+                    : <ProfileData onEditMode={onEditMode} isOwner={isOwner}/>}
+            </>
         </div>
     )
 }

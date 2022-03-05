@@ -1,5 +1,6 @@
 import {usersAPI} from '../api/usersAPI';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {setAppError, setAppStatus} from './app-reducer';
 
 type PhotosType = {
     small: string | null
@@ -30,17 +31,8 @@ const slice = createSlice({
             const user = state.users.find(u => u.id === action.payload)
             if (user) user.followed = !user.followed
         },
-        setUsers(state, action: PayloadAction<UserType[]>) {
-            state.users = action.payload
-        },
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload
-        },
-        setTotalCount(state, action: PayloadAction<number>) {
-            state.totalUsersCount = action.payload
-        },
-        toggleFetching(state, action: PayloadAction<boolean>) {
-            state.isFetching = action.payload
         },
         toggleIsFollowingProgress(state, action: PayloadAction<{ isFetching: boolean, userID: number }>) {
             state.isFollowing = action.payload.isFetching
@@ -48,29 +40,48 @@ const slice = createSlice({
                 : state.isFollowing.filter(id => id !== action.payload.userID)
         }
     },
+    extraReducers: builder => {
+        builder
+            .addCase(requestUsers.fulfilled, (state, action) => {
+                return {...state, ...action.payload}
+            })
+    }
 })
 
 export const usersReducer = slice.reducer
-export const {setCurrentPage, setTotalCount, setUsers, toggleFetching, followToggle, toggleIsFollowingProgress} = slice.actions
+export const {setCurrentPage, followToggle, toggleIsFollowingProgress} = slice.actions
 
 export const requestUsers = createAsyncThunk('users/requestUsers',
     async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, {dispatch}) => {
-        let getUsersRes = await usersAPI.getUsers(currentPage, pageSize)
-        dispatch(toggleFetching(false));
-        dispatch(setUsers(getUsersRes.items));
-        dispatch(setTotalCount(getUsersRes.totalCount));
+        dispatch(setAppStatus('loading'))
+        try {
+            let res = await usersAPI.getUsers(currentPage, pageSize)
+            dispatch(setAppStatus('succeeded'))
+            dispatch(setAppError(null))
+            return {isFetching: false, users: res.items, totalUsersCount: res.totalCount}
+        } catch (e: any) {
+            dispatch(setAppStatus('failed'))
+            dispatch(setAppError(e.message))
+        }
     })
 
 export const toggleFollow = createAsyncThunk('users/toggleFollow',
     async ({userID, isFollowed}: { userID: number, isFollowed: boolean }, {dispatch}) => {
-        dispatch(toggleIsFollowingProgress({isFetching: true, userID}))
-        await usersAPI.getUserData(userID)
-        if (isFollowed) {
-            let unfollowRes = await usersAPI.unfollowUserRequest(userID)
-            if (unfollowRes.data.resultCode === 0) dispatch(followToggle(userID))
-        } else {
-            let followRes = await usersAPI.followUserRequest(userID)
-            if (followRes.data.resultCode === 0) dispatch(followToggle(userID))
+        dispatch(setAppStatus('loading'))
+        try {
+            dispatch(toggleIsFollowingProgress({isFetching: true, userID}))
+            if (isFollowed) {
+                let unfollowRes = await usersAPI.unfollowUserRequest(userID)
+                if (unfollowRes.data.resultCode === 0) dispatch(followToggle(userID))
+            } else {
+                let followRes = await usersAPI.followUserRequest(userID)
+                if (followRes.data.resultCode === 0) dispatch(followToggle(userID))
+            }
+            dispatch(toggleIsFollowingProgress({isFetching: false, userID}))
+            dispatch(setAppStatus('succeeded'))
+            dispatch(setAppError(null))
+        } catch (e: any) {
+            dispatch(setAppError(e.message))
+            dispatch(setAppStatus('failed'))
         }
-        dispatch(toggleIsFollowingProgress({isFetching: false, userID}))
     })

@@ -6,6 +6,7 @@ import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
+import {Preloader} from '../Preloader/Preloader';
 
 export type ContactsType = {
     facebook: string | null,
@@ -33,13 +34,13 @@ export type ProfileType = {
 }
 
 export default WithAuthRedirect(() => {
-    console.log('profile')
+
     const {userId} = useParams()
     const dispatch = useAppDispatch()
     const {id} = useAppSelector(state => state.auth)
+    const profile = useAppSelector(state => state.profilePage.profile)
 
     useEffect(() => {
-        console.log(userId)
         refreshProfile()
     }, [userId])
 
@@ -52,6 +53,10 @@ export default WithAuthRedirect(() => {
     }
 
     const isOwner = userId ? +userId === id : false
+
+    if (!profile) {
+        return <Preloader/>
+    }
 
     return (
         <div className={s.mainCont}>

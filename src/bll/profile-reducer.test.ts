@@ -1,6 +1,6 @@
-import {addPost, deletePost, PostType, ProfilePageType, profileReducer} from './profile-reducer';
+import {addPost, deletePost, PostType, profileReducer} from './profile-reducer';
 
-let state: ProfilePageType;
+let state: any;
 
 beforeEach(() => {
     state = {

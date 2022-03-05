@@ -5,7 +5,6 @@ import {sidebarReducer} from './sidebar-reducer';
 import {usersReducer} from './users-reducer';
 import {authReducer} from './auth-reducer';
 import {appReducer} from './app-reducer';
-import {formReducer} from './form-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 
 
@@ -16,7 +15,6 @@ const reducersBunch = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     app: appReducer,
-    form: formReducer,
 });
 
 export const store = configureStore({
