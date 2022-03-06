@@ -3,8 +3,9 @@
 }
 
 .status {
+    display: inline-block;
     margin: 10px;
-   padding-left: 20px;
+    padding: 0 20px;
 }
 
 .status.active {

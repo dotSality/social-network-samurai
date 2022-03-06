@@ -1,12 +1,8 @@
-.container {
+.loader {
   position: relative;
-  height: 100vh;
-  top: 0;
-  left: 0;
+  top: 30%;
   width: 100%;
-  //top: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3;
 }

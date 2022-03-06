@@ -33,14 +33,14 @@ export const ProfileDataForm = ({error, onSubmit}: ProfileDataFormPropsType) => 
             fullName: profile.fullName,
             aboutMe: profile.aboutMe || '',
             contacts: {
-                facebook: profile.contacts.facebook || null,
-                website: profile.contacts.website || null,
-                vk: profile.contacts.vk || null,
-                twitter: profile.contacts.twitter || null,
-                instagram: profile.contacts.instagram || null,
-                youtube: profile.contacts.youtube || null,
-                github: profile.contacts.github || null,
-                mainLink: profile.contacts.mainLink || null,
+                facebook: profile.contacts.facebook,
+                website: profile.contacts.website,
+                vk: profile.contacts.vk,
+                twitter: profile.contacts.twitter,
+                instagram: profile.contacts.instagram,
+                youtube: profile.contacts.youtube,
+                github: profile.contacts.github,
+                mainLink: profile.contacts.mainLink,
             }
         }
     })

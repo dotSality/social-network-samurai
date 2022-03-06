@@ -20,7 +20,7 @@ const slice = createSlice({
             {id: 3, post: 'Wazzup?', likesCount: 23},
         ] as PostType[],
         profile: null as Nullable<ProfileType>,
-        status: '',
+        status: null as Nullable<string>,
     },
     reducers: {
         addPost(state, action: PayloadAction<string>) {
@@ -34,6 +34,10 @@ const slice = createSlice({
         deletePost(state, action: PayloadAction<number>) {
             const postIndex = state.posts.findIndex(p => action.payload === p.id)
             state.posts.splice(postIndex, 1)
+        },
+        clearProfileData(state) {
+            state.profile = null;
+            state.status = null;
         },
     },
     extraReducers: builder => {
@@ -53,9 +57,10 @@ const slice = createSlice({
 export type Nullable<T> = T | null
 
 export const profileReducer = slice.reducer
-export const {deletePost, addPost} = slice.actions
+export const {deletePost, addPost, clearProfileData} = slice.actions
 
 export const loadUserProfile = createAsyncThunk('profile/loadUserProfile', async (userId: number, {dispatch, rejectWithValue}) => {
+    dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.getUserProfile(userId)
         dispatch(setAppError(null))
@@ -69,6 +74,7 @@ export const loadUserProfile = createAsyncThunk('profile/loadUserProfile', async
 })
 
 export const getUserStatus = createAsyncThunk('profile/getUserStatus', async (userId: number, {dispatch, rejectWithValue}) => {
+    dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.getUserStatus(userId)
         dispatch(setAppError(null))

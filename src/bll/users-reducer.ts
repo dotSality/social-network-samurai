@@ -23,7 +23,7 @@ const slice = createSlice({
         pageSize: 5,
         totalUsersCount: 0,
         currentPage: 1,
-        isFetching: true,
+        isFetching: false,
         isFollowing: [] as number[]
     },
     reducers: {
@@ -38,6 +38,9 @@ const slice = createSlice({
             state.isFollowing = action.payload.isFetching
                 ? [...state.isFollowing, action.payload.userID]
                 : state.isFollowing.filter(id => id !== action.payload.userID)
+        },
+        clearUsersData(state) {
+            return {users: [], pageSize: 5, totalUsersCount: 0, currentPage: 1, isFetching: false, isFollowing: []}
         }
     },
     extraReducers: builder => {
@@ -49,7 +52,7 @@ const slice = createSlice({
 })
 
 export const usersReducer = slice.reducer
-export const {setCurrentPage, followToggle, toggleIsFollowingProgress} = slice.actions
+export const {setCurrentPage, followToggle, toggleIsFollowingProgress, clearUsersData} = slice.actions
 
 export const requestUsers = createAsyncThunk('users/requestUsers',
     async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, {dispatch}) => {

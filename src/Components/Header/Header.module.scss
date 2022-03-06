@@ -1,0 +1,52 @@
+.header {
+  grid-area: h;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #e44d3a;
+
+  .links {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 70%;
+
+    .item {
+      position: relative;
+      height: 100%;
+      display: inline-block;
+      padding: 20px;
+      color: white;
+      text-decoration: none;
+
+      &.active {
+        padding: 15px 20px 20px;
+      }
+
+      &.active::before {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        content: '';
+        height: 5px;
+        width: 100%;
+        background-color: white;
+      }
+    }
+  }
+
+  & img {
+    width: 70px;
+  }
+
+  .loginBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  & a {
+    color: #0065e9;
+  }
+}
+

@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
-import {getUserStatus, loadUserProfile} from '../../bll/profile-reducer';
+import {clearProfileData, getUserStatus, loadUserProfile} from '../../bll/profile-reducer';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../bll/hooks';
 import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
-import {Preloader} from '../Preloader/Preloader';
+import {InnerPreloader} from '../InnerPreloader/InnerPreloader';
 
 export type ContactsType = {
     facebook: string | null,
@@ -37,33 +37,29 @@ export default WithAuthRedirect(() => {
 
     const {userId} = useParams()
     const dispatch = useAppDispatch()
-    const {id} = useAppSelector(state => state.auth)
-    const profile = useAppSelector(state => state.profilePage.profile)
-
+    const {profile, status} = useAppSelector(state => state.profilePage)
     useEffect(() => {
-        console.log('2')
-        refreshProfile()
+        fetchProfile()
+        return () => {
+            dispatch(clearProfileData())
+        }
     }, [userId])
 
-    const refreshProfile = () => {
+    const fetchProfile = () => {
         if (userId) {
-            console.log('1')
             let id = +userId
             dispatch(loadUserProfile(id))
             dispatch(getUserStatus(id))
         }
     }
 
-    const isOwner = userId ? +userId === id : false
-
     if (!profile) {
-        return <Preloader/>
+        return <InnerPreloader/>
     }
 
     return (
         <div className={s.mainCont}>
-            <ProfileInfo isOwner={isOwner}/>
-            <MyPosts/>
+            <ProfileInfo status={status} profile={profile} isOwner={false}/>
         </div>
     )
 })

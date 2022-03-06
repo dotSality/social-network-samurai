@@ -1,19 +1,22 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './ProfileInfo.module.css'
 import {ProfileStatus} from './ProfileStatus';
-import {submitProfile, uploadPhoto} from '../../../bll/profile-reducer';
+import {Nullable, submitProfile, uploadPhoto} from '../../../bll/profile-reducer';
 import userPhoto from './../../../common/Img/default-user.jpg';
 import {ProfileData} from './ProfileData/ProfileData';
 import {ProfileDataForm, ProfileDataType} from './ProfileDataForm/ProfileDataForm';
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
+import {ProfileType} from '../Profile';
 
 type PropsType = {
     isOwner: boolean
+    profile: Nullable<ProfileType>
+    status: Nullable<string>
 }
 
-export const ProfileInfo = ({isOwner}: PropsType) => {
+export const ProfileInfo = ({isOwner, profile, status}: PropsType) => {
 
-    const {profile, status} = useAppSelector(state => state.profilePage)
+    // const {profile, status} = useAppSelector(state => state.profilePage)
     const {error} = useAppSelector(state => state.app)
     const [editMode, setEditMode] = useState<boolean>(false)
     const dispatch = useAppDispatch()
@@ -49,7 +52,7 @@ export const ProfileInfo = ({isOwner}: PropsType) => {
             </div>
             <>
                 {editMode ? <ProfileDataForm error={error} onSubmit={onSubmit}/>
-                    : <ProfileData onEditMode={onEditMode} isOwner={isOwner}/>}
+                    : <ProfileData profile={profile!} onEditMode={onEditMode} isOwner={isOwner}/>}
             </>
         </div>
     )

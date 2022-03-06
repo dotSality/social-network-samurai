@@ -1,7 +1,10 @@
 import {authAPI} from '../api/authAPI';
-import {Nullable} from './profile-reducer';
+import {getUserStatus, loadUserProfile, Nullable} from './profile-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setAppError, setAppStatus} from './app-reducer';
+import {ProfileType} from '../Components/Profile/Profile';
+import {RootStateType} from './store';
+import {profileAPI} from '../api/profileAPI';
 
 export type SubmitDataType = {
     email: string,
@@ -19,9 +22,11 @@ type UserDataActionType = {
 const slice = createSlice({
     name: 'auth',
     initialState: {
+        authProfile: null as Nullable<ProfileType>,
         id: null as number | null,
         email: null as string | null,
         login: null as string | null,
+        status: null as Nullable<string>,
         remember: false,
         isAuth: false,
         error: '',
@@ -44,12 +49,15 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer
 
-export const authMe = createAsyncThunk('auth/loginRequest', async (_, {dispatch, rejectWithValue}) => {
+export const authMe = createAsyncThunk('auth/loginRequest',
+    async (_, {dispatch, rejectWithValue}) => {
     try {
         let res = await authAPI.isAuthRequest()
         if (res.resultCode === 0) {
             let {id, email, login} = res.data
-            return {id, email, login, isAuth: true}
+            let authProfile = await profileAPI.getUserProfile(id)
+            let status = await profileAPI.getUserStatus(id)
+            return {id, email, login, isAuth: true, authProfile, status}
         } else {
             dispatch(setAppError(res.messages[0]))
             return rejectWithValue({})

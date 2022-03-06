@@ -1,5 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .app-wrapper {
-    padding: 10px 50px 10px 50px;
     margin: 0 auto;
     min-height: 700px;
     min-width: 700px;

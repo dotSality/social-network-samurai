@@ -1,14 +1,14 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, memo, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
 import {updateUserStatus} from '../../../bll/profile-reducer';
 
-export const ProfileStatus = () => {
+export const ProfileStatus = memo(() => {
 
-    const profileStatus = useAppSelector(state => state.profilePage.status)
+    const profileStatus = useAppSelector(state => state.auth.status)
     const dispatch = useAppDispatch()
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [status, setStatus] = useState<string>(profileStatus)
-
+    const [status, setStatus] = useState<string | null>(profileStatus || '')
+    console.log(status)
     useEffect(() => {
         setStatus(profileStatus)
     }, [profileStatus])
@@ -17,7 +17,7 @@ export const ProfileStatus = () => {
 
     const offEditMode = () => {
         setEditMode(false)
-        dispatch(updateUserStatus(status))
+        if (status) dispatch(updateUserStatus(status))
     }
 
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +30,7 @@ export const ProfileStatus = () => {
                 <span onClick={onEditMode}>{status || 'no status'}</span>
             </div>) : (
                 <div>
-                    <input onChange={onStatusChange} autoFocus onBlur={offEditMode} value={status}/>
+                    <input onChange={onStatusChange} autoFocus onBlur={offEditMode} value={status!}/>
                 </div>)}
     </div>
-}
+})

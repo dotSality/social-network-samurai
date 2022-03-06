@@ -1,6 +1,6 @@
 import {NavLink} from 'react-router-dom';
 import userPhoto from '../../common/Img/default-user.jpg';
-import s from './Users.module.css';
+import s from './Users.module.scss';
 import React from 'react';
 import {toggleFollow, UserType} from '../../bll/users-reducer';
 import {useAppDispatch, useAppSelector} from '../../bll/hooks';

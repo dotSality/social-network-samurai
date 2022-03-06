@@ -11,6 +11,7 @@ import {LazyWithSuspense} from './HOC/LazyWithSuspense';
 import {useAppDispatch, useAppSelector} from './bll/hooks';
 import {Header} from './Components/Header/Header';
 import {NavBar} from './Components/NavBar/NavBar';
+import {Home} from './Components/Profile/Home';
 
 const Dialogs = LazyWithSuspense(lazy(() => import('./Components/Dialogs/Dialogs')))
 const Profile = LazyWithSuspense(lazy(() => import('./Components/Profile/Profile')))
@@ -18,7 +19,6 @@ const Users = LazyWithSuspense(lazy(() => import('./Components/Users/Users')))
 
 export const App = () => {
 
-    const {id} = useAppSelector(state => state.auth)
     const {initialized, status} = useAppSelector(state => state.app)
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -27,14 +27,14 @@ export const App = () => {
 
     if (!initialized) return <Preloader/>
 
-    if (status === 'loading') return <Preloader/>
+    // if (status === 'loading') return <Preloader/>
 
     return <div className={'app-wrapper'}>
         <Header/>
         <NavBar/>
         <div className={'app-wrapper-content'}>
             <Routes>
-                <Route path={'/profile/'} element={<Navigate to={`/profile/${id}`}/>}/>
+                <Route path={'/'} element={<Home/>}/>
                 <Route path={'/login/'} element={<LoginPage/>}/>
                 <Route path={'/dialogs/'} element={<Dialogs/>}/>
                 <Route path={'/profile/:userId'} element={<Profile/>}/>

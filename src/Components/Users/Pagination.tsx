@@ -1,5 +1,6 @@
-import s from './Users.module.css';
+import s from './Users.module.scss';
 import React from 'react';
+import {useAppSelector} from '../../bll/hooks';
 
 type PropsType = {
     onPageChanged: (i: number, pageSize: number) => void,
@@ -11,6 +12,7 @@ type PropsType = {
 
 export const Pagination = ({currentPage, onPageChanged, totalUsersCount, pageSize}: PropsType) => {
 
+    const {status} = useAppSelector(state => state.app)
     const pages = []
     const prevTwoPages = () => onPageChanged(currentPage - 2, pageSize)
     const nextTwoPages = () => onPageChanged(currentPage + 2, pageSize)
@@ -19,11 +21,13 @@ export const Pagination = ({currentPage, onPageChanged, totalUsersCount, pageSiz
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize)
 
+    const divClassName = status === 'loading' ? s.disable : ''
+
     if (currentPage <= 4) {
         for (let i = 1; i <= 5; i++) {
             pages.push(i)
         }
-        return <div>
+        return <div className={divClassName}>
             {pages.map(i => <button key={i} onClick={() => onPageChanged(i, pageSize)}
                 className={currentPage === i ? s.selected : ''}>{i}</button>)
             }
@@ -34,7 +38,7 @@ export const Pagination = ({currentPage, onPageChanged, totalUsersCount, pageSiz
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
             pages.push(i)
         }
-        return <div>
+        return <div className={divClassName}>
             <button onClick={onFirstPageChange}>{1}</button>
             <button onClick={prevTwoPages}>«</button>
             {pages.map(i => <button key={i} onClick={() => onPageChanged(i, pageSize)}
@@ -47,7 +51,7 @@ export const Pagination = ({currentPage, onPageChanged, totalUsersCount, pageSiz
         for (let i = pagesCount - 4; i <= pagesCount; i++) {
             pages.push(i)
         }
-        return <div>
+        return <div className={divClassName}>
             <button onClick={onFirstPageChange}>{1}</button>
             <button onClick={prevTwoPages}>«</button>
             {pages.map(i => <button key={i} onClick={() => onPageChanged(i, pageSize)}

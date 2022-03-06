@@ -1,6 +1,8 @@
 import {authMe} from './auth-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Nullable} from './profile-reducer';
+import {loadUserProfile, Nullable} from './profile-reducer';
+import {RootStateType} from './store';
+import {ProfileType} from '../Components/Profile/Profile';
 
 export type RequestStatusType = 'loading' | 'idle' | 'failed' | 'succeeded'
 
@@ -27,7 +29,8 @@ const slice = createSlice({
 export const appReducer = slice.reducer
 export const {setAppStatus, setAppError, setAppInit} = slice.actions
 
-export const initializeApp = createAsyncThunk('app/initializeApp', async (_, {dispatch, rejectWithValue}) => {
+export const initializeApp = createAsyncThunk('app/initializeApp',
+    async (_, {dispatch, rejectWithValue, getState}) => {
     dispatch(setAppStatus('loading'))
     try {
         await dispatch(authMe())
