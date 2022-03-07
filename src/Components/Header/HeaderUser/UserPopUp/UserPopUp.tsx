@@ -1,17 +1,18 @@
 import s from './UserPopUp.module.scss';
 import {useNavigate} from 'react-router-dom';
+import {memo, useCallback} from 'react';
 
 type PropsType = {
     active: boolean
     logoutHandler: () => void
 }
 
-export const UserPopUp = ({active, logoutHandler}: PropsType) => {
+export const UserPopUp = memo(({active, logoutHandler}: PropsType) => {
 
     const navigate = useNavigate()
     const activeClassName = `${s.main} ${active ? s.active : ''}`
-    const onProfileNavigate = () => navigate('/')
-    const onSettingsNavigate = () => navigate('/settings')
+    const onProfileNavigate = useCallback(() => navigate('/'), [])
+    const onSettingsNavigate = useCallback(() => navigate('/settings'), [])
 
     return (
         <div className={activeClassName}>
@@ -20,4 +21,4 @@ export const UserPopUp = ({active, logoutHandler}: PropsType) => {
             <div className={s.item} onClick={logoutHandler}>Logout</div>
         </div>
     )
-}
+})

@@ -8,7 +8,7 @@ export const ProfileStatus = memo(() => {
     const dispatch = useAppDispatch()
     const [editMode, setEditMode] = useState<boolean>(false)
     const [status, setStatus] = useState<string | null>(profileStatus || '')
-    console.log(status)
+
     useEffect(() => {
         setStatus(profileStatus)
     }, [profileStatus])

@@ -1,4 +1,4 @@
-import {useEffect, useState, MouseEvent} from 'react';
+import {useEffect, useState, MouseEvent, memo, useCallback} from 'react';
 import arrow from '../../../common/Img/user-menu-arrow.svg';
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
 import s from './HeaderUser.module.scss';
@@ -6,27 +6,29 @@ import {logout} from '../../../bll/auth-reducer';
 import {UserPopUp} from './UserPopUp/UserPopUp';
 import {NavLink, useNavigate} from 'react-router-dom';
 
-export const HeaderUser = () => {
+export const HeaderUser = memo(() => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {authProfile, isAuth} = useAppSelector(state => state.auth)
     const [active, setActive] = useState<boolean>(false)
     useEffect(() => {
-        window.addEventListener('click', offActiveHandler)
+        if (active) window.addEventListener('click', offActiveHandler)
         return () => {
-            window.removeEventListener('click', offActiveHandler)
+            if (active) window.removeEventListener('click', offActiveHandler)
         }
-    })
-    const onActiveHandler = (e: MouseEvent<HTMLDivElement>) => {
-        !active && e.stopPropagation()
-        setActive(true)
-    }
-    const offActiveHandler = () => setActive(false)
-    const logoutHandler = () => {
+    }, [active, dispatch])
+
+    const onActiveHandler = useCallback(() => {
+        if (!active) {
+            setActive(true)
+        }
+    }, [active, dispatch])
+    const offActiveHandler = useCallback(() => active && setActive(false), [active, dispatch])
+    const logoutHandler = useCallback(() => {
         dispatch(logout())
         navigate('/login')
-    }
+    }, [dispatch])
 
     return (
         <div className={s.main}>
@@ -47,4 +49,4 @@ export const HeaderUser = () => {
             }
         </div>
     )
-}
+})
