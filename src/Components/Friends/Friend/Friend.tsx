@@ -1,15 +1,24 @@
-import React from 'react';
-import s from './Friend.module.css'
-import {FriendsItemType} from '../../../bll/sidebar-reducer';
+import React, {useState} from 'react';
+import s from './Friend.module.scss';
+import {useNavigate} from 'react-router-dom';
 
-export function Friend (props: FriendsItemType) {
-    return(
-        <div className={s.friend}>
-            <img
-                src={props.avatar}
-                alt={'avatar'}
-            />{'\n'}
-            <span className={s.name}>{props.name}</span>
+type PropsType = {
+    avatar: string;
+    name: string;
+    id: number;
+}
+
+export function Friend({avatar, name, id}: PropsType) {
+    const [hover, setHover] = useState<boolean>(false)
+    const onHoverHandler = () => setHover(true)
+    const offHoverHandler = () => setHover(false)
+    const navigate = useNavigate()
+    const onProfileNavigateHandler = () => navigate(`profile/${id}`)
+    const nameClassName = `${s.name} ${hover ? s.active : ''}`
+    return (
+        <div onMouseEnter={onHoverHandler} onMouseLeave={offHoverHandler} className={s.friend} onClick={onProfileNavigateHandler}>
+            <div className={s.avatar} style={{backgroundImage: `url(${avatar})`}}/>{'\n'}
+            <span className={nameClassName}>{name}</span>
         </div>
     )
 }

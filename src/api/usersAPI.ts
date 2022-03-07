@@ -3,9 +3,9 @@ import {UserType} from '../bll/users-reducer';
 import {instance} from './instance';
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
+    getUsers(currentPage: number, pageSize: number, friend: boolean | null = null) {
         return instance.get<string, AxiosResponse<GetDataType>>
-        (`users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
+        (`users?page=${currentPage}&count=${pageSize}&friend=${friend}`).then(res => res.data)
     },
     getUserData(userID: number) {
         return instance.get<AxiosResponse<CommonResponseType<UserType>>>(`follow/${userID}`).then(res => res.data)

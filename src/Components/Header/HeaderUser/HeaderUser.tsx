@@ -1,4 +1,4 @@
-import {useEffect, useState, MouseEvent, memo, useCallback} from 'react';
+import {useEffect, useState, memo, useCallback} from 'react';
 import arrow from '../../../common/Img/user-menu-arrow.svg';
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
 import s from './HeaderUser.module.scss';

@@ -1,9 +1,8 @@
 import {authAPI} from '../api/authAPI';
-import {getUserStatus, loadUserProfile, Nullable} from './profile-reducer';
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Nullable} from './profile-reducer';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {setAppError, setAppStatus} from './app-reducer';
 import {ProfileType} from '../Components/Profile/Profile';
-import {RootStateType} from './store';
 import {profileAPI} from '../api/profileAPI';
 
 export type SubmitDataType = {

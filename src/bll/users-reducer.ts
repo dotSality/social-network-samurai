@@ -70,7 +70,6 @@ export const requestUsers = createAsyncThunk('users/requestUsers',
 
 export const toggleFollow = createAsyncThunk('users/toggleFollow',
     async ({userID, isFollowed}: { userID: number, isFollowed: boolean }, {dispatch}) => {
-        dispatch(setAppStatus('loading'))
         try {
             dispatch(toggleIsFollowingProgress({isFetching: true, userID}))
             if (isFollowed) {
@@ -81,10 +80,8 @@ export const toggleFollow = createAsyncThunk('users/toggleFollow',
                 if (followRes.data.resultCode === 0) dispatch(followToggle(userID))
             }
             dispatch(toggleIsFollowingProgress({isFetching: false, userID}))
-            dispatch(setAppStatus('succeeded'))
             dispatch(setAppError(null))
         } catch (e: any) {
             dispatch(setAppError(e.message))
-            dispatch(setAppStatus('failed'))
         }
     })

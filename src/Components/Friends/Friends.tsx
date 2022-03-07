@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import s from './Friends.module.css'
-import {FriendsItemType} from '../../bll/sidebar-reducer';
 import {Friend} from './Friend/Friend';
+import {useAppDispatch, useAppSelector} from '../../bll/hooks';
+import user from '../../common/Img/user.svg';
 
-type FriendsPropsType = {
-    friends: FriendsItemType[]
-}
+export function Friends() {
 
-export function Friends (props: FriendsPropsType) {
-    let friendItems = props.friends.map(f => <Friend key={f.id} id={f.id} avatar={f.avatar} name={f.name}/>)
-    return(
+    const {friends} = useAppSelector(state => state.sidebar)
+    let friendItems = friends.map(({photos, name, id}) => {
+        return <Friend key={id} id={id} avatar={photos.small || user} name={name}/>
+    })
+    return (
         <div className={s.friendsCont}>
             <span className={s.header}>Friends</span>
             {friendItems}
