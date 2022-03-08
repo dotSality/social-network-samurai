@@ -1,9 +1,9 @@
-import {lazy, useEffect} from 'react';
-import './App.css';
+import {lazy, useEffect, useLayoutEffect} from 'react';
+import s from './App.module.scss';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {LoginPage} from './Components/LoginPage/LoginPage';
 import {initializeApp} from './bll/app-reducer';
 import {Preloader} from './Components/Preloader/Preloader';
@@ -23,28 +23,33 @@ export const App = () => {
     const {initialized, status} = useAppSelector(state => state.app)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(fetchFriends())
         dispatch(initializeApp())
+    }, [])
+
+    useLayoutEffect(() => {
+        dispatch(fetchFriends())
     }, [])
 
     if (!initialized) return <Preloader/>
 
     // if (status === 'loading') return <Preloader/>
 
-    return <div className={'app-wrapper'}>
+    return <div className={s.appWrapper}>
         <Header/>
-        <NavBar/>
-        <div className={'app-wrapper-content'}>
-            <Routes>
-                <Route path={'/'} element={<Home/>}/>
-                <Route path={'/login/'} element={<LoginPage/>}/>
-                <Route path={'/dialogs/'} element={<Dialogs/>}/>
-                <Route path={'/profile/:userId'} element={<Profile/>}/>
-                <Route path={'/users/'} element={<Users/>}/>
-                <Route path={'/news/'} element={<News/>}/>
-                <Route path={'/music/'} element={<Music/>}/>
-                <Route path={'/settings/'} element={<Settings/>}/>
-            </Routes>
+        <div className={s.appContainer}>
+            <NavBar/>
+            <div className={s.appContent}>
+                <Routes>
+                    <Route path={'/'} element={<Home/>}/>
+                    <Route path={'/login/'} element={<LoginPage/>}/>
+                    <Route path={'/dialogs/'} element={<Dialogs/>}/>
+                    <Route path={'/profile/:userId'} element={<Profile/>}/>
+                    <Route path={'/users/'} element={<Users/>}/>
+                    <Route path={'/news/'} element={<News/>}/>
+                    <Route path={'/music/'} element={<Music/>}/>
+                    <Route path={'/settings/'} element={<Settings/>}/>
+                </Routes>
+            </div>
         </div>
     </div>
 }

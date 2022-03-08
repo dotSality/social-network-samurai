@@ -1,11 +1,12 @@
 .header {
-  grid-area: h;
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: space-around;
   background-color: #e44d3a;
 
   .logo {
+    cursor: pointer;
     margin-left: 20px;
     align-self: center;
     width: 40px;
@@ -33,7 +34,7 @@
 
       &.active::before {
         position: absolute;
-        bottom: 0;
+        bottom: -5px;
         left: 0;
         content: '';
         height: 5px;

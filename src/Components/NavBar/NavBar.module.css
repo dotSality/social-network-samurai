@@ -1,6 +1,8 @@
 .nav {
-    grid-area: n;
+    max-width: 200px;
+    text-align: center;
     background-color: white;
-    padding: 20px;
-    border: 1px #0065e9 solid;
+    margin-right: 10px;
+    border: 1px solid #e44d3a;
+    width: 100%;
 }

@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+}
+
+.appWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+
+  .appContainer {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .appContent {
+    width: 100%;
+    border: 1px #e44d3a solid;
+  }
+}

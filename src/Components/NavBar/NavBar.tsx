@@ -4,7 +4,7 @@ import {Friends} from '../Friends/Friends';
 
 export const NavBar = () => {
 
-    return (<nav className={s.nav}>
+    return (<div className={s.nav}>
             <Friends/>
-    </nav>)
+    </div>)
 }
