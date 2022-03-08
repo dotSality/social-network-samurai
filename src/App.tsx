@@ -12,7 +12,6 @@ import {useAppDispatch, useAppSelector} from './bll/hooks';
 import {Header} from './Components/Header/Header';
 import {NavBar} from './Components/NavBar/NavBar';
 import {Home} from './Components/Profile/Home';
-import {fetchFriends} from './bll/sidebar-reducer';
 
 const Dialogs = LazyWithSuspense(lazy(() => import('./Components/Dialogs/Dialogs')))
 const Profile = LazyWithSuspense(lazy(() => import('./Components/Profile/Profile')))
@@ -26,13 +25,9 @@ export const App = () => {
         dispatch(initializeApp())
     }, [])
 
-    useLayoutEffect(() => {
-        dispatch(fetchFriends())
-    }, [])
-
     if (!initialized) return <Preloader/>
 
-    // if (status === 'loading') return <Preloader/>
+    if (status === 'loading') return <Preloader/>
 
     return <div className={s.appWrapper}>
         <Header/>

@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
 import {clearProfileData, getUserStatus, loadUserProfile} from '../../bll/profile-reducer';
-import {useParams} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../bll/hooks';
-import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 import {InnerPreloader} from '../InnerPreloader/InnerPreloader';
@@ -34,6 +33,7 @@ export type ProfileType = {
 
 export default WithAuthRedirect(() => {
 
+    const location = useLocation()
     const {userId} = useParams()
     const dispatch = useAppDispatch()
     const {profile, status} = useAppSelector(state => state.profilePage)
@@ -43,6 +43,8 @@ export default WithAuthRedirect(() => {
             dispatch(clearProfileData())
         }
     }, [userId])
+
+    const isOwner = location.pathname === '/'
 
     const fetchProfile = () => {
         if (userId) {
@@ -56,9 +58,5 @@ export default WithAuthRedirect(() => {
         return <InnerPreloader/>
     }
 
-    return (
-        <div className={s.mainCont}>
-            <ProfileInfo status={status} profile={profile} isOwner={false}/>
-        </div>
-    )
+    return <ProfileInfo status={status} profile={profile} isOwner={isOwner}/>
 })

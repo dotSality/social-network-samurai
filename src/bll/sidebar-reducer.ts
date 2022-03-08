@@ -10,7 +10,11 @@ const slice = createSlice({
     initialState: {
         friends: [] as UserType[],
     },
-    reducers: {},
+    reducers: {
+        clearFriendsData(state) {
+            state.friends = []
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchFriends.fulfilled, (state, action) => {
@@ -20,6 +24,7 @@ const slice = createSlice({
 })
 
 export const sidebarReducer = slice.reducer
+export const {clearFriendsData} = slice.actions
 
 export const fetchFriends = createAsyncThunk('sidebar/fetchFriends',
     async (_, {dispatch, rejectWithValue}) => {

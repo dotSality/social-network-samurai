@@ -20,10 +20,10 @@ const slice = createSlice({
     name: 'users',
     initialState: {
         users: [] as UserType[],
+        isFetching: false,
         pageSize: 5,
         totalUsersCount: 0,
         currentPage: 1,
-        isFetching: false,
         isFollowing: [] as number[]
     },
     reducers: {
@@ -45,8 +45,14 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder
+            .addCase(requestUsers.pending, state => {
+                state.isFetching = true
+            })
             .addCase(requestUsers.fulfilled, (state, action) => {
-                return {...state, ...action.payload}
+                const {isFetching, users, totalUsersCount} = action.payload
+                state.users = users
+                state.isFetching = isFetching
+                state.totalUsersCount = totalUsersCount
             })
     }
 })
@@ -55,16 +61,15 @@ export const usersReducer = slice.reducer
 export const {setCurrentPage, followToggle, toggleIsFollowingProgress, clearUsersData} = slice.actions
 
 export const requestUsers = createAsyncThunk('users/requestUsers',
-    async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, {dispatch}) => {
-        dispatch(setAppStatus('loading'))
+    async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, {dispatch, rejectWithValue}) => {
         try {
             let res = await usersAPI.getUsers(currentPage, pageSize)
-            dispatch(setAppStatus('succeeded'))
             dispatch(setAppError(null))
-            return {isFetching: false, users: res.items, totalUsersCount: res.totalCount}
+            return {users: res.items, totalUsersCount: res.totalCount, isFetching: false}
         } catch (e: any) {
             dispatch(setAppStatus('failed'))
             dispatch(setAppError(e.message))
+            return rejectWithValue({})
         }
     })
 

@@ -1,6 +1,7 @@
-import {authMe} from './auth-reducer';
+import {fetchAuthUserData} from './auth-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Nullable} from './profile-reducer';
+import {RootStateType} from './store';
 
 export type RequestStatusType = 'loading' | 'idle' | 'failed' | 'succeeded'
 
@@ -27,17 +28,18 @@ const slice = createSlice({
 export const appReducer = slice.reducer
 export const {setAppStatus, setAppError, setAppInit} = slice.actions
 
-export const initializeApp = createAsyncThunk('app/initializeApp',
-    async (_, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
-    try {
-        await dispatch(authMe())
-        dispatch(setAppStatus('succeeded'))
-    } catch (e: any) {
-        dispatch(setAppStatus('failed'))
-        setAppError('Login failed')
-        return rejectWithValue({})
-    } finally {
-        dispatch(setAppInit())
-    }
-})
+export const initializeApp = createAsyncThunk<void, void, { state: RootStateType }>('app/initializeApp',
+    async (_, {dispatch, rejectWithValue, getState}) => {
+        dispatch(setAppStatus('loading'))
+        try {
+            await dispatch(fetchAuthUserData())
+            console.log(getState().auth.authProfile)
+            dispatch(setAppStatus('succeeded'))
+        } catch (e: any) {
+            dispatch(setAppStatus('failed'))
+            setAppError('Login failed')
+            return rejectWithValue({})
+        } finally {
+            dispatch(setAppInit())
+        }
+    })

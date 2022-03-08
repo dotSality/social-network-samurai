@@ -4,10 +4,11 @@ import {DialogItem} from './Dialog/DialogItem';
 import {Message} from './Message/MessageItem';
 import {MessageForm} from './AddMessageForm/MessageForm';
 import {useAppSelector} from '../../bll/hooks';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
-const Dialogs = () => {
+const Dialogs = WithAuthRedirect(() => {
 
-    const {dialogs,messages} = useAppSelector(state => state.dialogsPage)
+    const {dialogs, messages} = useAppSelector(state => state.dialogsPage)
     let dialogItems = dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
     let messageItems = messages.map(m => <Message key={m.id} id={m.id} message={m.message} sender={m.sender}/>)
 
@@ -25,6 +26,6 @@ const Dialogs = () => {
 
         </div>
     )
-}
+})
 
 export default Dialogs

@@ -13,7 +13,7 @@ export type FormInputsType = {
 
 type SubmitDataPropsType = {
     onSubmitData: (data: FormInputsType) => void
-    captchaUrl: string
+    captchaUrl: Nullable<string>
 }
 
 export const LoginForm = (props: SubmitDataPropsType) => {

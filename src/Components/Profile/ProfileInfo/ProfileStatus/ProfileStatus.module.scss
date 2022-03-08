@@ -1,0 +1,14 @@
+.container {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 20px;
+
+  .status {
+    display: inline-block;
+    margin: 10px;
+
+    &.active {
+      text-decoration: underline;
+    }
+  }
+}

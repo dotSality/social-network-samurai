@@ -9,13 +9,21 @@ type PropsType = {
 }
 
 export function Friend({avatar, name, id}: PropsType) {
-    const [hover, setHover] = useState<boolean>(false)
-    const onHoverHandler = () => setHover(true)
-    const offHoverHandler = () => setHover(false)
+
     const navigate = useNavigate()
-    const onProfileNavigateHandler = () => navigate(`profile/${id}`)
+
+    const [hover, setHover] = useState<boolean>(false)
+
     const nameClassName = `${s.name} ${hover ? s.active : ''}`
+
     const friendClassName = `${s.friend} ${hover && s.active}`
+
+    const onHoverHandler = () => setHover(true)
+
+    const offHoverHandler = () => setHover(false)
+
+    const onProfileNavigateHandler = () => navigate(`profile/${id}`)
+
     return (
         <div onMouseEnter={onHoverHandler} onMouseLeave={offHoverHandler} className={friendClassName} onClick={onProfileNavigateHandler}>
             <div className={s.avatar} style={{backgroundImage: `url(${avatar})`}}/>{'\n'}

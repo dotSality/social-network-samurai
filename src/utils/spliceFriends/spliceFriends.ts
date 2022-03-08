@@ -4,7 +4,7 @@ export const spliceFriends = (items: UserType[]): UserType[] => {
     let arr: number[] = []
     let result = []
     items.forEach(({id}) => arr.push(id))
-    while (result.length < 5) {
+    while (items.length > 0 && result.length < 5) {
         const index = Math.floor(Math.random() * arr.length)
         const idByIndex = arr[index]
         if (items.findIndex(({id}) => id === idByIndex) > 0) {

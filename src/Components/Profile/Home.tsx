@@ -1,18 +1,19 @@
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import React from 'react';
-import {MyPosts} from './MyPosts/MyPosts';
 import {useAppSelector} from '../../bll/hooks';
-import {useParams} from 'react-router-dom';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
+import {useLocation} from 'react-router-dom';
+import {InnerPreloader} from '../InnerPreloader/InnerPreloader';
 
 export const Home = WithAuthRedirect(() => {
 
     const {authProfile, status} = useAppSelector(state => state.auth)
+    const location = useLocation()
+    const isOwner = location.pathname === '/'
 
-    return (
-        <div>
-            <ProfileInfo status={status} profile={authProfile} isOwner={true}/>
-            <MyPosts/>
-        </div>
-    )
+    if (!authProfile) {
+        return <InnerPreloader/>
+    }
+
+    return <ProfileInfo status={status} profile={authProfile} isOwner={isOwner}/>
 })

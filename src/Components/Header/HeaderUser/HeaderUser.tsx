@@ -1,56 +1,47 @@
-import {useEffect, useState, memo, useCallback} from 'react';
-import arrow from '../../../common/Img/user-menu-arrow.svg';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
 import s from './HeaderUser.module.scss';
 import {logout} from '../../../bll/auth-reducer';
 import {UserPopUp} from './UserPopUp/UserPopUp';
 import {NavLink, useNavigate} from 'react-router-dom';
+import {LoggedUser} from './LoggedUser/LoggedUser';
 
 export const HeaderUser = memo(() => {
 
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-    const {authProfile, isAuth} = useAppSelector(state => state.auth)
-    const {photos, fullName} = authProfile!
-    const [active, setActive] = useState<boolean>(false)
-    const [isHover, setIsHover] = useState<boolean>(false)
-    useEffect(() => {
-        if (active) window.addEventListener('click', offActiveHandler)
-        return () => {
-            if (active) window.removeEventListener('click', offActiveHandler)
-        }
-    }, [active, dispatch])
 
-    const onActiveHandler = useCallback(() => {
-        if (!active) {
-            setActive(true)
+    const dispatch = useAppDispatch()
+
+    const {isAuth} = useAppSelector(state => state.auth)
+
+    const [isActive, setIsActive] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (isActive) window.addEventListener('click', offActiveHandler)
+        return () => {
+            if (isActive) window.removeEventListener('click', offActiveHandler)
         }
-    }, [active, dispatch])
-    const offActiveHandler = useCallback(() => active && setActive(false), [active, dispatch])
+    }, [isActive, dispatch])
+
+    const offActiveHandler = useCallback(() => isActive && setIsActive(false), [isActive, dispatch])
+
     const logoutHandler = useCallback(() => {
         dispatch(logout())
         navigate('/login')
     }, [dispatch])
 
-    const mainClassName = `${s.main} ${active && s.active}`
-    const userNameOnHoverClassName = `${s.userName} ${isHover && s.active}`
+    const mainClassName = `${s.main} ${isActive && s.active}`
 
     return (
-        <div className={mainClassName} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        <div className={mainClassName}>
             {isAuth ?
                 <>
-                    <div className={s.container} onClick={onActiveHandler}>
-                        <div style={{backgroundImage: `url(${photos.small})`}} className={s.photo}/>
-                        <div className={userNameOnHoverClassName}>
-                            {fullName}
-                        </div>
-                        <div style={{backgroundImage: `url(${arrow})`}} className={s.arrow}/>
-                    </div>
-                    <UserPopUp logoutHandler={logoutHandler} active={active}/>
+                    <LoggedUser isActive={isActive} setIsActive={setIsActive}/>
+                    <UserPopUp logoutHandler={logoutHandler} active={isActive}/>
                 </>
-                : <>
-                    <NavLink to={'/login'}>Login</NavLink>
-                </>
+                : <NavLink className={s.link} to={'/login'}>
+                    Login
+            </NavLink>
             }
         </div>
     )

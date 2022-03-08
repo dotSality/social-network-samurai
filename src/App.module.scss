@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  //border: none;
 }
 
 .appWrapper {
@@ -11,17 +10,24 @@
   flex-direction: column;
   margin: 0 auto;
   align-items: center;
+  background-color: #edecf0;
 
   .appContainer {
     margin-top: 10px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     display: flex;
     flex-direction: row;
   }
 
   .appContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    border: 1px #e44d3a solid;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
   }
 }

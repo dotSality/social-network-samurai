@@ -7,14 +7,15 @@ import {useAppDispatch, useAppSelector} from '../../bll/hooks';
 export const LoginPage = () => {
 
     const dispatch = useAppDispatch()
-    const {isAuth, captchaUrl, id} = useAppSelector(state => state.auth)
+    const data = useAppSelector(state => state.auth)
+    const {isAuth, captchaUrl} = data!
     const onSubmitData = (data: FormInputsType) => {
         dispatch(login(data))
     }
 
-    return isAuth ? (
-        <Navigate to={'/'}/>
-    ) : <div>
+    if (isAuth) return <Navigate to={'/'}/>
+
+    return <div>
         <h1>Login page</h1>
         <LoginForm captchaUrl={captchaUrl}onSubmitData={onSubmitData}/>
     </div>

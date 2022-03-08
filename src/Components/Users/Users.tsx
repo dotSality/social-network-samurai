@@ -9,8 +9,7 @@ import {InnerPreloader} from '../InnerPreloader/InnerPreloader';
 import s from './Users.module.scss';
 
 export default WithAuthRedirect(memo(() => {
-    const {totalUsersCount, pageSize, currentPage, users} = useAppSelector(usersData)
-    const {status} = useAppSelector(state => state.app)
+    const {totalUsersCount, pageSize, currentPage, users, isFetching} = useAppSelector(usersData)
 
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -33,7 +32,7 @@ export default WithAuthRedirect(memo(() => {
             onPageChanged={onPageChanged}
         />}
         <div className={s.content}>
-            {status === 'loading'
+            {isFetching
                 ? <InnerPreloader/>
                 : users.map(u => <User key={u.id} u={u}/>)}
         </div>
