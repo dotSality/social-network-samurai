@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.77cc7a0e.css",
-    "main.js": "/static/js/main.a0d362e8.js",
+    "main.css": "/static/css/main.0f8749f5.css",
+    "main.js": "/static/js/main.418150f2.js",
     "static/css/678.6bf88eca.chunk.css": "/static/css/678.6bf88eca.chunk.css",
     "static/js/678.c6016fd9.chunk.js": "/static/js/678.c6016fd9.chunk.js",
     "static/css/488.31d6cfe0.chunk.css": "/static/css/488.31d6cfe0.chunk.css",
@@ -10,12 +10,17 @@
     "static/js/801.cd88a115.chunk.js": "/static/js/801.cd88a115.chunk.js",
     "static/media/inner-loader.gif": "/static/media/inner-loader.f533884a34aee881a09e.gif",
     "static/media/logo.svg": "/static/media/logo.86ddffca7cbe985e0c910454c911bf85.svg",
+    "static/media/users.svg": "/static/media/users.ab9148f4e789de7e14017bd3d2e4326e.svg",
     "static/media/Circle-Loading.svg": "/static/media/Circle-Loading.385f97b7b8bc25cf2660e867dbd44b85.svg",
+    "static/media/home.svg": "/static/media/home.d5394a6a7f74dd092b2d0a5fa690ec02.svg",
+    "static/media/news.svg": "/static/media/news.f47b96dc4202013ea9b5c2d7b73d7e3a.svg",
+    "static/media/music.svg": "/static/media/music.5fb88e20a6838517e72eaef9b06c23c2.svg",
     "static/media/user.svg": "/static/media/user.98da796fcb86dc46af09313453993f7c.svg",
     "index.html": "/index.html",
+    "static/media/message.svg": "/static/media/message.5e9589749eccb8f908c6b0f8b744ed75.svg",
     "static/media/user-menu-arrow.svg": "/static/media/user-menu-arrow.5dfd099a3e339cf86f479d78fbeec583.svg",
-    "main.77cc7a0e.css.map": "/static/css/main.77cc7a0e.css.map",
-    "main.a0d362e8.js.map": "/static/js/main.a0d362e8.js.map",
+    "main.0f8749f5.css.map": "/static/css/main.0f8749f5.css.map",
+    "main.418150f2.js.map": "/static/js/main.418150f2.js.map",
     "678.6bf88eca.chunk.css.map": "/static/css/678.6bf88eca.chunk.css.map",
     "678.c6016fd9.chunk.js.map": "/static/js/678.c6016fd9.chunk.js.map",
     "488.ff46a372.chunk.js.map": "/static/js/488.ff46a372.chunk.js.map",
@@ -23,7 +28,7 @@
     "801.cd88a115.chunk.js.map": "/static/js/801.cd88a115.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.77cc7a0e.css",
-    "static/js/main.a0d362e8.js"
+    "static/css/main.0f8749f5.css",
+    "static/js/main.418150f2.js"
   ]
 }
