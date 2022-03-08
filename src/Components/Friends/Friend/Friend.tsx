@@ -15,8 +15,9 @@ export function Friend({avatar, name, id}: PropsType) {
     const navigate = useNavigate()
     const onProfileNavigateHandler = () => navigate(`profile/${id}`)
     const nameClassName = `${s.name} ${hover ? s.active : ''}`
+    const friendClassName = `${s.friend} ${hover && s.active}`
     return (
-        <div onMouseEnter={onHoverHandler} onMouseLeave={offHoverHandler} className={s.friend} onClick={onProfileNavigateHandler}>
+        <div onMouseEnter={onHoverHandler} onMouseLeave={offHoverHandler} className={friendClassName} onClick={onProfileNavigateHandler}>
             <div className={s.avatar} style={{backgroundImage: `url(${avatar})`}}/>{'\n'}
             <span className={nameClassName}>{name}</span>
         </div>

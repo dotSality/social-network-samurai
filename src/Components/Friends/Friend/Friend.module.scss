@@ -1,11 +1,17 @@
 .friend {
-  margin-top: 5px;
+  padding: 10px 30px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.active {
+    background-color: #ede6f2;
+  }
 
   .name {
     font-size: 18px;
@@ -18,8 +24,8 @@
   }
 
   .avatar {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-size: cover;
   }

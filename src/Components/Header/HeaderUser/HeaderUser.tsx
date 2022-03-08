@@ -11,7 +11,9 @@ export const HeaderUser = memo(() => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {authProfile, isAuth} = useAppSelector(state => state.auth)
+    const {photos, fullName} = authProfile!
     const [active, setActive] = useState<boolean>(false)
+    const [isHover, setIsHover] = useState<boolean>(false)
     useEffect(() => {
         if (active) window.addEventListener('click', offActiveHandler)
         return () => {
@@ -30,14 +32,17 @@ export const HeaderUser = memo(() => {
         navigate('/login')
     }, [dispatch])
 
+    const mainClassName = `${s.main} ${active && s.active}`
+    const userNameOnHoverClassName = `${s.userName} ${isHover && s.active}`
+
     return (
-        <div className={s.main}>
+        <div className={mainClassName} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             {isAuth ?
                 <>
                     <div className={s.container} onClick={onActiveHandler}>
-                        <div style={{backgroundImage: `url(${authProfile?.photos.small})`}} className={s.photo}/>
-                        <div className={s.userName}>
-                            {authProfile?.fullName}
+                        <div style={{backgroundImage: `url(${photos.small})`}} className={s.photo}/>
+                        <div className={userNameOnHoverClassName}>
+                            {fullName}
                         </div>
                         <div style={{backgroundImage: `url(${arrow})`}} className={s.arrow}/>
                     </div>

@@ -10,12 +10,12 @@ type PropsType = {
 export const UserPopUp = memo(({active, logoutHandler}: PropsType) => {
 
     const navigate = useNavigate()
-    const activeClassName = `${s.main} ${active ? s.active : ''}`
+    const activeMainClassName = `${s.main} ${active ? s.active : ''}`
     const onProfileNavigate = useCallback(() => navigate('/'), [])
     const onSettingsNavigate = useCallback(() => navigate('/settings'), [])
 
     return (
-        <div className={activeClassName}>
+        <div className={activeMainClassName}>
             <div className={s.item} onClick={onProfileNavigate}>Profile</div>
             <div className={s.item} onClick={onSettingsNavigate}>Settings</div>
             <div className={s.item} onClick={logoutHandler}>Logout</div>

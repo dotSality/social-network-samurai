@@ -1,5 +1,25 @@
 .main {
   position: relative;
+  border: solid #c03420;
+  border-width: 0 1px;
+  transition: all 0.2s;
+
+  &.active {
+    border-color: #e44d3a;
+  }
+
+  &.active::before {
+    pointer-events: all;
+    position: absolute;
+    content: '';
+    background-color: #c03420;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    //z-index: 1;
+  }
 
   .container {
     position: relative;
@@ -35,7 +55,7 @@
       transform: scaleX(0);
     }
 
-    &:hover::before {
+    &.active::before {
       transform: scaleX(1);
     }
   }

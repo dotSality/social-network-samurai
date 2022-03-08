@@ -43,12 +43,10 @@ export const ProfileInfo = ({isOwner, profile, status}: PropsType) => {
                 <img src={profile?.photos.large || userPhoto} alt={'profile owner'}/>
                 {isOwner && <input onChange={onMainPhotoSelect} type={'file'}/>}
             </div>
-            <div>
-                <div onMouseEnter={onHover} onMouseLeave={offHover} className={activeClassName}>
-                    {isOwner
-                        ? <ProfileStatus/>
-                        : (status ? status : 'no status')}
-                </div>
+            <div onMouseEnter={onHover} onMouseLeave={offHover} className={activeClassName}>
+                {isOwner
+                    ? <ProfileStatus/>
+                    : (status ? status : 'no status')}
             </div>
             <>
                 {editMode ? <ProfileDataForm error={error} onSubmit={onSubmit}/>

@@ -20,7 +20,7 @@ type ProfileDataFormPropsType = {
 
 export const ProfileDataForm = ({error, onSubmit}: ProfileDataFormPropsType) => {
 
-    const profile = useAppSelector(state => state.profilePage.profile!)
+    const profile = useAppSelector(state => state.auth.authProfile!)
 
     const {
         register,

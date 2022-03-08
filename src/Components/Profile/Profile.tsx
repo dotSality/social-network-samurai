@@ -4,7 +4,6 @@ import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../bll/hooks';
 import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {MyPosts} from './MyPosts/MyPosts';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 import {InnerPreloader} from '../InnerPreloader/InnerPreloader';
 

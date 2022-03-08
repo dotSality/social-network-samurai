@@ -1,61 +1,77 @@
-.header {
-  display: flex;
+.headerContainer {
   width: 100%;
-  flex-direction: row;
-  justify-content: space-around;
+  display: flex;
+  justify-content: center;
   background-color: #e44d3a;
 
-  .logo {
-    cursor: pointer;
-    margin-left: 20px;
-    align-self: center;
-    width: 40px;
-    height: 40px;
-    background-size: cover;
-  }
-
-  .links {
+  .header {
     display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 70%;
+    width: 100%;
+    max-width: 1200px;
+    flex-direction: row;
+    justify-content: space-between;
 
-    .item {
-      position: relative;
+    .logo {
+      cursor: pointer;
+      margin-left: 20px;
+      align-self: center;
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
       height: 100%;
-      display: inline-block;
-      padding: 20px;
-      color: white;
-      text-decoration: none;
+      width: 70%;
 
-      &.active {
-        padding: 15px 20px 20px;
-      }
+      .item {
+        position: relative;
+        height: 100%;
+        display: inline-block;
+        padding: 10px;
+        margin: 0 10px;
+        color: white;
+        text-decoration: none;
 
-      &.active::before {
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        content: '';
-        height: 5px;
-        width: 100%;
-        background-color: white;
+        &:hover::after {
+          position: absolute;
+          content: '';
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background-color: white;
+          opacity: 0.2;
+        }
+
+        &.active {
+          padding: 5px 10px 10px;
+        }
+
+        &.active::after {
+          background-color: transparent;
+        }
+
+        &.active::before {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          content: '';
+          height: 5px;
+          width: 100%;
+          background-color: white;
+        }
       }
     }
   }
-
-  & img {
-    width: 70px;
-  }
-
-  .loginBlock {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  & a {
-    color: #0065e9;
-  }
 }
 
+.icon {
+  align-self: center;
+  margin: 0 auto;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+}
