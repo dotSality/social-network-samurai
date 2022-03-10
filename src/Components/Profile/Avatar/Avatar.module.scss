@@ -1,19 +1,79 @@
 .container {
   position: relative;
-  width: 200px;
+  min-width: 200px;
+  overflow: hidden;
 
   .avatar {
     position: relative;
-    align-self: center;
     border-radius: 2px;
     background-size: cover;
     background-repeat: no-repeat;
     width: 220px;
     height: 220px;
+    overflow: hidden;
+  }
+
+  .deleter {
+    position: absolute;
+    cursor: pointer;
+    top: -20px;
+    right: 0;
+    text-align: center;
+    line-height: 100%;
+    color: white;
+    width: 20px;
+    height: 20px;
+    background: rgb(0, 36, 13);
+    background: linear-gradient(0deg, rgba(0, 36, 13, 0.7) 0%, rgba(65, 65, 65, 0.7) 100%);
+    transition: all 0.2s;
+
+    &.active {
+      top: 0;
+    }
   }
 
   .uploader {
     position: absolute;
-    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    line-height: 100%;
+    bottom: -50px;
+    transition: all 0.2s;
+    background: rgb(0, 36, 13);
+    background: linear-gradient(0deg, rgba(0, 36, 13, 0.7) 0%, rgba(65, 65, 65, 0.7) 100%);
+    color: white;
+
+    &.active {
+      bottom: 0;
+    }
+
+    .input {
+      display: none;
+    }
+
+    .button {
+      position: relative;
+      cursor: pointer;
+
+      &:before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        bottom: -2px;
+        left: 0;
+        height: 1px;
+        transform: scaleX(0);
+        background-color: white;
+        transition: all 0.2s;
+      }
+
+      &:hover::before {
+        transform: scaleX(1);
+      }
+    }
   }
 }

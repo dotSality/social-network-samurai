@@ -1,5 +1,5 @@
 import {authAPI} from '../api/authAPI';
-import {Nullable} from './profile-reducer';
+import {Nullable, uploadPhoto} from './profile-reducer';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {setAppError, setAppStatus} from './app-reducer';
 import {ProfileType} from '../Components/Profile/Profile';
@@ -62,6 +62,9 @@ const slice = createSlice({
             })
             .addCase(fetchAuthUserData.fulfilled, (state, action) => {
                 return {...state, ...action.payload}
+            })
+            .addCase(uploadPhoto.fulfilled, (state, action) => {
+                state.authProfile!.photos = action.payload
             })
     }
 })

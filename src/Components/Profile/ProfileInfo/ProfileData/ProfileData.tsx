@@ -18,7 +18,7 @@ export const ProfileData = ({isOwner, onEditMode, profile}: ProfileDataPropsType
 
     return (
         <div className={s.container}>
-            <div className={s.item}>
+            <div style={{fontSize: "28px"}} className={s.item}>
                 <b>{fullName}</b>
             </div>
             <ProfileStatus isOwner={isOwner}/>

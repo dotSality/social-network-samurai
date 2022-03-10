@@ -43,15 +43,11 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder
-            // .addCase()
             .addCase(loadUserProfile.fulfilled, (state, action) => {
                 state.profile = action.payload
             })
             .addCase(getUserStatus.fulfilled, (state, action) => {
                 state.status = action.payload
-            })
-            .addCase(uploadPhoto.fulfilled, (state, action) => {
-                state.profile!.photos = action.payload
             })
     }
 })
@@ -90,16 +86,13 @@ export const getUserStatus = createAsyncThunk('profile/getUserStatus', async (us
 })
 
 export const updateUserStatus = createAsyncThunk('profile/updateUserStatus', async (status: string, {dispatch, rejectWithValue}) => {
-    // dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.updateStatus(status)
         if (res.data.resultCode === 0) {
-            // dispatch(setAppStatus('succeeded'))
             dispatch((setAppError(null)))
             return status
         } else {
             dispatch(setAppError(res.data.messages[0]))
-            // dispatch(setAppStatus('failed'))
             return rejectWithValue({})
         }
     } catch (e: any) {
@@ -110,19 +103,16 @@ export const updateUserStatus = createAsyncThunk('profile/updateUserStatus', asy
 })
 
 export const uploadPhoto = createAsyncThunk('profile/uploadPhoto', async (file: File, {dispatch, rejectWithValue}) => {
-    // dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.uploadPhoto(file)
         if (res.resultCode === 0) {
             return res.data.photos
         } else {
             dispatch(setAppError(res.messages[0]))
-            // dispatch(setAppStatus('failed'))
             return rejectWithValue({})
         }
     } catch (e: any) {
         dispatch(setAppError(e.message))
-        // dispatch(setAppStatus('failed'))
         return rejectWithValue({})
     }
 })
