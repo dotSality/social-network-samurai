@@ -1,6 +1,7 @@
 import {usersAPI} from '../api/usersAPI';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setAppError, setAppStatus} from './app-reducer';
+import {changeFriendsCount} from './sidebar-reducer';
 
 type PhotosType = {
     small: string | null
@@ -79,10 +80,16 @@ export const toggleFollow = createAsyncThunk('users/toggleFollow',
             dispatch(toggleIsFollowingProgress({isFetching: true, userID}))
             if (isFollowed) {
                 let unfollowRes = await usersAPI.unfollowUserRequest(userID)
-                if (unfollowRes.data.resultCode === 0) dispatch(followToggle(userID))
+                if (unfollowRes.data.resultCode === 0) {
+                    dispatch(followToggle(userID))
+                    dispatch(changeFriendsCount(-1))
+                }
             } else {
                 let followRes = await usersAPI.followUserRequest(userID)
-                if (followRes.data.resultCode === 0) dispatch(followToggle(userID))
+                if (followRes.data.resultCode === 0) {
+                    dispatch(followToggle(userID))
+                    dispatch(changeFriendsCount(+1))
+                }
             }
             dispatch(toggleIsFollowingProgress({isFetching: false, userID}))
             dispatch(setAppError(null))

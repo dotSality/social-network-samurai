@@ -1,10 +1,10 @@
 import React from "react";
 import s from './NavBar.module.css'
-import {Friends} from '../Friends/Friends';
+import {FriendsBlock} from '../FriendsBlock/FriendsBlock';
 
 export const NavBar = () => {
 
     return (<div className={s.nav}>
-            <Friends/>
+            <FriendsBlock/>
     </div>)
 }

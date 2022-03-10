@@ -21,6 +21,7 @@ const slice = createSlice({
         ] as PostType[],
         profile: null as Nullable<ProfileType>,
         status: null as Nullable<string>,
+        isFetching: false,
     },
     reducers: {
         addPost(state, action: PayloadAction<string>) {
@@ -42,6 +43,7 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder
+            // .addCase()
             .addCase(loadUserProfile.fulfilled, (state, action) => {
                 state.profile = action.payload
             })
@@ -60,44 +62,44 @@ export const profileReducer = slice.reducer
 export const {deletePost, addPost, clearProfileData} = slice.actions
 
 export const loadUserProfile = createAsyncThunk('profile/loadUserProfile', async (userId: number, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
+    // dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.getUserProfile(userId)
         dispatch(setAppError(null))
-        dispatch(setAppStatus('succeeded'))
+        // dispatch(setAppStatus('succeeded'))
         return res
     } catch (e: any) {
         dispatch(setAppError(e.message))
-        dispatch(setAppStatus('failed'))
+        // dispatch(setAppStatus('failed'))
         return rejectWithValue({})
     }
 })
 
 export const getUserStatus = createAsyncThunk('profile/getUserStatus', async (userId: number, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
+    // dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.getUserStatus(userId)
         dispatch(setAppError(null))
-        dispatch(setAppStatus('succeeded'))
+        // dispatch(setAppStatus('succeeded'))
         return res
     } catch (e: any) {
         dispatch(setAppError(e.message))
-        dispatch(setAppStatus('failed'))
+        // dispatch(setAppStatus('failed'))
         return rejectWithValue({})
     }
 })
 
 export const updateUserStatus = createAsyncThunk('profile/updateUserStatus', async (status: string, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
+    // dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.updateStatus(status)
         if (res.data.resultCode === 0) {
-            dispatch(setAppStatus('succeeded'))
+            // dispatch(setAppStatus('succeeded'))
             dispatch((setAppError(null)))
             return status
         } else {
             dispatch(setAppError(res.data.messages[0]))
-            dispatch(setAppStatus('failed'))
+            // dispatch(setAppStatus('failed'))
             return rejectWithValue({})
         }
     } catch (e: any) {
@@ -108,41 +110,41 @@ export const updateUserStatus = createAsyncThunk('profile/updateUserStatus', asy
 })
 
 export const uploadPhoto = createAsyncThunk('profile/uploadPhoto', async (file: File, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatus('loading'))
+    // dispatch(setAppStatus('loading'))
     try {
         let res = await profileAPI.uploadPhoto(file)
         if (res.resultCode === 0) {
             return res.data.photos
         } else {
             dispatch(setAppError(res.messages[0]))
-            dispatch(setAppStatus('failed'))
+            // dispatch(setAppStatus('failed'))
             return rejectWithValue({})
         }
     } catch (e: any) {
         dispatch(setAppError(e.message))
-        dispatch(setAppStatus('failed'))
+        // dispatch(setAppStatus('failed'))
         return rejectWithValue({})
     }
 })
 
 export const submitProfile = createAsyncThunk<void, ProfileDataType, { state: RootStateType }>('profile/submitProfile',
     async (profile: ProfileDataType, {dispatch, getState, rejectWithValue}) => {
-        dispatch(setAppStatus('loading'))
+        // dispatch(setAppStatus('loading'))
         try {
             let res = await profileAPI.submitProfile(profile)
             if (res.resultCode === 0) {
                 const userId = getState().auth.id!
                 await dispatch(loadUserProfile(userId))
                 dispatch(setAppError(null))
-                dispatch(setAppStatus('succeeded'))
+                // dispatch(setAppStatus('succeeded'))
             } else {
                 dispatch(setAppError(res.messages[0]))
-                dispatch(setAppStatus('failed'))
+                // dispatch(setAppStatus('failed'))
                 return rejectWithValue({})
             }
         } catch (e: any) {
             dispatch(setAppError(e.message))
-            dispatch(setAppStatus('failed'))
+            // dispatch(setAppStatus('failed'))
             return rejectWithValue({})
         }
     })

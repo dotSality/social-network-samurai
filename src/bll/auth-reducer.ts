@@ -4,7 +4,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {setAppError, setAppStatus} from './app-reducer';
 import {ProfileType} from '../Components/Profile/Profile';
 import {profileAPI} from '../api/profileAPI';
-import {clearFriendsData, fetchFriends} from './sidebar-reducer';
+import {changeFriendsCount, clearFriendsData, fetchFriends} from './sidebar-reducer';
 
 export type SubmitDataType = {
     email: string,
@@ -77,7 +77,6 @@ export const fetchAuthUserData = createAsyncThunk('auth/fetchAuthUserData',
                 let {id, email, login} = res.data
                 let authProfile = await profileAPI.getUserProfile(id)
                 let status = await profileAPI.getUserStatus(id)
-                // dispatch(setAppStatus('succeeded'))
                 return {id, email, login, isAuth: true, authProfile, status}
             } else {
                 dispatch(setAppStatus('failed'))
@@ -121,6 +120,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, {dispatch, rejec
         let res = await authAPI.userLogout()
         if (res.data.resultCode === 0) {
             dispatch(clearFriendsData())
+            dispatch(changeFriendsCount(null))
             dispatch(setAppStatus('succeeded'))
             return {id: null, email: null, login: null, isAuth: false}
         } else {

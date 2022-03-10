@@ -1,4 +1,4 @@
-import {lazy, useEffect, useLayoutEffect} from 'react';
+import {lazy, useEffect} from 'react';
 import s from './App.module.scss';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';

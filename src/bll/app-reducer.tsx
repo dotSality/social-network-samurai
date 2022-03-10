@@ -29,11 +29,10 @@ export const appReducer = slice.reducer
 export const {setAppStatus, setAppError, setAppInit} = slice.actions
 
 export const initializeApp = createAsyncThunk<void, void, { state: RootStateType }>('app/initializeApp',
-    async (_, {dispatch, rejectWithValue, getState}) => {
+    async (_, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatus('loading'))
         try {
             await dispatch(fetchAuthUserData())
-            console.log(getState().auth.authProfile)
             dispatch(setAppStatus('succeeded'))
         } catch (e: any) {
             dispatch(setAppStatus('failed'))
