@@ -5,8 +5,9 @@ import {ProfileDataForm, ProfileDataType} from './ProfileDataForm/ProfileDataFor
 import {useAppDispatch, useAppSelector} from '../../../bll/hooks';
 import {ProfileType} from '../Profile';
 import {Avatar} from '../Avatar/Avatar';
-import {ProfileStatus} from './ProfileStatus/ProfileStatus';
 import {MyPosts} from '../MyPosts/MyPosts';
+import s from './ProfileInfo.module.scss';
+import {FriendsBlock} from '../../FriendsBlock/FriendsBlock';
 
 type PropsType = {
     isOwner: boolean
@@ -14,7 +15,7 @@ type PropsType = {
     status: Nullable<string>
 }
 
-export const ProfileInfo = ({isOwner, profile, status}: PropsType) => {
+export const ProfileInfo = ({isOwner, profile}: PropsType) => {
 
     const {error} = useAppSelector(state => state.app)
     const [editMode, setEditMode] = useState<boolean>(false)
@@ -27,13 +28,29 @@ export const ProfileInfo = ({isOwner, profile, status}: PropsType) => {
         dispatch(submitProfile(data))
     }
 
+    const rightContainerClassName = `${s.rightContainer}`
+    const leftContainerClassName = `${s.leftContainer}`
+
     return (
-        <div>
-            <Avatar avatar={profile!.photos.large} isOwner={isOwner}/>
-            <ProfileStatus isOwner={isOwner}/>
-            {editMode ? <ProfileDataForm error={error} onSubmit={onSubmit}/>
-                : <ProfileData profile={profile!} onEditMode={onEditMode} isOwner={isOwner}/>}
-            <MyPosts/>
+        <div className={s.profileInfoContainer}>
+            <div className={leftContainerClassName}>
+                <div className={s.container}>
+                    <Avatar avatar={profile!.photos.large} isOwner={isOwner}/>
+                </div>
+                <div className={s.container}>
+                    <FriendsBlock/>
+                </div>
+            </div>
+
+            <div className={rightContainerClassName}>
+                <div className={s.container}>
+                    {editMode ? <ProfileDataForm error={error} onSubmit={onSubmit}/>
+                        : <ProfileData profile={profile!} onEditMode={onEditMode} isOwner={isOwner}/>}
+                </div>
+                <div className={s.container}>
+                    <MyPosts/>
+                </div>
+            </div>
         </div>
     )
 }

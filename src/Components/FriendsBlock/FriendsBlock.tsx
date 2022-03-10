@@ -9,8 +9,8 @@ export function FriendsBlock() {
 
     return (
         <div className={s.friends}>
-            <span className={s.header}>Your friends</span>
-            {totalFriendsCount && <span className={s.count}>Friends: {totalFriendsCount}</span>}
+            <span className={s.header}>Friends</span>
+            {totalFriendsCount && <span className={s.count}>Total: {totalFriendsCount}</span>}
             <FriendItems/>
         </div>
     )

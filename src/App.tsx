@@ -32,7 +32,7 @@ export const App = () => {
     return <div className={s.appWrapper}>
         <Header/>
         <div className={s.appContainer}>
-            <NavBar/>
+            {/*<NavBar/>*/}
             <div className={s.appContent}>
                 <Routes>
                     <Route path={'/'} element={<Home/>}/>

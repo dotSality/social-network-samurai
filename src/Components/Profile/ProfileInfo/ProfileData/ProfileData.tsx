@@ -4,6 +4,7 @@ import s from './ProfileData.module.css'
 import {useAppSelector} from '../../../../bll/hooks';
 import {Nullable} from '../../../../bll/profile-reducer';
 import {ProfileType} from '../../Profile';
+import {ProfileStatus} from '../ProfileStatus/ProfileStatus';
 
 type ProfileDataPropsType = {
     isOwner: boolean
@@ -13,21 +14,27 @@ type ProfileDataPropsType = {
 
 export const ProfileData = ({isOwner, onEditMode, profile}: ProfileDataPropsType) => {
 
+    const {contacts, aboutMe, lookingForAJob, lookingForAJobDescription, fullName} = profile
+
     return (
         <div className={s.container}>
             <div className={s.item}>
-                <b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}
+                <b>{fullName}</b>
             </div>
-            {profile.lookingForAJob && <div className={s.item}>
-                <b>My professional skills:</b> {profile.lookingForAJobDescription}
+            <ProfileStatus isOwner={isOwner}/>
+            <div className={s.item}>
+                <b>Looking for a job:</b> {lookingForAJob ? 'yes' : 'no'}
+            </div>
+            {lookingForAJob && <div className={s.item}>
+                <b>My professional skills:</b> {lookingForAJobDescription}
             </div>}
             <div className={s.item}>
-                <b>Full name: </b>{profile.fullName}
+                <b>Full name: </b>{fullName}
             </div>
-            {profile.aboutMe && <div className={s.item}>
-                <b>About me: </b>{profile.aboutMe}
+            {aboutMe && <div className={s.item}>
+                <b>About me: </b>{aboutMe}
             </div>}
-            <Contacts {...profile.contacts}/>
+            <Contacts {...contacts}/>
             {isOwner && <div className={s.item}>
                 <button onClick={onEditMode}>Edit profile</button>
             </div>}

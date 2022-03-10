@@ -1,3 +1,19 @@
-.avatar {
+.container {
+  position: relative;
+  width: 200px;
 
+  .avatar {
+    position: relative;
+    align-self: center;
+    border-radius: 2px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 220px;
+    height: 220px;
+  }
+
+  .uploader {
+    position: absolute;
+    bottom: 0;
+  }
 }

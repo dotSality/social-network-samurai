@@ -17,9 +17,9 @@ export const Avatar = ({avatar, isOwner}: PropsType) => {
     }
 
     return (
-        <div className={s.avatar}>
-            <img src={avatar || userPhoto} alt={'profile owner'}/>
-            {isOwner && <input onChange={onMainPhotoSelect} type={'file'}/>}
+        <div className={s.container}>
+            <div role="presentation" style={{backgroundImage: `url(${avatar || userPhoto})`}} className={s.avatar}/>
+            {isOwner && <input className={s.uploader} onChange={onMainPhotoSelect} type={'file'}/>}
         </div>
     )
 }
