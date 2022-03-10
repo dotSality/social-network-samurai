@@ -5,7 +5,6 @@ import {setAppError, setAppStatus} from './app-reducer';
 import {ProfileType} from '../Components/Profile/Profile';
 import {profileAPI} from '../api/profileAPI';
 import {clearFriendsData, fetchFriends} from './sidebar-reducer';
-import {RootStateType} from './store';
 
 export type SubmitDataType = {
     email: string,
@@ -44,7 +43,17 @@ const slice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(logout.fulfilled, (state) => {
-                return {id: null, isAuth: false, error: null, login: null, status: null, email: null, authProfile: null, captchaUrl: null, remember: false}
+                return {
+                    id: null,
+                    isAuth: false,
+                    error: null,
+                    login: null,
+                    status: null,
+                    email: null,
+                    authProfile: null,
+                    captchaUrl: null,
+                    remember: false
+                }
             })
             .addCase(login.fulfilled, (state, action) => {
                 if (action.payload) {
@@ -68,6 +77,7 @@ export const fetchAuthUserData = createAsyncThunk('auth/fetchAuthUserData',
                 let {id, email, login} = res.data
                 let authProfile = await profileAPI.getUserProfile(id)
                 let status = await profileAPI.getUserStatus(id)
+                // dispatch(setAppStatus('succeeded'))
                 return {id, email, login, isAuth: true, authProfile, status}
             } else {
                 dispatch(setAppStatus('failed'))
@@ -84,7 +94,7 @@ export const login = createAsyncThunk('auth/login', async (data: SubmitDataType,
     try {
         let res = await authAPI.userLogin(data)
         if (res.resultCode === 0) {
-            dispatch(fetchAuthUserData())
+            await dispatch(fetchAuthUserData())
             dispatch(setAppError(null))
             dispatch(setAppStatus('succeeded'))
             return ''

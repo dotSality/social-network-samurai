@@ -35,7 +35,6 @@ export const fetchFriends = createAsyncThunk('sidebar/fetchFriends',
             let page = Math.floor(Math.random() * (totalCount / pageSize))
             let {items} = await usersAPI.getUsers(page || 1, pageSize, true)
             const friends = spliceFriends(items)
-            dispatch(setAppStatus('succeeded'))
             return friends
         } catch (e: any) {
             dispatch(setAppStatus('failed'))
