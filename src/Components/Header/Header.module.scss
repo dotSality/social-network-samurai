@@ -1,8 +1,10 @@
 .headerContainer {
+  position: fixed;
   width: 100%;
   display: flex;
   justify-content: center;
   background-color: #e44d3a;
+  z-index: 2;
 
   .header {
     display: flex;

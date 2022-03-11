@@ -26,28 +26,23 @@ export const Avatar = ({avatar, isOwner}: PropsType) => {
             .then(blob => {
                 const file = new File([blob], "File name.jpg", {type: "image/jpg"})
                 dispatch(uploadPhoto(file))
-                // console.log(file)
             })
     }
 
     const showUploaderHandler = () => setIsShow(true)
     const hideUploaderHandler = () => setIsShow(false)
 
-    const deleterClassName = `${s.deleter} ${isShow && s.active}`
     const uploaderClassName = `${s.uploader} ${isShow && s.active}`
 
     return (
         <div className={s.container} onMouseEnter={showUploaderHandler} onMouseLeave={hideUploaderHandler}>
             <div role="presentation" style={{backgroundImage: `url(${avatar || userPhoto})`}} className={s.avatar}/>
-            {avatar !== userPhoto && <div className={deleterClassName} onClick={removePhotoOnClick}>
-                x
-            </div>}
-            <div className={uploaderClassName}>
-                {isOwner && <label>
+            {isOwner && <div className={uploaderClassName}>
+                <label>
                     <input accept=".jpg, .jpeg, .png" className={s.input} onChange={onMainPhotoSelect} type={'file'}/>
                     <span className={s.button}>Upload photo</span>
-                </label>}
-            </div>
+                </label>
+            </div>}
         </div>
     )
 }

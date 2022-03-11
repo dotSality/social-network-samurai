@@ -2,10 +2,18 @@ import {usersAPI} from '../api/usersAPI';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setAppError, setAppStatus} from './app-reducer';
 import {changeFriendsCount} from './sidebar-reducer';
+import {Nullable} from './profile-reducer';
 
 type PhotosType = {
     small: string | null
     large: string | null
+}
+
+export type FetchUsersDataType = {
+    count: number;
+    page: number;
+    term: string;
+    friend: Nullable<boolean>;
 }
 
 export type UserType = {
@@ -21,6 +29,12 @@ const slice = createSlice({
     name: 'users',
     initialState: {
         users: [] as UserType[],
+        fetchData: {
+            count: 5,
+            page: 1,
+            term: '',
+            friend: null as Nullable<boolean>,
+        },
         isFetching: false,
         pageSize: 5,
         totalUsersCount: 0,
@@ -41,19 +55,28 @@ const slice = createSlice({
                 : state.isFollowing.filter(id => id !== action.payload.userID)
         },
         clearUsersData(state) {
-            return {users: [], pageSize: 5, totalUsersCount: 0, currentPage: 1, isFetching: false, isFollowing: []}
+            return {
+                users: [],
+                pageSize: 5,
+                totalUsersCount: 0,
+                currentPage: 1,
+                isFetching: false,
+                isFollowing: [],
+                fetchData: {} as FetchUsersDataType
+            }
         }
     },
     extraReducers: builder => {
         builder
-            .addCase(requestUsers.pending, state => {
+            .addCase(fetchUsers.pending, state => {
                 state.isFetching = true
             })
-            .addCase(requestUsers.fulfilled, (state, action) => {
+            .addCase(fetchUsers.fulfilled, (state, action) => {
                 const {isFetching, users, totalUsersCount} = action.payload
                 state.users = users
                 state.isFetching = isFetching
                 state.totalUsersCount = totalUsersCount
+                state.pageSize = users.length
             })
     }
 })
@@ -61,7 +84,7 @@ const slice = createSlice({
 export const usersReducer = slice.reducer
 export const {setCurrentPage, followToggle, toggleIsFollowingProgress, clearUsersData} = slice.actions
 
-export const requestUsers = createAsyncThunk('users/requestUsers',
+export const fetchUsers = createAsyncThunk('users/requestUsers',
     async ({currentPage, pageSize}: { currentPage: number, pageSize: number }, {dispatch, rejectWithValue}) => {
         try {
             let res = await usersAPI.getUsers(currentPage, pageSize)
