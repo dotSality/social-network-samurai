@@ -1,5 +1,5 @@
 import {useForm, SubmitHandler} from 'react-hook-form';
-import s from '../../common/styles/Common.module.css'
+import s from '../../common/styles/Common.module.scss'
 import {captchaFieldValidator, emailFieldValidator, passwordFieldValidator} from '../../utils/validators/validators';
 import {Nullable} from '../../bll/profile-reducer';
 import {useAppSelector} from '../../bll/hooks';

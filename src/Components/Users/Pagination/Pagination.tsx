@@ -1,6 +1,6 @@
-import s from './Users.module.scss';
-import React from 'react';
-import {useAppSelector} from '../../bll/hooks';
+import s from './Pagination.module.scss';
+import React, {useState} from 'react';
+import {useAppSelector} from '../../../bll/hooks';
 
 type PropsType = {
     onPageChanged: (i: number, pageSize: number) => void,

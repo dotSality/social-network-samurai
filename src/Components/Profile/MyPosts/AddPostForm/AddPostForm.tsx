@@ -1,6 +1,6 @@
 import {useForm} from 'react-hook-form';
 import {postFieldValidator} from '../../../../utils/validators/validators';
-import s from '../../../../common/styles/Common.module.css';
+import s from '../../../../common/styles/Common.module.scss';
 
 type PostFormType = {
     text: string,

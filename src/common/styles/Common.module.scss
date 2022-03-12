@@ -1,0 +1,26 @@
+.textBlock {
+    display: inline-block;
+    height: 30px;
+    color: red;
+    user-select: none;
+    padding-left: 10px;
+}
+
+.textArea {
+    outline: none;
+
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.container {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
