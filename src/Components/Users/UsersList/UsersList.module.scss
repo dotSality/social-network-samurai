@@ -1,8 +1,11 @@
 .content {
   position: relative;
-  margin-top: 35px;
+  //margin-top: 50px;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
+
+  &.scrolled {
+    margin-top: 50px;
+  }
 }
