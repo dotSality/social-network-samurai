@@ -14,8 +14,7 @@
   background-color: #edecf0;
 
   .appContainer {
-    min-height: calc(100vh - 67px - 10px);
-    margin-top: 66px;
+    margin-top: 85px;
     width: 100%;
     max-width: 1100px;
     display: flex;
@@ -27,9 +26,6 @@
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    //background-color: white;
-    //-webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
-    //-moz-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
-    //box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+    padding-bottom: 30px;
   }
 }

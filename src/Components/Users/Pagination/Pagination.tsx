@@ -1,5 +1,5 @@
 import s from './Pagination.module.scss';
-import React, {useState} from 'react';
+import React from 'react';
 import {useAppSelector} from '../../../bll/hooks';
 
 type PropsType = {

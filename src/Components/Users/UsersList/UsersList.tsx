@@ -5,18 +5,12 @@ import React, {memo} from 'react';
 import {useAppSelector} from '../../../bll/hooks';
 import {usersData} from '../../../bll/selectors';
 
-type PropsType = {
-    isScrolled: boolean
-}
-
-export const UsersList = memo(({isScrolled}: PropsType) => {
+export const UsersList = memo(() => {
 
     const {users, isFetching} = useAppSelector(usersData)
 
-    const contentClassName = `${s.content} ${isScrolled && s.scrolled}`
-
     return (
-        <div className={contentClassName}>
+        <div className={s.content}>
             {isFetching
                 ? <InnerPreloader/>
                 : users.map(u => <UserItem key={u.id} u={u}/>)}
