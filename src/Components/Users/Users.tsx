@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from 'react';
-import { clearUsersData, fetchUsers, setCurrentPage } from '../../bll/users-reducer';
+import React, { ChangeEvent, memo, useEffect, useState } from 'react';
+import { clearUsersData, fetchUsers } from '../../bll/users-reducer';
 import { Pagination } from './Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../bll/hooks';
 import { usersData } from '../../bll/selectors';
@@ -9,35 +9,59 @@ import c from '../../common/styles/Common.module.scss';
 import { UsersList } from './UsersList/UsersList';
 import { SortSelect } from './SortSelect/SortSelect';
 import { useStickyRef } from '../../hooks/useStickyRef';
+import { useDebounceValue } from '../../hooks/useDebounceValue';
+import { useSearchParams } from 'react-router-dom';
+import { Input } from 'antd';
 
 export default WithAuthRedirect(memo(() => {
-  const { totalUsersCount, pageSize, currentPage } = useAppSelector(usersData);
+  const { totalUsersCount } = useAppSelector(usersData);
+
+  const [search, setParams] = useSearchParams();
+
+  const currentPage = Number(search.get('page')) || 1;
+
+  const pageSize = Number(search.get('count')) || 10;
 
   const { stickyRef, isSticky } = useStickyRef();
 
-  const dispatch = useAppDispatch();
+  const [term, setTerm] = useState('');
+
+  const onTempChange = (e: ChangeEvent<HTMLInputElement>) => setTerm(e.currentTarget.value);
+
+  const debouncedValue = useDebounceValue<string>(term, 1500);
+
   useEffect(() => {
-    dispatch(fetchUsers({ currentPage, pageSize }));
+    if (term.trim()) {
+      search.set('term', term);
+      setParams(search);
+    } else {
+      search.delete('term');
+      setParams(search);
+    }
+  }, [debouncedValue]);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers({ currentPage, pageSize, term }));
     return () => {
       dispatch(clearUsersData());
     };
-  }, []);
+  }, [currentPage, debouncedValue, dispatch, pageSize]);
 
-  const onPageChanged = (currentPage: number, pageSize: number) => {
-    dispatch(setCurrentPage(currentPage));
-    dispatch(fetchUsers({ currentPage, pageSize }));
+  const onPageChanged = (currentPage: number) => {
+    search.set('page', String(currentPage));
+    setParams(search);
   };
 
   return <div className={`${c.container} ${s.main}`}>
     <div className={s.info}>
-            <span>
-                All users: {totalUsersCount}
-            </span>
+      <span>
+        All users: {totalUsersCount}
+      </span>
     </div>
     <div ref={stickyRef} className={`${s.filterBlock} ${isSticky ? s.scrolled : ''}`}>
-      <div>
-        <input type="text"/>
-      </div>
+      <Input className={s.searchInput} value={term} onChange={onTempChange} type="text"/>
       {!!totalUsersCount && <Pagination
         pageSize={pageSize}
         currentPage={currentPage}

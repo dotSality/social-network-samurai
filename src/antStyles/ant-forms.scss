@@ -1,0 +1,19 @@
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  content: none;
+}
+
+.ant-form {
+  padding: 0 20px;
+  min-width: 300px;
+  max-width: 700px;
+  width: 100%;
+}
+
+.ant-form-item-label > label {
+  font-size: 14px;
+  color: gray;
+}
+
+.ant-form-vertical .ant-form-item-label {
+  padding: 0 0 5px 5px;
+}

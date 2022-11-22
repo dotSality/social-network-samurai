@@ -1,14 +1,13 @@
 .main {
   position: relative;
-  border:solid #c03420;
+  border: solid #c03420;
   border-width: 0 1px;
-  transition: all 0.2s;
 
   &.active::before {
     pointer-events: all;
     position: absolute;
     content: '';
-    background-color: #c03420;
+    background-color: rgba(#FFFFFF, 0.2);
     opacity: 0.5;
     height: 100%;
     width: 100%;
@@ -26,5 +25,34 @@
       height: 30px;
       background-size: cover;
     }
+  }
+}
+
+.loggedUser {
+  display: flex;
+  padding: 5px 10px;
+  align-items: center;
+  width: 180px;
+  height: 100%;
+  cursor: pointer;
+  grid-gap: 10px;
+  transition: opacity 0.1s ease-in, background-color 0.1s ease-in;
+
+  &:hover {
+    opacity: 0.7;
+    background-color: rgba(#FFFFFF, 0.2);
+  }
+
+  .avatar {
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+  }
+
+  .name {
+    color: #ffffff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

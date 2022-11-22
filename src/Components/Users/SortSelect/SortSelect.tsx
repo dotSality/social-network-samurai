@@ -1,37 +1,28 @@
-import React, {memo, useEffect, useState} from 'react';
+import React from 'react';
+import { Select } from 'antd';
+import { useSearchParams } from 'react-router-dom';
 import s from './SortSelect.module.scss';
-import {useAppSelector} from '../../../bll/hooks';
-import {Option} from './Option/Option';
+import { CaretDownOutlined } from '@ant-design/icons';
 
-const pageSizeFilterValues: number[] = [3, 5, 7, 10, 20]
+const pageSizeFilterValues: number[] = [3, 5, 7, 10, 20];
 
-export const SortSelect = memo(() => {
+export const SortSelect = () => {
+  const [search, setParams] = useSearchParams();
 
-    const pageSize = useAppSelector(state => state.usersPage.pageSize)
-    const [count, setCount] = useState<number>(pageSize)
-    const [isShow, setIsShow] = useState<boolean>(false)
-    const onShowSelectOnClick = () => setIsShow(true)
-    const onHideSelectOnClick = () => {
-        if (isShow) {
-            setIsShow(false)
-        }
-    }
+  const count = Number(search.get('count')) || 10;
 
-    useEffect(() => {
-        isShow && window.addEventListener('click', onHideSelectOnClick)
-        return () => {
-            window.removeEventListener('click', onHideSelectOnClick)
-        }
-    }, [isShow])
+  const onSelectChange = (value: number) => {
+    search.set('count', String(value));
+    setParams(search);
+  };
 
-    const selectClassName = `${s.select} ${isShow && s.active}`
+  const selectOptions = pageSizeFilterValues.map((size) => ({ value: size, label: size }));
 
-    return (
-        <div className={selectClassName} onClick={onShowSelectOnClick}>
-            {count}
-            {isShow && <div className={s.options}>
-                {pageSizeFilterValues.map(el => <Option key={el} value={el} setCount={setCount}/>)}
-            </div>}
-        </div>
-    )
-})
+  return <Select
+    className={s.select}
+    suffixIcon={<CaretDownOutlined/>}
+    defaultValue={count || 10}
+    onChange={onSelectChange}
+    options={selectOptions}
+  />;
+};

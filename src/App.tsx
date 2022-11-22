@@ -5,23 +5,24 @@ import { Preloader } from './Components/Preloader/Preloader';
 import { useAppDispatch, useAppSelector } from './bll/hooks';
 import { Header } from './Components/Header/Header';
 import AppRoutes from './Components/Routes/Routes';
+import 'antd/dist/antd.css';
 
 export const App = () => {
-    const {initialized, status} = useAppSelector(state => state.app)
+    const { initialized, status } = useAppSelector(state => state.app)
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(initializeApp())
-    }, [])
+    }, [dispatch])
 
-    if (!initialized) return <Preloader/>
+    if (!initialized) return <Preloader />
 
-    if (status === 'loading') return <Preloader/>
+    if (status === 'loading') return <Preloader />
 
     return <div className={s.appWrapper}>
-        <Header/>
+        <Header />
         <div className={s.appContainer}>
             <div className={s.appContent}>
-                <AppRoutes/>
+                <AppRoutes />
             </div>
         </div>
     </div>

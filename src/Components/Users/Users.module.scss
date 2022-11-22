@@ -17,6 +17,7 @@
         height: 50px;
         z-index: 1;
         display: flex;
+        align-items: center;
         flex-direction: row;
         justify-content: space-around;
         background-color: #edecf0;
@@ -27,6 +28,11 @@
         &.scrolled {
             position: fixed;
             top: 65px;
+        }
+
+        .searchInput {
+            max-width: 200px;
+            height: 32px;
         }
     }
 
