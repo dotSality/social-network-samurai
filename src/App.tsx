@@ -8,22 +8,24 @@ import AppRoutes from './Components/Routes/Routes';
 import 'antd/dist/antd.min.css';
 
 export const App = () => {
-    const { initialized, status } = useAppSelector(state => state.app)
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(initializeApp())
-    }, [dispatch])
+  const { initialized, status } = useAppSelector(state => state.app);
 
-    if (!initialized) return <Preloader />
+  const dispatch = useAppDispatch();
 
-    if (status === 'loading') return <Preloader />
+  useEffect(() => {
+    dispatch(initializeApp());
+  }, [dispatch]);
 
-    return <div className={s.appWrapper}>
-        <Header />
-        <div className={s.appContainer}>
-            <div className={s.appContent}>
-                <AppRoutes />
-            </div>
-        </div>
+  if (!initialized) return <Preloader/>;
+
+  if (status === 'loading') return <Preloader/>;
+
+  return <div className={s.appWrapper}>
+    <Header/>
+    <div className={s.appContainer}>
+      <div className={s.appContent}>
+        <AppRoutes/>
+      </div>
     </div>
-}
+  </div>;
+};
