@@ -1,0 +1,28 @@
+.dialogs {
+  display: flex;
+  width: 100%;
+}
+
+.dialogs .dialogsItems {
+  width: 30%;
+  padding: 10px;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  padding: 10px;
+  overflow: inherit;
+  height: calc(100vh - 115px);
+  overflow: hidden;
+
+  .container {
+    overflow: hidden scroll;
+  }
+}
+
+.addMsg {
+  align-self: flex-start;
+}

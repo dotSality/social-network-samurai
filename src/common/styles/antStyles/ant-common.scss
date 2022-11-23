@@ -6,7 +6,12 @@
   color: #FFFFFF;
   border-radius: 5px;
 
-  &:hover,
+  &:hover {
+    background-color: rgba(#e44d3a, 0.8);
+    color: white;
+    border-color: rgba(#e44d3a, 1);
+  }
+
   &:focus {
     color: rgba(#e44d3a, 1);
     border-color: rgba(#e44d3a, 1);

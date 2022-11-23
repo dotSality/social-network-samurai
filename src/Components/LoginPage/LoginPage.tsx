@@ -4,7 +4,7 @@ import { login } from '../../bll/auth-reducer';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../bll/hooks';
 
-export const LoginPage = () => {
+const LoginPage = () => {
 
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.auth);
@@ -20,3 +20,5 @@ export const LoginPage = () => {
     <LoginForm captchaUrl={captchaUrl} onSubmitData={onSubmitData}/>
   </div>;
 };
+
+export default LoginPage;

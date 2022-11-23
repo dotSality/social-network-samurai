@@ -3,7 +3,6 @@ import { Nullable } from '../../../bll/profile-reducer';
 import { ProfileData } from './ProfileData/ProfileData';
 import { ProfileType } from '../Profile';
 import { Avatar } from '../Avatar/Avatar';
-import { MyPosts } from '../MyPosts/MyPosts';
 import s from './ProfileInfo.module.scss';
 import { FriendsBlock } from '../../FriendsBlock/FriendsBlock';
 
@@ -32,9 +31,9 @@ export const ProfileInfo = ({ isOwner, profile }: PropsType) => {
         <div className={s.container}>
           <ProfileData profile={profile!} isOwner={isOwner}/>
         </div>
-        <div className={s.container}>
-          <MyPosts/>
-        </div>
+        {/*<div className={s.container}>
+         <MyPosts/>
+         </div>*/}
       </div>
     </div>
   );

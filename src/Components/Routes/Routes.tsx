@@ -1,15 +1,15 @@
 import React, { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home } from '../Profile/Home';
-import { LoginPage } from '../LoginPage/LoginPage';
-import News from '../News/News';
-import Music from '../Music/Music';
-import Settings from '../Settings/Settings';
 import { LazyWithSuspense } from '../../HOC/LazyWithSuspense';
 
-const Dialogs = LazyWithSuspense(lazy(() => import('../Dialogs/Dialogs')))
-const Profile = LazyWithSuspense(lazy(() => import('../Profile/Profile')))
-const Users = LazyWithSuspense(lazy(() => import('../Users/Users')))
+const Dialogs = LazyWithSuspense(lazy(() => import('../Dialogs/Dialogs')));
+const Profile = LazyWithSuspense(lazy(() => import('../Profile/Profile')));
+const Users = LazyWithSuspense(lazy(() => import('../Users/Users')));
+const Home = LazyWithSuspense(lazy(() => import('../Profile/Home')));
+const LoginPage = LazyWithSuspense(lazy(() => import('../LoginPage/LoginPage')));
+const Settings = LazyWithSuspense(lazy(() => import('../Settings/Settings')));
+const News = LazyWithSuspense(lazy(() => import('../News/News')));
+const Music = LazyWithSuspense(lazy(() => import('../Music/Music')));
 
 const AppRoutes = () => (
   <Routes>

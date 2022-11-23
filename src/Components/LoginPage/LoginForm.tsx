@@ -62,7 +62,7 @@ export const LoginForm = (props: SubmitDataPropsType) => {
         name="password"
         label="Password"
       >
-        <Input/>
+        <Input.Password/>
       </Item>
       {
         props.captchaUrl &&

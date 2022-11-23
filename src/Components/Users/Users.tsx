@@ -43,10 +43,11 @@ export default WithAuthRedirect(memo(() => {
 
   useEffect(() => {
     dispatch(fetchUsers({ currentPage, pageSize, term }));
-    return () => {
-      dispatch(clearUsersData());
-    };
   }, [currentPage, debouncedValue, dispatch, pageSize]);
+
+  useEffect(() => () => {
+    dispatch(clearUsersData());
+  }, [dispatch]);
 
   const onPageChanged = (currentPage: number) => {
     search.set('page', String(currentPage));

@@ -5,7 +5,7 @@ import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 import {useLocation} from 'react-router-dom';
 import {InnerPreloader} from '../InnerPreloader/InnerPreloader';
 
-export const Home = WithAuthRedirect(() => {
+export default WithAuthRedirect(() => {
 
     const {authProfile, status} = useAppSelector(state => state.auth)
     const location = useLocation()

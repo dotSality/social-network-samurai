@@ -1,32 +1,37 @@
-import {useForm} from 'react-hook-form';
-import {useAppDispatch} from '../../../bll/hooks';
-import {addMessage} from '../../../bll/dialogs-reducer';
+import { useAppDispatch } from '../../../bll/hooks';
+import { addMessage } from '../../../bll/dialogs-reducer';
+import { Form, Input } from 'antd';
+import CommonButton from '../../CommonUI/CommonButton/CommonButton';
+import s from './MessageForm.module.scss';
+
+const { Item } = Form;
+const { TextArea } = Input;
 
 type MessageData = {
-    message: string
+  message: string
 }
 
 export const MessageForm = () => {
+  const [form] = Form.useForm();
 
-    const dispatch = useAppDispatch()
-    const {
-        register,
-        handleSubmit,
-        reset
-    } = useForm<MessageData>({
-        defaultValues: {
-            message: ''
-        }
-    })
+  const dispatch = useAppDispatch();
 
-    const onSubmit = (data: MessageData) => {
-        dispatch(addMessage(data.message))
-        reset()
-    }
+  const onSubmit = (data: MessageData) => {
+    dispatch(addMessage(data.message));
+    form.resetFields();
+  };
 
-    return <form onSubmit={handleSubmit(onSubmit)}>
-        <textarea placeholder={'Enter your message...'}
-            {...register('message')}/>
-        <input type={'submit'} value={'Send message'}/>
-    </form>
-}
+  return <Form
+    layout="vertical"
+    className={s.messageForm}
+    form={form}
+    onFinish={onSubmit}
+  >
+    <Item name="message" rules={[{ required: true, message: 'Message can\'t be empty' }]}>
+      <TextArea autoSize={{ minRows: 3, maxRows: 6 }}/>
+    </Item>
+    <CommonButton htmlType="submit">
+      Send message
+    </CommonButton>
+  </Form>;
+};

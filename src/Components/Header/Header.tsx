@@ -17,7 +17,7 @@ export const Header = () => {
   const linkClassName = ({ isActive }: { isActive: boolean }) => `${s.item} ${isActive ? s.active : ''}`;
 
   const headerLinks = links.map(({ icon, route, label }) => (
-    <NavLink to={route} className={linkClassName}>
+    <NavLink key={route} to={route} className={linkClassName}>
       <div style={{ backgroundImage: `url(${icon})` }} className={s.icon}/>
       {label}
     </NavLink>

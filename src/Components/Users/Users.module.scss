@@ -1,53 +1,53 @@
 .main {
-    margin: 0 20px;
-    padding: 0 15px;
-    position: relative;
+  margin: 0 20px;
+  padding: 0 15px !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  width: 100%;
+
+  &.scrolled {
+    flex-direction: row;
+  }
+
+  .filterBlock {
+    transform: translate(-15px, 0);
+    width: 800px;
+    height: 50px;
+    z-index: 1;
     display: flex;
-    flex-direction: column;
-    max-width: 800px;
-    width: 100%;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #edecf0;
+    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
 
     &.scrolled {
-        flex-direction: row;
+      position: fixed;
+      top: 65px;
     }
 
-    .filterBlock {
-        transform: translate(-15px, 0);
-        width: 800px;
-        height: 50px;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        justify-content: space-around;
-        background-color: #edecf0;
-        -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
-        -moz-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
-        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
-
-        &.scrolled {
-            position: fixed;
-            top: 65px;
-        }
-
-        .searchInput {
-            max-width: 200px;
-            height: 32px;
-        }
+    .searchInput {
+      max-width: 200px;
+      height: 32px;
     }
+  }
 
-    .info {
-        display: flex;
-        align-items: center;
-        height: 40px;
+  .info {
+    display: flex;
+    align-items: center;
+    height: 40px;
 
-        &.scrolled {
-            display: none;
-        }
+    &.scrolled {
+      display: none;
     }
+  }
 
-    .disable {
-        pointer-events: none;
-    }
+  .disable {
+    pointer-events: none;
+  }
 }
 
