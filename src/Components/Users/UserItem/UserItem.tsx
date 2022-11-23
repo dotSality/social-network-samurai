@@ -16,6 +16,8 @@ export const UserItem = ({ u }: UserPropsType) => {
   const { isFollowing } = useAppSelector(state => state.usersPage);
   const toggleFollowHandler = () => dispatch(toggleFollow({ userID: u.id, isFollowed: u.followed }));
 
+  const isLoading = isFollowing.some(id => id === u.id);
+
   return (
     <div className={s.itemContainer}>
       <NavLink className={s.link} to={'/profile/' + u.id}>
@@ -29,10 +31,14 @@ export const UserItem = ({ u }: UserPropsType) => {
         </span>
         {u.status && <span className={s.status}>{u.status}</span>}
       </div>
-      <div>
-        <CommonButton loading={isFollowing.some(id => id === u.id)}
-          onClick={toggleFollowHandler}>{!u.followed ? 'Follow' : 'Unfollow'}</CommonButton>
-      </div>
+      <CommonButton
+        className={s.button}
+        disabled={isLoading}
+        loading={isLoading}
+        onClick={toggleFollowHandler}
+      >
+        {!u.followed ? 'Follow' : 'Unfollow'}
+      </CommonButton>
     </div>
   );
 };

@@ -25,6 +25,7 @@ const slice = createSlice({
     error: null as Nullable<string>,
     captchaUrl: null as Nullable<string>,
     submitErrors: [] as string[],
+    isFetching: false,
   },
   reducers: {
     clearSubmitErrors: (state) => {
@@ -45,12 +46,20 @@ const slice = createSlice({
           captchaUrl: null,
           remember: false,
           submitErrors: [],
+          isFetching: false,
         };
+      })
+      .addCase(login.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(login.rejected, (state) => {
+        state.isFetching = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         if (action.payload) {
           state.captchaUrl = action.payload;
         }
+        state.isFetching = false;
       })
       .addCase(fetchAuthUserData.fulfilled, (state, action) => {
         return { ...state, ...action.payload };
@@ -93,7 +102,7 @@ export const fetchAuthUserData = createAsyncThunk('auth/fetchAuthUserData',
   });
 
 export const login = createAsyncThunk('auth/login', async (data: SubmitDataType, { dispatch, rejectWithValue }) => {
-  dispatch(setAppStatus('loading'));
+  // dispatch(setAppStatus('loading'));
   try {
     let res = await authAPI.userLogin(data);
     if (res.resultCode === 0) {

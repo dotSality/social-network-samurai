@@ -1,6 +1,5 @@
 import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 import { clearUsersData, fetchUsers } from '../../bll/users-reducer';
-import { Pagination } from './Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../bll/hooks';
 import { usersData } from '../../bll/selectors';
 import { WithAuthRedirect } from '../../HOC/WithAuthRedirect';
@@ -11,7 +10,7 @@ import { SortSelect } from './SortSelect/SortSelect';
 import { useStickyRef } from '../../hooks/useStickyRef';
 import { useDebounceValue } from '../../hooks/useDebounceValue';
 import { useSearchParams } from 'react-router-dom';
-import { Input } from 'antd';
+import { Input, Pagination } from 'antd';
 
 export default WithAuthRedirect(memo(() => {
   const { totalUsersCount } = useAppSelector(usersData);
@@ -61,13 +60,16 @@ export default WithAuthRedirect(memo(() => {
       </span>
     </div>
     <div ref={stickyRef} className={`${s.filterBlock} ${isSticky ? s.scrolled : ''}`}>
-      <Input className={s.searchInput} value={term} onChange={onTempChange} type="text"/>
-      {!!totalUsersCount && <Pagination
-        pageSize={pageSize}
-        currentPage={currentPage}
-        totalUsersCount={totalUsersCount}
-        onPageChanged={onPageChanged}
-      />}
+      <Input placeholder="Enter name..." className={s.searchInput} value={term} onChange={onTempChange} type="text"/>
+      {!!totalUsersCount &&
+        <Pagination
+          showLessItems
+          showSizeChanger={false}
+          showQuickJumper={false}
+          current={currentPage}
+          total={totalUsersCount}
+          onChange={onPageChanged}
+        />}
       <SortSelect/>
     </div>
     <UsersList/>

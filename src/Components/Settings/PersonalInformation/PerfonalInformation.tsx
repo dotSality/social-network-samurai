@@ -4,8 +4,8 @@ import CommonButton from '../../CommonUI/CommonButton/CommonButton';
 import s from './PersonalInformation.module.scss';
 import { useAppDispatch, useAppSelector } from '../../../bll/hooks';
 import { submitProfile } from '../../../bll/profile-reducer';
-import { ProfileDataType } from '../../Profile/ProfileInfo/ProfileDataForm/ProfileDataForm';
 import { clearSubmitErrors } from '../../../bll/auth-reducer';
+import { ProfileDataType } from '../../../api/profileAPI';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -123,6 +123,7 @@ const PersonalInformation = () => {
           name="lookingForAJob"
           label="Looking for a job"
           valuePropName="checked"
+          className={s.formItem}
         >
           <Checkbox/>
         </Item>

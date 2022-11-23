@@ -5,7 +5,7 @@ import { Preloader } from './Components/Preloader/Preloader';
 import { useAppDispatch, useAppSelector } from './bll/hooks';
 import { Header } from './Components/Header/Header';
 import AppRoutes from './Components/Routes/Routes';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 export const App = () => {
     const { initialized, status } = useAppSelector(state => state.app)

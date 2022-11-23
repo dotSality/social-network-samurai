@@ -2,8 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+  //align-items: center;
   height: 130px;
 
   &:nth-child(n)::after {
@@ -24,6 +23,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    flex: 1 1 auto;
 
     .name {
       display: inline-block;
@@ -54,5 +54,9 @@
   .userPhoto {
     width: 100px;
     border-radius: 50%;
+  }
+
+  .button {
+    margin-top: 20px;
   }
 }

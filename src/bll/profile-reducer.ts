@@ -1,6 +1,5 @@
 import { ProfileType } from '../Components/Profile/Profile';
-import { profileAPI } from '../api/profileAPI';
-import { ProfileDataType } from '../Components/Profile/ProfileInfo/ProfileDataForm/ProfileDataForm';
+import { profileAPI, ProfileDataType } from '../api/profileAPI';
 import { RootStateType } from './store';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setAppError, setAppStatus } from './app-reducer';

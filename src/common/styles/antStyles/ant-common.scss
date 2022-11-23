@@ -50,6 +50,33 @@
   color: #e44d3a;
 }
 
-.ant-tabs-tab:hover {
-  color: rgba(#e44d3a, 0.7);
+.ant-pagination-item {
+  color: rgba(#e44d3a, 0.5);
+}
+
+.ant-pagination-item:hover {
+  border-color: rgba(#e44d3a, 0.7);
+
+  & a {
+    color: rgba(#e44d3a, 0.7);
+  }
+}
+
+.ant-pagination-item-active {
+  border-color: #e44d3a;
+
+  & a {
+    color: #e44d3a;
+  }
+}
+
+.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon,
+.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon {
+  color: #e44d3a;
+}
+
+.ant-pagination-next:hover .ant-pagination-item-link,
+.ant-pagination-prev:hover .ant-pagination-item-link {
+  color: #e44d3a;
+  border-color: #e44d3a;
 }

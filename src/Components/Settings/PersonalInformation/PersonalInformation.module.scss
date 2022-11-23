@@ -22,4 +22,27 @@
       padding-top: 10px;
     }
   }
+
+  .formItem {
+    cursor: pointer;
+    :global {
+      .ant-row {
+        flex-direction: row;
+        align-items: center;
+        grid-gap: 10px;
+
+         & label {
+          cursor: pointer;
+        }
+      }
+
+      .ant-col.ant-form-item-control {
+        width: unset;
+
+        .ant-form-item-control-input {
+          min-height: unset;
+        }
+      }
+    }
+  }
 }

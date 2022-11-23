@@ -6,18 +6,6 @@ export const postFieldValidator = {
     },
 }
 
-export const emailFieldValidator = {
-    required: 'Please, enter e-mail',
-    pattern: {
-        value: /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/,
-        message: 'Incorrect e-mail'
-    }
-}
-
-export const passwordFieldValidator = {
-    required: 'Please, enter password',
-}
-
 export const captchaFieldValidator = {
     required: 'Wrong captcha'
 }
