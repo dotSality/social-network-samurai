@@ -4,7 +4,7 @@
     :global {
       .ant-row {
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
         grid-gap: 10px;
 
         & label {

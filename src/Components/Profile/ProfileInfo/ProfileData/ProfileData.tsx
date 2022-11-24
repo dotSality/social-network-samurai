@@ -1,6 +1,5 @@
-import React from 'react';
-import { Contacts } from '../Contacts/Contacts';
-import s from './ProfileData.module.css';
+import React, { Fragment } from 'react';
+import s from './ProfileData.module.scss';
 import { ProfileType } from '../../Profile';
 import { ProfileStatus } from '../ProfileStatus/ProfileStatus';
 
@@ -13,26 +12,34 @@ export const ProfileData = ({ isOwner, profile }: ProfileDataPropsType) => {
 
   const { contacts, aboutMe, lookingForAJob, lookingForAJobDescription, fullName } = profile;
 
+  const contactsKeys = Object.keys(contacts);
+  const contactsValues = Object.values(contacts);
+  const isRendering = contactsValues.some(value => value !== null);
+
+  const mappedContacts = contactsKeys.map((key, i) => {
+    return <Fragment key={contactsKeys[i]}><span className={s.label}>{key}:</span>
+      {<a target={'_blank'} rel={'noreferrer'} href={contactsValues[i]!}> {contactsValues[i]}</a>}</Fragment>;
+  });
+
   return (
     <div className={s.container}>
-      <div style={{ fontSize: "28px" }} className={s.item}>
-        <b>{fullName}</b>
-      </div>
+      <span className={s.fullName}>{fullName}</span>
       <ProfileStatus isOwner={isOwner}/>
-      <div className={s.item}>
-        <b>Looking for a job:</b> {lookingForAJob ? 'yes' : 'no'}
+      <div className={s.dataGrid}>
+        <span className={s.label}>Looking for a job:</span><span>{lookingForAJob ? 'Yes' : 'No'}</span>
+        {lookingForAJob && <>
+          <span className={s.label}>My professional skills:</span><span>{lookingForAJobDescription}</span>
+        </>}
+        <span className={s.label}>Full name: </span><span>{fullName}</span>
+        {aboutMe && <>
+          <span className={s.label}>About me: </span><span>{aboutMe}</span>
+        </>}
       </div>
-      {lookingForAJob && <div className={s.item}>
-        <b>My professional skills:</b> {lookingForAJobDescription}
-      </div>}
-      <div className={s.item}>
-        <b>Full name: </b>{fullName}
-      </div>
-      {aboutMe && <div className={s.item}>
-        <b>About me: </b>{aboutMe}
-      </div>}
-      <Contacts {...contacts}/>
-      {isOwner && <div className={s.item}>
+      {isRendering && <div className={s.contacts}>
+        <span className={s.label}>Contacts:</span>
+        <div className={s.links}>
+          {mappedContacts}
+        </div>
       </div>}
     </div>);
 };

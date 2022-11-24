@@ -1,0 +1,31 @@
+.container {
+  display: grid;
+  flex-direction: column;
+
+  .fullName {
+    font-size: 28px;
+    font-weight: 500;
+  }
+
+  .dataGrid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-rows: 32px;
+  }
+
+  .contacts {
+    display: flex;
+    flex-direction: column;
+
+    .links {
+      margin: 20px 0 0 20px;
+      display: grid;
+      grid-template-columns: 20% auto;
+      grid-auto-rows: 32px;
+    }
+  }
+}
+
+.label {
+  font-weight: 500;
+}

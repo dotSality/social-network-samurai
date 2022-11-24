@@ -52,6 +52,9 @@ const slice = createSlice({
       .addCase(login.pending, (state) => {
         state.isFetching = true;
       })
+      .addCase(submitProfile.pending, (state) => {
+        state.isFetching = true;
+      })
       .addCase(login.rejected, (state) => {
         state.isFetching = false;
       })
@@ -69,11 +72,13 @@ const slice = createSlice({
       })
       .addCase(submitProfile.fulfilled, (state) => {
         state.submitErrors = [];
+        state.isFetching = false;
       })
       .addCase(submitProfile.rejected, (state, action) => {
         if (action.payload && 'submitErrors' in action.payload) {
           state.submitErrors = action.payload.submitErrors;
         }
+        state.isFetching = false;
       });
   }
 });

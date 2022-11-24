@@ -16,7 +16,7 @@ const LoginPage = () => {
   if (isAuth) return <Navigate to={'/'}/>;
 
   return <div>
-    <h1 style={{ padding: '0 20px' }}>Login page</h1>
+    <h1 style={{ padding: '0 20px 20px', fontWeight: '700', fontSize: '20px' }}>Login page</h1>
     <LoginForm captchaUrl={captchaUrl} onSubmitData={onSubmitData}/>
   </div>;
 };

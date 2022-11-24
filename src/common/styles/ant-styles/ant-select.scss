@@ -1,13 +1,15 @@
+@import 'src/common/styles/variables';
+
 .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
-  border-color: rgba(#e44d3a, 0.7);
-  color: rgba(#e44d3a, 0.7);
+  border-color: rgba($red-common, 0.7);
+  color: rgba($red-common, 0.7);
 }
 
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  border-color: rgba(#e44d3a, 0.7);
-  box-shadow: 0 0 0 2px rgba(#e44d3a, 0.2);
+  border-color: rgba($red-common, 0.7);
+  box-shadow: $box-shadow-red-smooth;
 }
 
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background-color: rgba(#e44d3a, 0.2);
+  background-color: rgba($red-common, 0.2);
 }

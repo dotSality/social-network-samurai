@@ -36,7 +36,7 @@ export const ProfileStatus = memo(({ isOwner }: PropsType) => {
 
   return (
     <div
-      className={s.container}
+      className={`${s.container} ${isOwner ? s.owner : ""}`}
       onClick={onEditMode}
     >
       {!editMode

@@ -1,0 +1,103 @@
+@import 'src/common/styles/variables';
+
+.ant-btn {
+  background-color: $red-common;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba($red-common, 0.8);
+    color: white;
+    border-color: rgba($red-common, 1);
+  }
+
+  &:focus {
+    color: rgba($red-common, 1);
+    border-color: rgba($red-common, 1);
+  }
+}
+
+.ant-input-affix-wrapper,
+.ant-input,
+.ant-textarea {
+  border-radius: 5px;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: $red-common;
+  border-color: $red-common;
+}
+
+.ant-checkbox-input:focus + .ant-checkbox-inner {
+  border-color: rgba($red-common, 0.7)
+}
+
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-checked:hover .ant-checkbox-inner, {
+  border-color: rgba($red-common, 0.7)
+}
+
+.ant-checkbox-checked:after {
+  border-color: $red-common;
+}
+
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+  border-color: $red-common;
+}
+
+.ant-input-affix-wrapper:focus {
+  border-color: $red-common;
+  box-shadow: $box-shadow-red-smooth;
+}
+
+.ant-input:focus,
+.ant-input:hover {
+  border-color: rgba($red-common, 0.5);
+  box-shadow: $box-shadow-red-smooth;
+}
+
+.ant-tabs-ink-bar {
+  background: rgba($red-common, 0.7);
+}
+
+.ant-tabs-tab:hover {
+  color: rgba($red-common, 0.7);
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: $red-common;
+}
+
+.ant-pagination-item {
+  color: rgba($red-common, 0.5);
+}
+
+.ant-pagination-item:hover {
+  border-color: rgba($red-common, 0.7);
+
+  & a {
+    color: rgba($red-common, 0.7);
+  }
+}
+
+.ant-pagination-item-active {
+  border-color: $red-common;
+
+  & a {
+    color: $red-common;
+  }
+}
+
+.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon,
+.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon {
+  color: $red-common;
+}
+
+.ant-pagination-next:hover .ant-pagination-item-link,
+.ant-pagination-prev:hover .ant-pagination-item-link {
+  color: $red-common;
+  border-color: $red-common;
+}

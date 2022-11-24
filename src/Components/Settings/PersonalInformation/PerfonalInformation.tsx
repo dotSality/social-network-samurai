@@ -30,6 +30,7 @@ const PersonalInformation = () => {
 
   const profile = useAppSelector(state => state.auth.authProfile);
   const errors = useAppSelector(state => state.auth.submitErrors);
+  const isFetching = useAppSelector(state => state.auth.isFetching);
 
   const dispatch = useAppDispatch();
 
@@ -127,7 +128,7 @@ const PersonalInformation = () => {
         >
           <Checkbox/>
         </Item>
-        <p className={s.formTitle}>Helpful links</p>
+        <p className={s.formTitle}>Contact links</p>
         <Item rules={[{ validateTrigger: 'onChange' }]} name="facebook" label="Facebook">
           <Input/>
         </Item>
@@ -152,7 +153,7 @@ const PersonalInformation = () => {
         <Item rules={[{ validateTrigger: 'onChange' }]} name="mainLink" label="Main link">
           <Input/>
         </Item>
-        <CommonButton htmlType="submit">
+        <CommonButton disabled={isFetching} loading={isFetching} htmlType="submit">
           Submit
         </CommonButton>
       </Form>
